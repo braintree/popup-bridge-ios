@@ -1,4 +1,5 @@
 #import "POPAppDelegate.h"
+#import <PopupBridge/POPPopupBridge.h>
 
 @implementation POPAppDelegate
 
@@ -33,6 +34,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    if ([url.scheme localizedCaseInsensitiveCompare:@"com.braintreepayments.popupbridgeexample"] == NSOrderedSame) {
+        // TODO: do something
+
+        NSLog(@"%@", url);
+        // use sourceApplication for analytcs
+        return [POPPopupBridge openURL:url sourceApplication:sourceApplication];
+
+
+    }
+    return NO;
 }
 
 @end

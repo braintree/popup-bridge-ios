@@ -23,6 +23,9 @@
 		6FECBBAEF66665E78CF777B7 /* Pods_PopupBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		878445D1E5A0D98DF9F85BF5 /* Pods_PopupBridge_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */; };
+		A7E9D6D11DCA6B4F0035FA41 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */; };
+		A7E9D6D31DCA6B540035FA41 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
+		A7EB850C1DCAA03D0005ECC7 /* PopupBridge.js in Resources */ = {isa = PBXBuildFile; fileRef = A7EB850B1DCAA03D0005ECC7 /* PopupBridge.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,9 @@
 		872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		A7EB850B1DCAA03D0005ECC7 /* PopupBridge.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = PopupBridge.js; path = "Pods/Target Support Files/PopupBridge/PopupBridge.js"; sourceTree = "<group>"; };
 		AED3AD61C1CAC7A12C2EE6E8 /* Pods-PopupBridge_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B6CFED07EA53F89735AA3F39 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CA8164985E847CE032CD1186 /* Pods-PopupBridge_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7E9D6D31DCA6B540035FA41 /* SafariServices.framework in Frameworks */,
+				A7E9D6D11DCA6B4F0035FA41 /* WebKit.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
@@ -96,6 +104,7 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				A7EB850B1DCAA03D0005ECC7 /* PopupBridge.js */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for PopupBridge */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -117,6 +126,8 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */,
+				A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
@@ -276,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7EB850C1DCAA03D0005ECC7 /* PopupBridge.js in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -517,7 +529,7 @@
 				GCC_PREFIX_HEADER = "PopupBridge/PopupBridge-Prefix.pch";
 				INFOPLIST_FILE = "PopupBridge/PopupBridge-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.popupbridgeexample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -533,7 +545,7 @@
 				GCC_PREFIX_HEADER = "PopupBridge/PopupBridge-Prefix.pch";
 				INFOPLIST_FILE = "PopupBridge/PopupBridge-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.popupbridgeexample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
