@@ -9,6 +9,7 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
+  - OCMock (3.3.1)
   - PopupBridge (0.1.0)
   - Specta (1.0.5)
 
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - Expecta
   - Expecta+Snapshots
   - FBSnapshotTestCase
+  - OCMock
   - PopupBridge (from `../`)
   - Specta
 
@@ -27,9 +29,10 @@ SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
   PopupBridge: 4dafbdddbf005d10c5aec4515a45cf7515329fe9
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
-PODFILE CHECKSUM: 12759f67bc21d4ca6b73af5d7ca82dcd869928e2
+PODFILE CHECKSUM: 0ed1efbe77057a8e562d34e22d41f61974d81c40
 
 COCOAPODS: 1.1.1

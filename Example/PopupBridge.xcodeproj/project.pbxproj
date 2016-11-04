@@ -10,33 +10,42 @@
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
-		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* POPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* POPAppDelegate.m */; };
 		6003F5A7195388D20070C39A /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* POPViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
-		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
-		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
-		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
-		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		6FECBBAEF66665E78CF777B7 /* Pods_PopupBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		878445D1E5A0D98DF9F85BF5 /* Pods_PopupBridge_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */; };
+		A764C9AF1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */; };
 		A7E9D6D11DCA6B4F0035FA41 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */; };
 		A7E9D6D31DCA6B540035FA41 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
-		A7EB850C1DCAA03D0005ECC7 /* PopupBridge.js in Resources */ = {isa = PBXBuildFile; fileRef = A7EB850B1DCAA03D0005ECC7 /* PopupBridge.js */; };
+		A7EB850D1DCBA5040005ECC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
+		A7EB85141DCBA5CB0005ECC7 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6003F5B3195388D20070C39A /* PBXContainerItemProxy */ = {
+		A764C9B11DCBEAE50074C4B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6003F582195388D10070C39A /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 6003F589195388D20070C39A;
-			remoteInfo = PopupBridge;
+			remoteInfo = PopupBridge_Example;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A7EB85121DCBA5690005ECC7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A7EB85141DCBA5CB0005ECC7 /* PopupBridge.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		317783C3F96DAB0943150A60 /* Pods-PopupBridge_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -53,20 +62,20 @@
 		6003F5A5195388D20070C39A /* POPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
 		6003F5A6195388D20070C39A /* POPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6003F5AE195388D20070C39A /* PopupBridge_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopupBridge_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
-		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
-		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		61BA52B0C0E1302B0EC94545 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		68118C965F189F0FC61D020E /* PopupBridge.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PopupBridge.podspec; path = ../PopupBridge.podspec; sourceTree = "<group>"; };
 		872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
+		A71371B11DCD442900D03A5C /* Pods_PopupBridge_Example.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PopupBridge_Example.framework; path = "../../../Library/Developer/Xcode/DerivedData/PopupBridge-ffcpeunkmupdowemkcgziegyolga/Build/Products/Debug-iphonesimulator/Pods_PopupBridge_Example.framework"; sourceTree = "<group>"; };
+		A764C9AC1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopupBridge_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_ExampleUITests.m; sourceTree = "<group>"; };
+		A764C9B01DCBEAE50074C4B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		A7EB850B1DCAA03D0005ECC7 /* PopupBridge.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = PopupBridge.js; path = "Pods/Target Support Files/PopupBridge/PopupBridge.js"; sourceTree = "<group>"; };
+		A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "../../../Library/Developer/Xcode/DerivedData/PopupBridge-ffcpeunkmupdowemkcgziegyolga/Build/Products/Debug-iphonesimulator/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		AED3AD61C1CAC7A12C2EE6E8 /* Pods-PopupBridge_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B6CFED07EA53F89735AA3F39 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CA8164985E847CE032CD1186 /* Pods-PopupBridge_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,14 +96,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6003F5AB195388D20070C39A /* Frameworks */ = {
+		A764C9A91DCBEAE50074C4B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
-				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
-				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				6FECBBAEF66665E78CF777B7 /* Pods_PopupBridge_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,10 +109,9 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				A7EB850B1DCAA03D0005ECC7 /* PopupBridge.js */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for PopupBridge */,
-				6003F5B5195388D20070C39A /* Tests */,
+				A764C9AD1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				87EB253BE6D1887CA52D4D40 /* Pods */,
@@ -118,7 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F58A195388D20070C39A /* PopupBridge_Example.app */,
-				6003F5AE195388D20070C39A /* PopupBridge_Tests.xctest */,
+				A764C9AC1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,6 +130,9 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A71371B11DCD442900D03A5C /* Pods_PopupBridge_Example.framework */,
+				A71371AF1DCD429100D03A5C /* PopupBridge.framework */,
+				A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */,
 				A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */,
 				A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
@@ -164,25 +171,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		6003F5B5195388D20070C39A /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				6003F5BB195388D20070C39A /* Tests.m */,
-				6003F5B6195388D20070C39A /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		6003F5B6195388D20070C39A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				6003F5B7195388D20070C39A /* Tests-Info.plist */,
-				6003F5B8195388D20070C39A /* InfoPlist.strings */,
-				606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +192,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A764C9AD1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */,
+				A764C9B01DCBEAE50074C4B8 /* Info.plist */,
+			);
+			path = PopupBridge_ExampleUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -217,6 +214,7 @@
 				6003F588195388D20070C39A /* Resources */,
 				C10BF3F416E52E07F7335BFD /* [CP] Embed Pods Frameworks */,
 				E524D75C1E54083CF974AFAD /* [CP] Copy Pods Resources */,
+				A7EB85121DCBA5690005ECC7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -227,26 +225,23 @@
 			productReference = 6003F58A195388D20070C39A /* PopupBridge_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6003F5AD195388D20070C39A /* PopupBridge_Tests */ = {
+		A764C9AB1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "PopupBridge_Tests" */;
+			buildConfigurationList = A764C9B31DCBEAE50074C4B8 /* Build configuration list for PBXNativeTarget "PopupBridge_ExampleUITests" */;
 			buildPhases = (
-				263E71B60B9F2010B78E3C10 /* [CP] Check Pods Manifest.lock */,
-				6003F5AA195388D20070C39A /* Sources */,
-				6003F5AB195388D20070C39A /* Frameworks */,
-				6003F5AC195388D20070C39A /* Resources */,
-				E5D7146CA2D5C9BFAD2C8256 /* [CP] Embed Pods Frameworks */,
-				42F1DB9DB271602B475AF039 /* [CP] Copy Pods Resources */,
+				A764C9A81DCBEAE50074C4B8 /* Sources */,
+				A764C9A91DCBEAE50074C4B8 /* Frameworks */,
+				A764C9AA1DCBEAE50074C4B8 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6003F5B4195388D20070C39A /* PBXTargetDependency */,
+				A764C9B21DCBEAE50074C4B8 /* PBXTargetDependency */,
 			);
-			name = PopupBridge_Tests;
-			productName = PopupBridgeTests;
-			productReference = 6003F5AE195388D20070C39A /* PopupBridge_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = PopupBridge_ExampleUITests;
+			productName = PopupBridge_ExampleUITests;
+			productReference = A764C9AC1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -258,7 +253,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Braintree;
 				TargetAttributes = {
-					6003F5AD195388D20070C39A = {
+					A764C9AB1DCBEAE50074C4B8 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 6003F589195388D20070C39A;
 					};
 				};
@@ -277,7 +274,7 @@
 			projectRoot = "";
 			targets = (
 				6003F589195388D20070C39A /* PopupBridge_Example */,
-				6003F5AD195388D20070C39A /* PopupBridge_Tests */,
+				A764C9AB1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -287,18 +284,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7EB850C1DCAA03D0005ECC7 /* PopupBridge.js in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
-				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				A7EB850D1DCBA5040005ECC7 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6003F5AC195388D20070C39A /* Resources */ = {
+		A764C9AA1DCBEAE50074C4B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,36 +313,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		263E71B60B9F2010B78E3C10 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		42F1DB9DB271602B475AF039 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C10BF3F416E52E07F7335BFD /* [CP] Embed Pods Frameworks */ = {
@@ -380,21 +345,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E5D7146CA2D5C9BFAD2C8256 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -408,21 +358,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6003F5AA195388D20070C39A /* Sources */ = {
+		A764C9A81DCBEAE50074C4B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
+				A764C9AF1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6003F5B4195388D20070C39A /* PBXTargetDependency */ = {
+		A764C9B21DCBEAE50074C4B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6003F589195388D20070C39A /* PopupBridge_Example */;
-			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+			targetProxy = A764C9B11DCBEAE50074C4B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -431,14 +381,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				6003F597195388D20070C39A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		6003F5B8195388D20070C39A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6003F5B9195388D20070C39A /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -528,6 +470,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PopupBridge/PopupBridge-Prefix.pch";
 				INFOPLIST_FILE = "PopupBridge/PopupBridge-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.popupbridgeexample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -544,6 +487,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PopupBridge/PopupBridge-Prefix.pch";
 				INFOPLIST_FILE = "PopupBridge/PopupBridge-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.popupbridgeexample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -551,47 +495,46 @@
 			};
 			name = Release;
 		};
-		6003F5C3195388D20070C39A /* Debug */ = {
+		A764C9B41DCBEAE50074C4B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBA6F4A6EE197CC3ED969924 /* Pods-PopupBridge_Tests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PopupBridge_ExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PopupBridge_Example.app/PopupBridge_Example";
-				WRAPPER_EXTENSION = xctest;
+				TEST_TARGET_NAME = PopupBridge_Example;
 			};
 			name = Debug;
 		};
-		6003F5C4195388D20070C39A /* Release */ = {
+		A764C9B51DCBEAE50074C4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 317783C3F96DAB0943150A60 /* Pods-PopupBridge_Tests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
-				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PopupBridge_ExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PopupBridge_Example.app/PopupBridge_Example";
-				WRAPPER_EXTENSION = xctest;
+				TEST_TARGET_NAME = PopupBridge_Example;
 			};
 			name = Release;
 		};
@@ -616,11 +559,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "PopupBridge_Tests" */ = {
+		A764C9B31DCBEAE50074C4B8 /* Build configuration list for PBXNativeTarget "PopupBridge_ExampleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6003F5C3195388D20070C39A /* Debug */,
-				6003F5C4195388D20070C39A /* Release */,
+				A764C9B41DCBEAE50074C4B8 /* Debug */,
+				A764C9B51DCBEAE50074C4B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

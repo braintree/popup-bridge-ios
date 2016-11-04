@@ -29,12 +29,32 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F5AD195388D20070C39A"
                BuildableName = "PopupBridge_Tests.xctest"
                BlueprintName = "PopupBridge_Tests"
+               ReferencedContainer = "container:PopupBridge.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A764C9AB1DCBEAE50074C4B8"
+               BuildableName = "PopupBridge_ExampleUITests.xctest"
+               BlueprintName = "PopupBridge_ExampleUITests"
+               ReferencedContainer = "container:PopupBridge.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A766DA931DCD108400B2B691"
+               BuildableName = "PopupBridge_ExampleTests.xctest"
+               BlueprintName = "PopupBridge_ExampleTests"
                ReferencedContainer = "container:PopupBridge.xcodeproj">
             </BuildableReference>
          </TestableReference>
