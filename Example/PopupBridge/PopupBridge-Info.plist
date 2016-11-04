@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.braintreepayments.popupbridgeexample</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.braintreepayments.popupbridgeexample</string>

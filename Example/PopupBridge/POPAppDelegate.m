@@ -1,11 +1,13 @@
 #import "POPAppDelegate.h"
 #import <PopupBridge/POPPopupBridge.h>
 
+#define kReturnURLScheme @"com.braintreepayments.popupbridgeexample"
+
 @implementation POPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [POPPopupBridge setReturnURLScheme:kReturnURLScheme];
     return YES;
 }
 
@@ -40,14 +42,8 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    if ([url.scheme localizedCaseInsensitiveCompare:@"com.braintreepayments.popupbridgeexample"] == NSOrderedSame) {
-        // TODO: do something
-
-        NSLog(@"%@", url);
-        // use sourceApplication for analytcs
+    if ([url.scheme localizedCaseInsensitiveCompare:kReturnURLScheme] == NSOrderedSame) {
         return [POPPopupBridge openURL:url sourceApplication:sourceApplication];
-
-
     }
     return NO;
 }
