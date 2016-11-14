@@ -16,13 +16,12 @@
 
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
-    // 1. Create Popup Bridge.
+    // 2. Create Popup Bridge.
     self.popupBridge = [[POPPopupBridge alloc] initWithDelegate:self webView:self.webView];
 
     [self.view addSubview:self.webView];
     self.webView.navigationDelegate = self;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3099"]]];
-    [self.popupBridge enablePageInWebView:self.webView];
 }
 
 - (void)popupBridge:(POPPopupBridge *)bridge requestsPresentationOfViewController:(UIViewController *)viewController {
@@ -33,16 +32,9 @@
     [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
-    [self.popupBridge enablePageInWebView:webView];
-}
-
-- (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
-    [self.popupBridge enablePageInWebView:webView];
-}
-
-- (void)webView:(WKWebView *)webView didFinishNavigation:(__unused WKNavigation *)navigation {
-    // 2. Enable PopupBridge for the page in the web view.
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    // 3. Enable PopupBridge for the page in the web view.
+    // We recommend doing this in -webView:didCommitNavigation:
     [self.popupBridge enablePageInWebView:webView];
 }
 

@@ -7,6 +7,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // 1. Set return URL scheme
     [POPPopupBridge setReturnURLScheme:kReturnURLScheme];
     return YES;
 }

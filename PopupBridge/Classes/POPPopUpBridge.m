@@ -45,7 +45,7 @@ static NSString *scheme;
             } else {
                 err = [NSString stringWithFormat:@"{ \"path\": \"%@\", \"payload\": %@ }", url.path, json];
             }
-            [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"window.PopupBridge.onCompleteCallback(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+            [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"PopupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
                 if (error) {
                     NSLog(@"Error: PopupBridge requires onCompleteCallback. Details: %@", error.description);
                 }
@@ -69,6 +69,21 @@ static NSString *scheme;
     }];
 }
 
+- (NSString *)javascriptTemplate {
+    // NB: This string does not maintain newlines, so you cannot use single-line JS comments.
+    return @"\
+        ;(function () {\
+            if (!window.PopupBridge) { window.PopupBridge = {}; };\
+            window.PopupBridge.scheme = '%%SCHEME%%://popupbridge/%%VERSION%%/';\
+            window.PopupBridge.open = function (options) {\
+                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
+                    url: options.url\
+                });\
+            };\
+            return 0;\
+        })();";
+}
+
 #pragma mark - SFSafariViewControllerDelegate
 
 // User clicked "Done"
@@ -85,24 +100,10 @@ static NSString *scheme;
     }
 }
 
-- (NSString *)javascriptTemplate {
-    return @"\
-        (function(){\
-            if (!window.PopupBridge) {\
-                window.PopupBridge = {\
-                    scheme: '%%SCHEME%%://popupbridge/%%VERSION%%/',\
-                    open: function (URL,name,specs) {\
-                        window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({URL: URL,name: name,specs: specs});\
-                    }\
-                };\
-            };\
-            return 0;\
-        })();";
-}
-
 - (void)dismissSafariViewController {
     if (self.safariViewController) {
         [self.viewControllerPresentingDelegate popupBridge:self requestsDismissalOfViewController:self.safariViewController];
+        self.safariViewController = nil;
     }
 }
 
@@ -111,10 +112,9 @@ static NSString *scheme;
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     if ([message.name isEqualToString:kScriptMessageHandlerName]) {
         NSDictionary *params = message.body;
-        NSString *urlString = params[@"URL"];
+        NSString *urlString = params[@"url"];
         if (urlString) {
             [self dismissSafariViewController];
-            self.safariViewController = nil;
 
             NSURL *url = [NSURL URLWithString:urlString];
             self.safariViewController = [[SFSafariViewController alloc] initWithURL:url];
