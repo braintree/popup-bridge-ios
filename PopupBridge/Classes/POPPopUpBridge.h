@@ -26,9 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Enable Popup Bridge for a page.
 /// You may wish to call this in your -webView:didFinishNavigation: delegate method.
-///
-/// @param webView The web view displaying the page that will use Popup Bridge.
-- (void)enablePageInWebView:(WKWebView *)webView;
+- (void)enablePageInWebView;
 
 /// Set the URL Scheme that you have registered in your Info.plist.
 + (void)setReturnURLScheme:(NSString *)returnURLScheme;

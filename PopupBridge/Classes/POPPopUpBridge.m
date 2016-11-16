@@ -23,6 +23,10 @@ static NSString *scheme;
 
         [webView.configuration.userContentController addScriptMessageHandler:self name:kScriptMessageHandlerName];
 
+        NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme] stringByReplacingOccurrencesOfString:@"%%VERSION%%" withString:@"v1"] stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kScriptMessageHandlerName];
+        WKUserScript *script = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
+        [webView.configuration.userContentController addUserScript:script];
+
         __weak POPPopupBridge *weakSelf = self;
         returnBlock = ^(NSURL *url) {
             [weakSelf dismissSafariViewController];
@@ -47,7 +51,7 @@ static NSString *scheme;
             }
             [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"PopupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
                 if (error) {
-                    NSLog(@"Error: PopupBridge requires onCompleteCallback. Details: %@", error.description);
+                    NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
                 }
             }];
         };
@@ -55,31 +59,22 @@ static NSString *scheme;
     return self;
 }
 
-- (void)enablePageInWebView:(WKWebView *)webView {
-    NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme] stringByReplacingOccurrencesOfString:@"%%VERSION%%" withString:@"v1"] stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kScriptMessageHandlerName];
-
-    [webView evaluateJavaScript:javascript completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-        if (![result isEqual:@0]) {
-            if (error) {
-                NSLog(@"Error creating PopupBridge: %@", error);
-            } else {
-                NSLog(@"Unknown error creating PopupBridge");
-            }
-        }
-    }];
-}
-
 - (NSString *)javascriptTemplate {
     // NB: This string does not maintain newlines, so you cannot use single-line JS comments.
     return @"\
         ;(function () {\
             if (!window.PopupBridge) { window.PopupBridge = {}; };\
-            window.PopupBridge.scheme = '%%SCHEME%%://popupbridge/%%VERSION%%/';\
-            window.PopupBridge.open = function (options) {\
+            \
+            window.PopupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {\
+                return '%%SCHEME%%://popupbridge/%%VERSION%%/';\
+            };\
+            \
+            window.PopupBridge.open = function open(url) {\
                 window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
-                    url: options.url\
+                    url: url\
                 });\
             };\
+            \
             return 0;\
         })();";
 }

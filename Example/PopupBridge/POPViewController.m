@@ -20,8 +20,7 @@
     self.popupBridge = [[POPPopupBridge alloc] initWithDelegate:self webView:self.webView];
 
     [self.view addSubview:self.webView];
-    self.webView.navigationDelegate = self;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3099"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3099/"]]];
 }
 
 - (void)popupBridge:(POPPopupBridge *)bridge requestsPresentationOfViewController:(UIViewController *)viewController {
@@ -30,12 +29,6 @@
 
 - (void)popupBridge:(POPPopupBridge *)bridge requestsDismissalOfViewController:(UIViewController *)viewController {
     [viewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    // 3. Enable PopupBridge for the page in the web view.
-    // We recommend doing this in -webView:didCommitNavigation:
-    [self.popupBridge enablePageInWebView:webView];
 }
 
 @end
