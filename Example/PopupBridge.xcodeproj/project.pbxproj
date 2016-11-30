@@ -16,6 +16,7 @@
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		878445D1E5A0D98DF9F85BF5 /* Pods_PopupBridge_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */; };
+		9E9ED928349D6FFD8340DE68 /* Pods_PopupBridge_Example_PopupBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B38C184CA9504D0FB08E656F /* Pods_PopupBridge_Example_PopupBridge_Tests.framework */; };
 		A764C9AF1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_Tests.m */; };
 		A775A08F1DEE4EF0009E67C2 /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = A775A08D1DEE4EF0009E67C2 /* PopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		317783C3F96DAB0943150A60 /* Pods-PopupBridge_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		4D9C5526F903288B5284342D /* Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example-PopupBridge_Tests/Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* PopupBridge_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopupBridge_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -81,6 +83,7 @@
 		872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FCB8B395B31A5F7E2EA96DE /* Pods-PopupBridge_Example-PopupBridge_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example-PopupBridge_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example-PopupBridge_Tests/Pods-PopupBridge_Example-PopupBridge_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		A71371B11DCD442900D03A5C /* Pods_PopupBridge_Example.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PopupBridge_Example.framework; path = "../../../Library/Developer/Xcode/DerivedData/PopupBridge-ffcpeunkmupdowemkcgziegyolga/Build/Products/Debug-iphonesimulator/Pods_PopupBridge_Example.framework"; sourceTree = "<group>"; };
 		A764C9AC1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopupBridge_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +101,7 @@
 		A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "../../../Library/Developer/Xcode/DerivedData/PopupBridge-ffcpeunkmupdowemkcgziegyolga/Build/Products/Debug-iphonesimulator/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		AED3AD61C1CAC7A12C2EE6E8 /* Pods-PopupBridge_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		B38C184CA9504D0FB08E656F /* Pods_PopupBridge_Example_PopupBridge_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Example_PopupBridge_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CFED07EA53F89735AA3F39 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CA8164985E847CE032CD1186 /* Pods-PopupBridge_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example.release.xcconfig"; sourceTree = "<group>"; };
 		DBA6F4A6EE197CC3ED969924 /* Pods-PopupBridge_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E9ED928349D6FFD8340DE68 /* Pods_PopupBridge_Example_PopupBridge_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +189,7 @@
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 				8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */,
 				872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */,
+				B38C184CA9504D0FB08E656F /* Pods_PopupBridge_Example_PopupBridge_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,6 +237,8 @@
 				CA8164985E847CE032CD1186 /* Pods-PopupBridge_Example.release.xcconfig */,
 				DBA6F4A6EE197CC3ED969924 /* Pods-PopupBridge_Tests.debug.xcconfig */,
 				317783C3F96DAB0943150A60 /* Pods-PopupBridge_Tests.release.xcconfig */,
+				4D9C5526F903288B5284342D /* Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig */,
+				9FCB8B395B31A5F7E2EA96DE /* Pods-PopupBridge_Example-PopupBridge_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -320,9 +328,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A775A0851DEE4E7E009E67C2 /* Build configuration list for PBXNativeTarget "PopupBridge_Tests" */;
 			buildPhases = (
+				CEC1F8AB75D9DBEDFA9FEBDF /* [CP] Check Pods Manifest.lock */,
 				A775A0781DEE4E7E009E67C2 /* Sources */,
 				A775A0791DEE4E7E009E67C2 /* Frameworks */,
 				A775A07A1DEE4E7E009E67C2 /* Resources */,
+				D4096ACC7F2DB0696CEF479D /* [CP] Embed Pods Frameworks */,
+				137FD5E05624646989C7A489 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -434,6 +445,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		137FD5E05624646989C7A489 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Example-PopupBridge_Tests/Pods-PopupBridge_Example-PopupBridge_Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1D193EDC2B5529DCB3B86E0B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -462,6 +488,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Example/Pods-PopupBridge_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CEC1F8AB75D9DBEDFA9FEBDF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D4096ACC7F2DB0696CEF479D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Example-PopupBridge_Tests/Pods-PopupBridge_Example-PopupBridge_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E524D75C1E54083CF974AFAD /* [CP] Copy Pods Resources */ = {
@@ -695,6 +751,7 @@
 		};
 		A775A0831DEE4E7E009E67C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D9C5526F903288B5284342D /* Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -717,6 +774,7 @@
 		};
 		A775A0841DEE4E7E009E67C2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FCB8B395B31A5F7E2EA96DE /* Pods-PopupBridge_Example-PopupBridge_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -836,6 +894,7 @@
 				A775A0841DEE4E7E009E67C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A775A0901DEE4EF0009E67C2 /* Build configuration list for PBXNativeTarget "PopupBridge" */ = {
 			isa = XCConfigurationList;
@@ -844,6 +903,7 @@
 				A775A0921DEE4EF0009E67C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

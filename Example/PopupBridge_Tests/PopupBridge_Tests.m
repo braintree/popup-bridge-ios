@@ -1,4 +1,5 @@
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "POPPopupBridge.h"
 
 @interface PopupBridge_Tests : XCTestCase
@@ -7,26 +8,30 @@
 
 @implementation PopupBridge_Tests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+- (void)testInit_addsUserScript {
+    WKWebView *webView = [[WKWebView alloc] init];
+    id<POPViewControllerPresentingDelegate> delegate = (id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init];
+
+    XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 0);
+
+    __unused POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:delegate];
+
+    XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 1);
+    WKUserScript *userScript = webView.configuration.userContentController.userScripts[0];
+    XCTAssertEqual(userScript.injectionTime, WKUserScriptInjectionTimeAtDocumentStart);
+    XCTAssertTrue(userScript.forMainFrameOnly);
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
+- (void)testInit_addsScriptMessageHandler {
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+    id mockUserContentController = OCMClassMock([WKUserContentController class]);
+    configuration.userContentController = mockUserContentController;
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+    id<POPViewControllerPresentingDelegate> delegate = (id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init];
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:delegate];
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+    OCMVerify([mockUserContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)pub name:kScriptMessageHandlerName]);
 }
 
 @end

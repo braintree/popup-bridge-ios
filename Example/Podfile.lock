@@ -1,7 +1,9 @@
 PODS:
+  - OCMock (3.3.1)
   - PopupBridge (0.1.0)
 
 DEPENDENCIES:
+  - OCMock
   - PopupBridge (from `../`)
 
 EXTERNAL SOURCES:
@@ -9,8 +11,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  PopupBridge: 4dafbdddbf005d10c5aec4515a45cf7515329fe9
+  OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
+  PopupBridge: 66ef0bd8f253dce326ee77235324639a47e604d4
 
-PODFILE CHECKSUM: f9a0f88e9ed47a3854c360406f5bed0b60807060
+PODFILE CHECKSUM: b5a44b638016a9c08c89395db41238e8c1d92fab
 
 COCOAPODS: 1.1.1
