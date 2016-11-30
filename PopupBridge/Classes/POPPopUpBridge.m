@@ -2,8 +2,8 @@
 #import <SafariServices/SFSafariViewController.h>
 
 @interface POPPopupBridge () <WKNavigationDelegate, SFSafariViewControllerDelegate, WKScriptMessageHandler>
-@property (nonnull, nonatomic, readwrite) id <POPViewControllerPresentingDelegate> viewControllerPresentingDelegate;
-@property (nonnull, nonatomic) WKWebView *webView;
+@property (nonatomic, readwrite, weak) id <POPViewControllerPresentingDelegate> viewControllerPresentingDelegate;
+@property (nonnull, nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) SFSafariViewController *safariViewController;
 @end
 
@@ -16,7 +16,7 @@ static NSString *scheme;
     scheme = returnURLScheme;
 }
 
-- (id)initWithDelegate:(id<POPViewControllerPresentingDelegate>)delegate webView:(WKWebView *)webView {
+- (id)initWithWebView:(WKWebView *)webView delegate:(id<POPViewControllerPresentingDelegate>)delegate {
     if ( self = [super init] ) {
         self.viewControllerPresentingDelegate = delegate;
         self.webView = webView;
@@ -27,34 +27,7 @@ static NSString *scheme;
         WKUserScript *script = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
         [webView.configuration.userContentController addUserScript:script];
 
-        __weak POPPopupBridge *weakSelf = self;
-        returnBlock = ^(NSURL *url) {
-            [weakSelf dismissSafariViewController];
-            NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url
-                                                        resolvingAgainstBaseURL:NO];
-            NSArray *queryItems = urlComponents.queryItems;
-            NSMutableString *json = [@"{" mutableCopy];
-            if (queryItems.count >= 1) {
-                for (NSURLQueryItem *item in queryItems) {
-                    [json appendFormat:@"\"%@\": \"%@\",", item.name, item.value];
-                }
-                [json deleteCharactersInRange:NSMakeRange(json.length-1, 1)];
-            }
-            [json appendString:@"}"];
 
-            NSString *err = @"null";
-            NSString *payload = @"null";
-            if ([url.path hasSuffix:@"return"]) {
-                payload = json;
-            } else {
-                err = [NSString stringWithFormat:@"{ \"path\": \"%@\", \"payload\": %@ }", url.path, json];
-            }
-            [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"PopupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-                if (error) {
-                    NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
-                }
-            }];
-        };
     }
     return self;
 }
@@ -83,21 +56,32 @@ static NSString *scheme;
 
 // User clicked "Done"
 - (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
-    NSURL *url = [NSURL URLWithString:@""];
     if (returnBlock) {
-        returnBlock(url);
+        returnBlock(nil);
     }
 }
 
 + (BOOL)openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication {
     if (returnBlock) {
         returnBlock(url);
+        return YES;
     }
+    return NO;
+}
+
++ (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    if (returnBlock) {
+        returnBlock(url);
+        return YES;
+    }
+    return NO;
 }
 
 - (void)dismissSafariViewController {
     if (self.safariViewController) {
-        [self.viewControllerPresentingDelegate popupBridge:self requestsDismissalOfViewController:self.safariViewController];
+        if ([self.viewControllerPresentingDelegate respondsToSelector:@selector(popupBridge:requestsDismissalOfViewController:)]) {
+            [self.viewControllerPresentingDelegate popupBridge:self requestsDismissalOfViewController:self.safariViewController];
+        }
         self.safariViewController = nil;
     }
 }
@@ -111,12 +95,69 @@ static NSString *scheme;
         if (urlString) {
             [self dismissSafariViewController];
 
+            __weak POPPopupBridge *weakSelf = self;
+            returnBlock = ^(NSURL *url) {
+                [weakSelf dismissSafariViewController];
+
+                NSString *err = @"null";
+                NSString *payload = @"null";
+
+                if (url) {
+                    NSDictionary *queryItemsDictionary = [self.class dictionaryForQueryString:url.query];
+                    NSError *error;
+                    NSData *queryItemsData = [NSJSONSerialization dataWithJSONObject:queryItemsDictionary options:0 error:&error];
+                    if (!queryItemsData) {
+                        NSString *errorMessage = [NSString stringWithFormat:@"Failed to parse query items from return URL. %@", error.localizedDescription];
+                        err = [NSString stringWithFormat:@"new Error(\"%@\")", errorMessage];
+                    } else {
+                        payload = [[NSString alloc] initWithData:queryItemsData encoding:NSUTF8StringEncoding];
+                    }
+                }
+
+                [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"PopupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                    if (error) {
+                        NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
+                    }
+                }];
+            };
+
             NSURL *url = [NSURL URLWithString:urlString];
             self.safariViewController = [[SFSafariViewController alloc] initWithURL:url];
             self.safariViewController.delegate = self;
-            [self.viewControllerPresentingDelegate popupBridge:self requestsPresentationOfViewController:self.safariViewController];
+            if ([self.viewControllerPresentingDelegate respondsToSelector:@selector(popupBridge:requestsPresentationOfViewController:)]) {
+                [self.viewControllerPresentingDelegate popupBridge:self requestsPresentationOfViewController:self.safariViewController];
+            }
         }
     }
+}
+
+#pragma mark - Helpers
+
++ (NSDictionary *)dictionaryForQueryString:(NSString *)queryString {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSArray *components = [queryString componentsSeparatedByString:@"&"];
+    for (NSString *keyValueString in components) {
+        if ([keyValueString length] == 0) {
+            continue;
+        }
+
+        NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
+        NSString *key = [self percentDecodedStringForString:keyValueArray[0]];
+        if (!key) {
+            continue;
+        }
+        if (keyValueArray.count == 2) {
+            NSString *value = [self percentDecodedStringForString:keyValueArray[1]];
+            parameters[key] = value;
+        } else {
+            parameters[key] = [NSNull null];
+        }
+    }
+    return [NSDictionary dictionaryWithDictionary:parameters];
+}
+
++ (NSString *)percentDecodedStringForString:(NSString *)string {
+    return [[string stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByRemovingPercentEncoding];
 }
 
 @end

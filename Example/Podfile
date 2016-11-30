@@ -1,15 +1,9 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '8.0'
+
 use_frameworks!
 
 target 'PopupBridge_Example' do
   pod 'PopupBridge', :path => '../'
-
-  target 'PopupBridge_Tests' do
-    inherit! :search_paths
-
-    pod 'OCMock'
-    pod 'Specta'
-    pod 'Expecta'
-    pod 'FBSnapshotTestCase'
-    pod 'Expecta+Snapshots'
-  end
 end

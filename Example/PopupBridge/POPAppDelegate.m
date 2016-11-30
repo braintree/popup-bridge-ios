@@ -39,12 +39,23 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+// Required for iOS 8
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     if ([url.scheme localizedCaseInsensitiveCompare:kReturnURLScheme] == NSOrderedSame) {
         return [POPPopupBridge openURL:url sourceApplication:sourceApplication];
+    }
+    return NO;
+}
+
+// Used by iOS 9+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    if ([url.scheme localizedCaseInsensitiveCompare:kReturnURLScheme] == NSOrderedSame) {
+        return [POPPopupBridge openURL:url options:options];
     }
     return NO;
 }

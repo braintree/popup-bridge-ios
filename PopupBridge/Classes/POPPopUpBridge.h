@@ -20,9 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initialize Popup Bridge.
 ///
-/// @param delegate A delegate that presents and dismisses the Safari View Controllers.
 /// @param webView The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
-- (instancetype)initWithDelegate:(id <POPViewControllerPresentingDelegate>)delegate webView:(WKWebView *)webView;
+/// @param delegate A delegate that presents and dismisses the Safari View Controllers.
+- (id)initWithWebView:(WKWebView *)webView delegate:(id<POPViewControllerPresentingDelegate>)delegate;
 
 /// Enable Popup Bridge for a page.
 /// You may wish to call this in your -webView:didFinishNavigation: delegate method.
@@ -33,7 +33,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Handle completion of the popup flow by calling this method from your
 /// -application:openURL:sourceApplication:annotation: app delegate method.
+/// Required by iOS 8.
 + (BOOL)openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication;
+
+/// Handle completion of the popup flow by calling this method from your
+/// -application:openURL:sourceApplication:annotation: app delegate method.
+/// Used by iOS 9+.
++ (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;
 
 /// Use this as your WKWebViewConfiguration's userContentController.
 @property (nonatomic, readonly) WKUserContentController *userContentController;

@@ -17,7 +17,7 @@
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
     // 2. Create Popup Bridge.
-    self.popupBridge = [[POPPopupBridge alloc] initWithDelegate:self webView:self.webView];
+    self.popupBridge = [[POPPopupBridge alloc] initWithWebView:self.webView delegate:self];
 
     [self.view addSubview:self.webView];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3099/"]]];
