@@ -9,7 +9,7 @@
 
 @implementation POPPopupBridge
 
-static void (^returnBlock)(NSURL *url);
+static BOOL (^returnBlock)(NSURL *url);
 static NSString *scheme;
 
 + (void)setReturnURLScheme:(NSString *)returnURLScheme {
@@ -56,21 +56,24 @@ static NSString *scheme;
 - (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
     if (returnBlock) {
         returnBlock(nil);
+        returnBlock = nil;
     }
 }
 
 + (BOOL)openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication {
     if (returnBlock) {
-        returnBlock(url);
-        return YES;
+        BOOL result = returnBlock(url);
+        returnBlock = nil;
+        return result;
     }
     return NO;
 }
 
 + (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     if (returnBlock) {
-        returnBlock(url);
-        return YES;
+        BOOL result = returnBlock(url);
+        returnBlock = nil;
+        return result;
     }
     return NO;
 }
@@ -95,15 +98,25 @@ static NSString *scheme;
 
             __weak POPPopupBridge *weakSelf = self;
             returnBlock = ^(NSURL *url) {
+                NSString *path;
+                NSString *prefix = [NSString stringWithFormat:@"%@://popupbridge/%@/", scheme, kPOPVersionString];
+                if ([url.absoluteString hasPrefix:prefix]) {
+                    path = [url.absoluteString stringByReplacingOccurrencesOfString:prefix withString:@""];
+                } else {
+                    return NO;
+                }
+
                 [weakSelf dismissSafariViewController];
 
                 NSString *err = @"null";
                 NSString *payload = @"null";
 
                 if (url) {
-                    NSDictionary *queryItemsDictionary = [self.class dictionaryForQueryString:url.query];
+                    NSMutableDictionary *payloadDictionary = [[self.class dictionaryForQueryString:url.query] mutableCopy];
+                    payloadDictionary[@"path"] = path;
+
                     NSError *error;
-                    NSData *queryItemsData = [NSJSONSerialization dataWithJSONObject:queryItemsDictionary options:0 error:&error];
+                    NSData *queryItemsData = [NSJSONSerialization dataWithJSONObject:payloadDictionary options:0 error:&error];
                     if (!queryItemsData) {
                         NSString *errorMessage = [NSString stringWithFormat:@"Failed to parse query items from return URL. %@", error.localizedDescription];
                         err = [NSString stringWithFormat:@"new Error(\"%@\")", errorMessage];
@@ -117,10 +130,11 @@ static NSString *scheme;
                         NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
                     }
                 }];
+
+                return YES;
             };
 
-            NSURL *url = [NSURL URLWithString:urlString];
-            self.safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+            self.safariViewController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString]];
             self.safariViewController.delegate = self;
             if ([self.viewControllerPresentingDelegate respondsToSelector:@selector(popupBridge:requestsPresentationOfViewController:)]) {
                 [self.viewControllerPresentingDelegate popupBridge:self requestsPresentationOfViewController:self.safariViewController];
