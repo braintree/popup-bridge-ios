@@ -11,6 +11,8 @@
 
 static BOOL (^returnBlock)(NSURL *url);
 static NSString *scheme;
+NSString * const kPOPScriptMessageHandlerName = @"POPPopupBridge";
+NSString * const kPOPURLHost = @"popupbridgev1";
 
 + (void)setReturnURLScheme:(NSString *)returnURLScheme {
     scheme = returnURLScheme;
@@ -23,7 +25,7 @@ static NSString *scheme;
 
         [webView.configuration.userContentController addScriptMessageHandler:self name:kPOPScriptMessageHandlerName];
 
-        NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme] stringByReplacingOccurrencesOfString:@"%%VERSION%%" withString:kPOPVersionString] stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kPOPScriptMessageHandlerName];
+        NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme]  stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kPOPScriptMessageHandlerName] stringByReplacingOccurrencesOfString:@"%%HOST%%" withString:kPOPURLHost];
         WKUserScript *script = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
         [webView.configuration.userContentController addUserScript:script];
     }
@@ -37,7 +39,7 @@ static NSString *scheme;
             if (!window.PopupBridge) { window.PopupBridge = {}; };\
             \
             window.PopupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {\
-                return '%%SCHEME%%://popupbridge/%%VERSION%%/';\
+                return '%%SCHEME%%://%%HOST%%/';\
             };\
             \
             window.PopupBridge.open = function open(url) {\
@@ -98,11 +100,10 @@ static NSString *scheme;
 
             __weak POPPopupBridge *weakSelf = self;
             returnBlock = ^(NSURL *url) {
-                NSString *path;
-                NSString *prefix = [NSString stringWithFormat:@"%@://popupbridge/%@/", scheme, kPOPVersionString];
-                if ([url.absoluteString hasPrefix:prefix]) {
-                    path = [url.absoluteString stringByReplacingOccurrencesOfString:prefix withString:@""];
-                } else {
+                NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
+                NSString *path = urlComponents.path;
+
+                if (!([urlComponents.scheme isEqualToString:scheme] && [urlComponents.host isEqualToString:kPOPURLHost])) {
                     return NO;
                 }
 

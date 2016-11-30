@@ -83,10 +83,17 @@
 
     POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
-    [POPPopupBridge openURL:[NSURL URLWithString:@"com.example.my.app://return?something=foo"] options:@{}];
+    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo"] options:@{}];
 
-    OCMVerify([webView evaluateJavaScript:@"PopupBridge.onComplete(null, {\"something\":\"foo\"});" completionHandler:OCMOCK_ANY]);
+    OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
+        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"PopupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
+        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+        XCTAssertEqualObjects(jsonDictionary[@"something"], @"foo");
+        XCTAssertEqualObjects(jsonDictionary[@"path"], @"/return");
+        return YES;
+    }] completionHandler:OCMOCK_ANY]);
 }
+
 
 - (void)testReturnBlock_whenDoneButtonTappedOnSafariViewController_callsOnCompleteWithNoPayloadOrError {}
 

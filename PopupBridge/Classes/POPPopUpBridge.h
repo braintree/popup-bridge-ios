@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 
-#define kPOPScriptMessageHandlerName @"POPPopupBridge"
-#define kPOPVersionString @"v1"
-
 NS_ASSUME_NONNULL_BEGIN
+
+extern NSString * const kPOPScriptMessageHandlerName;
+extern NSString * const kPOPURLHost;
 
 @class POPPopupBridge;
 
