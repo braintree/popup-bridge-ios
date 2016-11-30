@@ -1,7 +1,7 @@
 #import "POPPopUpBridge.h"
 #import <SafariServices/SFSafariViewController.h>
 
-@interface POPPopupBridge () <WKNavigationDelegate, SFSafariViewControllerDelegate, WKScriptMessageHandler>
+@interface POPPopupBridge () <WKNavigationDelegate, SFSafariViewControllerDelegate>
 @property (nonatomic, readwrite, weak) id <POPViewControllerPresentingDelegate> viewControllerPresentingDelegate;
 @property (nonnull, nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) SFSafariViewController *safariViewController;
@@ -17,17 +17,15 @@ static NSString *scheme;
 }
 
 - (id)initWithWebView:(WKWebView *)webView delegate:(id<POPViewControllerPresentingDelegate>)delegate {
-    if ( self = [super init] ) {
+    if (self = [super init]) {
         self.viewControllerPresentingDelegate = delegate;
         self.webView = webView;
 
-        [webView.configuration.userContentController addScriptMessageHandler:self name:kScriptMessageHandlerName];
+        [webView.configuration.userContentController addScriptMessageHandler:self name:kPOPScriptMessageHandlerName];
 
-        NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme] stringByReplacingOccurrencesOfString:@"%%VERSION%%" withString:@"v1"] stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kScriptMessageHandlerName];
+        NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme] stringByReplacingOccurrencesOfString:@"%%VERSION%%" withString:kPOPVersionString] stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kPOPScriptMessageHandlerName];
         WKUserScript *script = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
         [webView.configuration.userContentController addUserScript:script];
-
-
     }
     return self;
 }
@@ -89,7 +87,7 @@ static NSString *scheme;
 #pragma mark - WKScriptMessageHandler
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    if ([message.name isEqualToString:kScriptMessageHandlerName]) {
+    if ([message.name isEqualToString:kPOPScriptMessageHandlerName]) {
         NSDictionary *params = message.body;
         NSString *urlString = params[@"url"];
         if (urlString) {

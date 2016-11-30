@@ -1,6 +1,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "POPPopupBridge.h"
+#import <SafariServices/SafariServices.h>
 
 @interface PopupBridge_Tests : XCTestCase
 
@@ -31,7 +32,72 @@
 
     POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:delegate];
 
-    OCMVerify([mockUserContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)pub name:kScriptMessageHandlerName]);
+    OCMVerify([mockUserContentController addScriptMessageHandler:pub name:kPOPScriptMessageHandlerName]);
 }
+
+- (void)testReceiveScriptMessage_whenMessageContainsURL_requestsPresentationOfSafariViewController {
+    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
+    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
+    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
+    OCMStub([stubWebView configuration]).andDo(nil);
+    id mockDelegate = OCMProtocolMock(@protocol(POPViewControllerPresentingDelegate));
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
+
+    OCMVerify([mockDelegate popupBridge:pub requestsPresentationOfViewController:[OCMArg checkWithBlock:^BOOL(UIViewController *viewController) {
+        return [viewController isKindOfClass:[SFSafariViewController class]];
+    }]]);
+}
+
+- (void)testReceiveScriptMessage_whenURLIsMissing_doesNotRequestPresentationOfViewControllers {
+    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
+    OCMStub(stubMessage.body).andReturn(@{});
+    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
+    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
+    OCMStub([stubWebView configuration]).andDo(nil);
+    id mockDelegate = OCMStrictProtocolMock(@protocol(POPViewControllerPresentingDelegate));
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
+}
+
+- (void)testReceiveScriptMessage_whenMessageNameIsNotScriptMessageHandlerName_doesNotRequestPresentationOfViewControllers {
+    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
+    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+    OCMStub(stubMessage.name).andReturn(@"foo");
+    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
+    OCMStub([stubWebView configuration]).andDo(nil);
+    id mockDelegate = OCMStrictProtocolMock(@protocol(POPViewControllerPresentingDelegate));
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
+}
+
+- (void)testReturnBlock_whenURLHasQueryParams_passesQueryParamsPayloadToWebView {
+    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
+    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
+    WKWebView *webView = OCMClassMock([WKWebView class]);
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init]];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+    [POPPopupBridge openURL:[NSURL URLWithString:@"com.example.my.app://return?something=foo"] options:@{}];
+
+    OCMVerify([webView evaluateJavaScript:@"PopupBridge.onComplete(null, {\"something\":\"foo\"});" completionHandler:OCMOCK_ANY]);
+}
+
+- (void)testReturnBlock_whenDoneButtonTappedOnSafariViewController_callsOnCompleteWithNoPayloadOrError {}
+
+// Test openURL:sourceApplication: and openURL:options:
+- (void)testOpenURL_whenReturnBlockIsSet_invokesBlockAndReturnsTrue {}
+
+// Test openURL:sourceApplication: and openURL:options:
+- (void)testOpenURL_whenReturnBlockIsSet_setsReturnBlockToNil {}
+
+// Test openURL:sourceApplication: and openURL:options:
+- (void)testOpenURL_whenReturnBlockIsNotSet_doesNotInvokeBlockAndReturnsFalse {}
+
 
 @end
