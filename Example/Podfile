@@ -4,11 +4,6 @@ platform :ios, '8.0'
 
 use_frameworks!
 
-target 'PopupBridge_Example' do
-  pod 'PopupBridge', :path => '../'
-
-  target 'PopupBridge_Tests' do
-    pod 'OCMock'
-  end
+target 'PopupBridge_Tests' do
+  pod 'OCMock'
 end
-
