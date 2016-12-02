@@ -100,19 +100,19 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
             __weak POPPopupBridge *weakSelf = self;
             returnBlock = ^(NSURL *url) {
-                NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
-                NSString *path = urlComponents.path;
-
-                if (!([urlComponents.scheme isEqualToString:scheme] && [urlComponents.host isEqualToString:kPOPURLHost])) {
-                    return NO;
-                }
-
-                [weakSelf dismissSafariViewController];
-
                 NSString *err = @"null";
                 NSString *payload = @"null";
 
                 if (url) {
+                    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
+                    NSString *path = urlComponents.path;
+
+                    if (![urlComponents.scheme isEqualToString:scheme] || ![urlComponents.host isEqualToString:kPOPURLHost]) {
+                        return NO;
+                    }
+
+                    [weakSelf dismissSafariViewController];
+
                     NSMutableDictionary *payloadDictionary = [[self.class dictionaryForQueryString:url.query] mutableCopy];
                     payloadDictionary[@"path"] = path;
 

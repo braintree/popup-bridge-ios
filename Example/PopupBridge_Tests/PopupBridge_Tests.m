@@ -75,7 +75,7 @@
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
 }
 
-- (void)testReturnBlock_whenURLHasQueryParams_passesQueryParamsPayloadToWebView {
+- (void)testReturnBlock_whenURLHasQueryParams_passesPayloadToWebView {
     WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
     OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
@@ -95,16 +95,60 @@
 }
 
 
-- (void)testReturnBlock_whenDoneButtonTappedOnSafariViewController_callsOnCompleteWithNoPayloadOrError {}
+- (void)testReturnBlock_whenDoneButtonTappedOnSafariViewController_callsOnCompleteWithNoPayloadOrError {
+    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
+    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
+    WKWebView *webView = OCMClassMock([WKWebView class]);
+    SFSafariViewController *stubSafari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"http://example.com"]];
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init]];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+
+    [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
+
+    OCMVerify([webView evaluateJavaScript:@"PopupBridge.onComplete(null, null);" completionHandler:OCMOCK_ANY]);
+}
+
+- (void)testReturnBlock_whenReturnURLDoesNotMatchScheme_returnsFalseAndDoesNotCallOnComplete {
+    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
+    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
+    // Use strict mock to verify that webview does not call onComplete
+    WKWebView *webView = OCMStrictClassMock([WKWebView class]);
+    OCMStub([webView configuration]).andReturn(nil);
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init]];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+
+    BOOL result = [POPPopupBridge openURL:[NSURL URLWithString:@"not.the.right.scheme://popupbridgev1/return?something=foo"] options:@{}];
+    XCTAssertFalse(result);
+}
+
+- (void)testReturnBlock_whenReturnURLDoesNotMatchHost_returnsFalseAndDoesNotCallOnComplete {
+    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
+    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
+    // Use strict mock to verify that webview does not call onComplete
+    WKWebView *webView = OCMStrictClassMock([WKWebView class]);
+    OCMStub([webView configuration]).andReturn(nil);
+
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init]];
+    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+
+    BOOL result = [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://notcorrect/return?something=foo"] options:@{}];
+    XCTAssertFalse(result);
+}
+
 
 // Test openURL:sourceApplication: and openURL:options:
-- (void)testOpenURL_whenReturnBlockIsSet_invokesBlockAndReturnsTrue {}
+- (void)testOpenURL_whenReturnBlockIsSet_returnsTrue {}
 
 // Test openURL:sourceApplication: and openURL:options:
-- (void)testOpenURL_whenReturnBlockIsSet_setsReturnBlockToNil {}
+- (void)testOpenURL_whenReturnBlockIsNotSet_returnsFalse {}
 
-// Test openURL:sourceApplication: and openURL:options:
-- (void)testOpenURL_whenReturnBlockIsNotSet_doesNotInvokeBlockAndReturnsFalse {}
+- (void)testOpenURL_whenURLDoesNotMatchScheme_doesNotInvokeBlockAndReturnsFalse {}
 
+// Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.
 
 @end
