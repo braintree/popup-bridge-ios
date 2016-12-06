@@ -107,22 +107,24 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
                     NSString *path = urlComponents.path;
 
-                    if (![urlComponents.scheme isEqualToString:scheme] || ![urlComponents.host isEqualToString:kPOPURLHost]) {
+                    if ([urlComponents.scheme localizedCaseInsensitiveCompare:scheme] != NSOrderedSame ||
+                        [urlComponents.host localizedCaseInsensitiveCompare:kPOPURLHost] != NSOrderedSame) {
                         return NO;
                     }
 
                     [weakSelf dismissSafariViewController];
 
-                    NSMutableDictionary *payloadDictionary = [[self.class dictionaryForQueryString:url.query] mutableCopy];
+                    NSMutableDictionary *payloadDictionary = [NSMutableDictionary new];
                     payloadDictionary[@"path"] = path;
+                    payloadDictionary[@"queryItems"] = [self.class dictionaryForQueryString:url.query];
 
                     NSError *error;
-                    NSData *queryItemsData = [NSJSONSerialization dataWithJSONObject:payloadDictionary options:0 error:&error];
-                    if (!queryItemsData) {
+                    NSData *payloadData = [NSJSONSerialization dataWithJSONObject:payloadDictionary options:0 error:&error];
+                    if (!payloadData) {
                         NSString *errorMessage = [NSString stringWithFormat:@"Failed to parse query items from return URL. %@", error.localizedDescription];
                         err = [NSString stringWithFormat:@"new Error(\"%@\")", errorMessage];
                     } else {
-                        payload = [[NSString alloc] initWithData:queryItemsData encoding:NSUTF8StringEncoding];
+                        payload = [[NSString alloc] initWithData:payloadData encoding:NSUTF8StringEncoding];
                     }
                 }
 

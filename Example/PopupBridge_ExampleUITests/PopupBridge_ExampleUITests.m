@@ -8,57 +8,86 @@
     XCUIApplication *app;
 }
 
+#pragma mark - Setup
+
 - (void)setUp {
     [super setUp];
-    
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-    
+
     // In UI tests it is usually best to stop immediately when a failure occurs.
     self.continueAfterFailure = NO;
     // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
     app = [[XCUIApplication alloc] init];
     [app launch];
-    
-    // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+#pragma mark - Helpers
+
+- (void)waitForElement:(XCUIElement *)element timeout:(NSTimeInterval)timeout {
+    [self expectationForPredicate:[NSPredicate predicateWithFormat:@"exists == 1"] evaluatedWithObject:element handler:nil];
+    [self waitForExpectationsWithTimeout:timeout handler:nil];
 }
 
-//- (void)testDoneClosesSafariViewController
-
-//- (void)testCancelClosesSafariViewController
-
-- (void)testMakingAPurchase {
+- (void)runTestForColor:(NSString *)color {
     XCUIElementQuery *query = [app descendantsMatchingType:XCUIElementTypeWebView];
     XCUIElement *webView = [query elementBoundByIndex:0];
 
-    [webView swipeUp];
-    [webView swipeUp];
-    [webView swipeUp];
-    [webView swipeUp];
-    [webView swipeUp];
+    XCUIElement *launchPopupButton = webView.buttons[@"Launch Popup"];
+    [self waitForElement:launchPopupButton timeout:5];
+    [launchPopupButton tap];
 
-    [webView.buttons[@"PayPal Check out The safer, easier way to pay"] tap];
+    XCUIElement *text = app.staticTexts[@"What's your favorite color?"];
+    [self waitForElement:text timeout:5];
 
-    XCUIElement *text = app.staticTexts[@"Mock Sandbox Purchase Flow"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == 1"];
-    [self expectationForPredicate:predicate evaluatedWithObject:text handler:nil];
-    [self waitForExpectationsWithTimeout:5 handler:nil];
-    XCTAssert(text.exists);
+    XCUIElement *colorLink = app.links[color];
+    [self waitForElement:colorLink timeout:1];
 
-    [app.links[@"Proceed with Sandbox Purchase"] tap];
+    [colorLink tap];
 
-    [webView.buttons[@"Submit Transaction"] tap];
+    [self waitForElement:app.staticTexts[@"PopupBridge Example"] timeout:1];
+    [self waitForElement:app.staticTexts[@"Your favorite color:"] timeout:1];
+    [self waitForElement:app.staticTexts[color.lowercaseString] timeout:1];
+}
 
-    [self expectationForPredicate:predicate evaluatedWithObject:app.staticTexts[@"SUCCESS"] handler:nil];
-    [self waitForExpectationsWithTimeout:5 handler:nil];
+#pragma mark - Tests
 
-    XCTAssert(app.staticTexts[@"SUCCESS"]);
-    XCTAssert(app.staticTexts[@"payment method: PayPal"]);
-    XCTAssert(app.staticTexts[@"status: authorized"]);
+- (void)testClickingColors_returnsColors {
+    for (NSString *color in @[@"Red", @"Green", @"Blue"]) {
+        [self runTestForColor:color];
+    }
+}
+
+- (void)testClickingDoNotLikeColors_returnsDoNotLikeColors {
+    XCUIElementQuery *query = [app descendantsMatchingType:XCUIElementTypeWebView];
+    XCUIElement *webView = [query elementBoundByIndex:0];
+
+    XCUIElement *launchPopupButton = webView.buttons[@"Launch Popup"];
+    [self waitForElement:launchPopupButton timeout:5];
+    [launchPopupButton tap];
+
+    XCUIElement *text = app.staticTexts[@"What's your favorite color?"];
+    [self waitForElement:text timeout:5];
+
+    XCUIElement *doNotLikeLink = app.links[@"I don't like any of these colors"];
+    [self waitForElement:doNotLikeLink timeout:1];
+
+    [doNotLikeLink tap];
+
+    [self waitForElement:app.staticTexts[@"You did not like any of our colors"] timeout:1];
+}
+
+- (void)testClickingSafariDone_returnsCancel {
+    XCUIElementQuery *query = [app descendantsMatchingType:XCUIElementTypeWebView];
+    XCUIElement *webView = [query elementBoundByIndex:0];
+
+    XCUIElement *launchPopupButton = webView.buttons[@"Launch Popup"];
+    [self waitForElement:launchPopupButton timeout:5];
+    [launchPopupButton tap];
+
+    XCUIElement *doneButton = app.buttons[@"Done"];
+    [self waitForElement:doneButton timeout:5];
+    [doneButton tap];
+
+    [self waitForElement:app.staticTexts[@"You did not choose a color"] timeout:1];
 }
 
 @end

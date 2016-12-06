@@ -16,6 +16,8 @@
 		6003F5A7195388D20070C39A /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* POPViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		A76262D51DF24C0C004766F6 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
+		A76262D61DF24C0C004766F6 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A764C9AF1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_Tests.m */; };
 		A775A08F1DEE4EF0009E67C2 /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = A775A08D1DEE4EF0009E67C2 /* PopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,7 +28,6 @@
 		A7E9D6D11DCA6B4F0035FA41 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */; };
 		A7E9D6D31DCA6B540035FA41 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
 		A7EB850D1DCBA5040005ECC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
-		A7EB85141DCBA5CB0005ECC7 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,13 +55,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A7EB85121DCBA5690005ECC7 /* Embed Frameworks */ = {
+		A76262D71DF24C0C004766F6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A7EB85141DCBA5CB0005ECC7 /* PopupBridge.framework in Embed Frameworks */,
+				A76262D61DF24C0C004766F6 /* PopupBridge.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,8 +106,6 @@
 		A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PopupBridge-Framework-Info.plist"; sourceTree = "<group>"; };
 		A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "../../../Library/Developer/Xcode/DerivedData/PopupBridge-ffcpeunkmupdowemkcgziegyolga/Build/Products/Debug-iphonesimulator/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
-		B38C184CA9504D0FB08E656F /* Pods_PopupBridge_Example_PopupBridge_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopupBridge_Example_PopupBridge_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CFED07EA53F89735AA3F39 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		DBA6F4A6EE197CC3ED969924 /* Pods-PopupBridge_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +119,7 @@
 				A7E9D6D11DCA6B4F0035FA41 /* WebKit.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
+				A76262D51DF24C0C004766F6 /* PopupBridge.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,7 +183,6 @@
 			children = (
 				A71371B11DCD442900D03A5C /* Pods_PopupBridge_Example.framework */,
 				A71371AF1DCD429100D03A5C /* PopupBridge.framework */,
-				A7EB850E1DCBA55C0005ECC7 /* PopupBridge.framework */,
 				A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */,
 				A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
@@ -192,7 +191,6 @@
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 				8EA485C36507EB9424811FC8 /* Pods_PopupBridge_Example.framework */,
 				872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */,
-				B38C184CA9504D0FB08E656F /* Pods_PopupBridge_Example_PopupBridge_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -293,7 +291,7 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				A7EB85121DCBA5690005ECC7 /* Embed Frameworks */,
+				A76262D71DF24C0C004766F6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -646,6 +644,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/PopupBridge",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PopupBridge/PopupBridge-Prefix.pch";
 				INFOPLIST_FILE = "PopupBridge/PopupBridge-Info.plist";
@@ -662,6 +664,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/PopupBridge",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PopupBridge/PopupBridge-Prefix.pch";
 				INFOPLIST_FILE = "PopupBridge/PopupBridge-Info.plist";
