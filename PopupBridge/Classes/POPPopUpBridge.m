@@ -36,13 +36,13 @@ NSString * const kPOPURLHost = @"popupbridgev1";
     // NB: This string does not maintain newlines, so you cannot use single-line JS comments.
     return @"\
         ;(function () {\
-            if (!window.PopupBridge) { window.PopupBridge = {}; };\
+            if (!window.popupBridge) { window.popupBridge = {}; };\
             \
-            window.PopupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {\
+            window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {\
                 return '%%SCHEME%%://%%HOST%%/';\
             };\
             \
-            window.PopupBridge.open = function open(url) {\
+            window.popupBridge.open = function open(url) {\
                 window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
                     url: url\
                 });\
@@ -128,7 +128,7 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                     }
                 }
 
-                [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"PopupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"window.popupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
                     if (error) {
                         NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
                     }

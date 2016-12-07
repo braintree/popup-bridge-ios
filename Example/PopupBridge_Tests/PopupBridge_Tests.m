@@ -86,7 +86,7 @@
     [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar"] options:@{}];
 
     OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
-        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"PopupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
+        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
         NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
         XCTAssertEqualObjects(jsonDictionary[@"path"], @"/return");
         NSDictionary *queryItems = jsonDictionary[@"queryItems"];
@@ -107,7 +107,7 @@
     [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"] options:@{}];
 
     OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
-        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"PopupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
+        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
         NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
         XCTAssertEqualObjects(jsonDictionary[@"path"], @"/return");
         NSDictionary *queryItems = jsonDictionary[@"queryItems"];
@@ -129,7 +129,7 @@
 
     [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
 
-    OCMVerify([webView evaluateJavaScript:@"PopupBridge.onComplete(null, null);" completionHandler:OCMOCK_ANY]);
+    OCMVerify([webView evaluateJavaScript:@"window.popupBridge.onComplete(null, null);" completionHandler:OCMOCK_ANY]);
 }
 
 - (void)testReturnBlock_whenReturnURLDoesNotMatchScheme_returnsFalseAndDoesNotCallOnComplete {
