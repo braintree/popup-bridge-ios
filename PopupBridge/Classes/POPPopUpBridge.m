@@ -19,6 +19,10 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 }
 
 - (id)initWithWebView:(WKWebView *)webView delegate:(id<POPViewControllerPresentingDelegate>)delegate {
+    if (!scheme) {
+        [NSException raise:@"POPPopupBridgeSchemeNotSet" format:@"PopupBridge requires a URL scheme to be set"];
+        return nil;
+    }
     if (self = [super init]) {
         self.viewControllerPresentingDelegate = delegate;
         self.webView = webView;

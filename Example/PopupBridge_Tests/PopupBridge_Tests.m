@@ -35,6 +35,25 @@
     OCMVerify([mockUserContentController addScriptMessageHandler:pub name:kPOPScriptMessageHandlerName]);
 }
 
+- (void)testInit_whenSchemeIsNotSet_throwsError {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    [POPPopupBridge setReturnURLScheme:nil];
+#pragma clang diagnostic pop
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+
+    NSException *thrownException;
+    POPPopupBridge *popupBridge;
+    @try {
+        popupBridge = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init]];
+    } @catch (NSException *exception) {
+        thrownException = exception;
+    } @finally {
+        XCTAssertEqualObjects(thrownException.name, @"POPPopupBridgeSchemeNotSet");
+        XCTAssertNil(popupBridge);
+    }
+}
+
 - (void)testReceiveScriptMessage_whenMessageContainsURL_requestsPresentationOfSafariViewController {
     WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
     OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
