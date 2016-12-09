@@ -9,6 +9,12 @@
 
 @implementation PopupBridge_Tests
 
+- (void)setUp {
+    [super setUp];
+
+    [POPPopupBridge setReturnURLScheme:@"com.braintreepayments.popupbridgeexample"];
+}
+
 - (void)testInit_addsUserScript {
     WKWebView *webView = [[WKWebView alloc] init];
     id<POPViewControllerPresentingDelegate> delegate = (id<POPViewControllerPresentingDelegate>)[[NSObject alloc] init];

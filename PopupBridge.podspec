@@ -21,22 +21,15 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/PopupBridge'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/braintree/PopupBridge'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Braintree' => 'code@getbraintree.com' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/PopupBridge.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/braintree/PopupBridge.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'PopupBridge/Classes/**/*'
+  s.source_files = 'PopupBridge/Classes/**/*.m'
+  s.public_header_files = 'Pod/Classes/**/*.h'
 
-  # s.resource_bundles = {
-  #   'PopupBridge' => ['PopupBridge/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'SafariServices'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
