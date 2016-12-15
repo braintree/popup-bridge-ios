@@ -2,7 +2,7 @@
 #import <WebKit/WebKit.h>
 #import <PopupBridge/POPPopupBridge.h>
 
-@interface POPViewController () <POPViewControllerPresentingDelegate, WKNavigationDelegate>
+@interface POPViewController () <POPViewControllerPresentingDelegate>
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) POPPopupBridge *popupBridge;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
