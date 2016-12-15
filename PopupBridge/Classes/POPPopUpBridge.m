@@ -1,7 +1,7 @@
 #import "POPPopUpBridge.h"
 #import <SafariServices/SFSafariViewController.h>
 
-@interface POPPopupBridge () <WKNavigationDelegate, SFSafariViewControllerDelegate>
+@interface POPPopupBridge () <SFSafariViewControllerDelegate>
 @property (nonatomic, readwrite, weak) id <POPViewControllerPresentingDelegate> viewControllerPresentingDelegate;
 @property (nonnull, nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) SFSafariViewController *safariViewController;
