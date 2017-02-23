@@ -1,35 +1,27 @@
-#
-# Be sure to run `pod lib lint PopupBridge.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = 'PopupBridge'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of PopupBridge.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
+  s.summary          = 'Use PopupBridge to enable your web view to open pages in a Safari View Controller'
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController
+browser and send data back to the WKWebView.
+
+Use cases for PopupBridge:
+* Apps with WebViews that need to open a popup
+* When a popup window needs to to send data from the popup back to the WKWebView
+* When the popup window needs to display the HTTPS lock icon to increase user trust
+* Apps that use OAuth
                        DESC
 
-  s.homepage         = 'https://github.com/braintree/PopupBridge'
+  s.homepage         = 'https://github.com/braintree/popup-bridge-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Braintree' => 'code@getbraintree.com' }
-  s.source           = { :git => 'https://github.com/braintree/PopupBridge.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/braintree/popup-bridge-ios.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'PopupBridge/Classes/**/*.m'
-  s.public_header_files = 'Pod/Classes/**/*.h'
+  s.source_files = 'PopupBridge/Classes/**/*.{h,m}'
+  s.public_header_files = 'PopupBridge/Classes/**/*.h'
 
   s.frameworks = 'UIKit', 'SafariServices'
 end
