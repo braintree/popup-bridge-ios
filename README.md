@@ -1,14 +1,9 @@
-PopupBridge
-===========
-
-[![CI Status](http://img.shields.io/travis/Braintree/PopupBridge.svg?style=flat)](https://travis-ci.org/Braintree/PopupBridge)
-[![Version](https://img.shields.io/cocoapods/v/PopupBridge.svg?style=flat)](http://cocoapods.org/pods/PopupBridge)
-[![License](https://img.shields.io/cocoapods/l/PopupBridge.svg?style=flat)](http://cocoapods.org/pods/PopupBridge)
-[![Platform](https://img.shields.io/cocoapods/p/PopupBridge.svg?style=flat)](http://cocoapods.org/pods/PopupBridge)
+PopupBridge iOS
+===============
 
 PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController browser and send data back to the WKWebView.
 
-PopupBridge is also available for [Android](../../../popup-bridge-android).
+PopupBridge is also available for Android.
 
 See the [Frequently Asked Questions](#frequently-asked-questions) to learn more about PopupBridge.
 
@@ -32,8 +27,6 @@ Example
 -------
 
 To run the example app, clone the repo, open `PopupBridge.xcworkspace` and run the `PopupBridge-Example` app target.
-
-This repo also has an [example Node.js web app](popup-bridge-site) to help demonstrate PopupBridge. Read the [popup-bridge-site README](popup-bridge-site/README.md) to learn how to run the app in your local dev environment.
 
 Quick Start
 -----------
