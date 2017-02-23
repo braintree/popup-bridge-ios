@@ -10,7 +10,7 @@ See the [Frequently Asked Questions](#frequently-asked-questions) to learn more 
 Requirements
 ------------
 
-- iOS 8.0+
+- iOS 9.0+
 
 Installation
 ------------
@@ -47,18 +47,6 @@ Quick Start
       return YES;
   }
 
-  // Required for iOS 8
-  - (BOOL)application:(UIApplication *)application
-              openURL:(NSURL *)url
-    sourceApplication:(NSString *)sourceApplication
-           annotation:(id)annotation {
-      if ([url.scheme localizedCaseInsensitiveCompare:@"com.my-app.popupbridge"] == NSOrderedSame) {
-          return [POPPopupBridge openURL:url sourceApplication:sourceApplication];
-      }
-      return NO;
-  }
-
-  // Used by iOS 9+
   - (BOOL)application:(UIApplication *)app
               openURL:(NSURL *)url
               options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
