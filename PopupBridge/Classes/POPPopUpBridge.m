@@ -2,7 +2,7 @@
 #import <SafariServices/SFSafariViewController.h>
 
 @interface POPPopupBridge () <SFSafariViewControllerDelegate>
-@property (nonatomic, readwrite, weak) id <POPViewControllerPresentingDelegate> viewControllerPresentingDelegate;
+@property (nonatomic, readwrite, weak) id <POPPopupBridgeDelegate> delegate;
 @property (nonnull, nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) SFSafariViewController *safariViewController;
 @end
@@ -18,13 +18,13 @@ NSString * const kPOPURLHost = @"popupbridgev1";
     scheme = returnURLScheme;
 }
 
-- (id)initWithWebView:(WKWebView *)webView delegate:(id<POPViewControllerPresentingDelegate>)delegate {
+- (id)initWithWebView:(WKWebView *)webView delegate:(id<POPPopupBridgeDelegate>)delegate {
     if (!scheme) {
         [NSException raise:@"POPPopupBridgeSchemeNotSet" format:@"PopupBridge requires a URL scheme to be set"];
         return nil;
     }
     if (self = [super init]) {
-        self.viewControllerPresentingDelegate = delegate;
+        self.delegate = delegate;
         self.webView = webView;
 
         [webView.configuration.userContentController addScriptMessageHandler:self name:kPOPScriptMessageHandlerName];
@@ -49,6 +49,15 @@ NSString * const kPOPURLHost = @"popupbridgev1";
             window.popupBridge.open = function open(url) {\
                 window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
                     url: url\
+                });\
+            };\
+            \
+            window.popupBridge.sendMessage = function sendMessage(message, data) {\
+                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
+                    message: {\
+                        name: message,\
+                        data: data\
+                    }\
                 });\
             };\
             \
@@ -86,8 +95,8 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
 - (void)dismissSafariViewController {
     if (self.safariViewController) {
-        if ([self.viewControllerPresentingDelegate respondsToSelector:@selector(popupBridge:requestsDismissalOfViewController:)]) {
-            [self.viewControllerPresentingDelegate popupBridge:self requestsDismissalOfViewController:self.safariViewController];
+        if ([self.delegate respondsToSelector:@selector(popupBridge:requestsDismissalOfViewController:)]) {
+            [self.delegate popupBridge:self requestsDismissalOfViewController:self.safariViewController];
         }
         self.safariViewController = nil;
     }
@@ -141,11 +150,19 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                 return YES;
             };
 
-            self.safariViewController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString]];
-            self.safariViewController.delegate = self;
-            if ([self.viewControllerPresentingDelegate respondsToSelector:@selector(popupBridge:requestsPresentationOfViewController:)]) {
-                [self.viewControllerPresentingDelegate popupBridge:self requestsPresentationOfViewController:self.safariViewController];
+            NSURL *url = [NSURL URLWithString:urlString];
+            
+            if ([self.delegate respondsToSelector:@selector(popupBridge:willOpenURL:)]) {
+                [self.delegate popupBridge:self willOpenURL:url];
             }
+            
+            self.safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+            self.safariViewController.delegate = self;
+            if ([self.delegate respondsToSelector:@selector(popupBridge:requestsPresentationOfViewController:)]) {
+                [self.delegate popupBridge:self requestsPresentationOfViewController:self.safariViewController];
+            }
+        } else if (params[@"message"][@"name"] && [self.delegate respondsToSelector:@selector(popupBridge:receivedMessage:data:)]) {
+            [self.delegate popupBridge:self receivedMessage:params[@"message"][@"name"] data:params[@"message"][@"data"]];
         }
     }
 }

@@ -8,12 +8,24 @@ extern NSString * const kPOPURLHost;
 
 @class POPPopupBridge;
 
-/// Popup Bridge will provide a Safari View Controller to your delegate.
-/// You must present and dismiss the view controller in these delegate methods.
-@protocol POPViewControllerPresentingDelegate <NSObject>
+/// Set a delegate to handle various events the "popup" lifecycle.
+@protocol POPPopupBridgeDelegate <NSObject>
 @required
+
+/// Popup Bridge will provide a Safari View Controller to your delegate.
+/// You must present the view controller in this method.
 - (void)popupBridge:(POPPopupBridge *)bridge requestsPresentationOfViewController:(UIViewController *)viewController;
+
+/// You must dismiss the view controller in this method.
 - (void)popupBridge:(POPPopupBridge *)bridge requestsDismissalOfViewController:(UIViewController *)viewController;
+
+@optional
+
+/// Optional: Receive the URL that will be opened
+- (void)popupBridge:(POPPopupBridge *)bridge willOpenURL:(NSURL *)url;
+
+/// Optional: Receive messages from the web view
+- (void)popupBridge:(POPPopupBridge *)bridge receivedMessage:(NSString *)messageName data:(nullable NSString *)data;
 @end
 
 /// Popup Bridge provides an alternative to window.open that works in WKWebView.
@@ -24,7 +36,7 @@ extern NSString * const kPOPURLHost;
 ///
 /// @param webView The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
 /// @param delegate A delegate that presents and dismisses the Safari View Controllers.
-- (id)initWithWebView:(WKWebView *)webView delegate:(id<POPViewControllerPresentingDelegate>)delegate;
+- (id)initWithWebView:(WKWebView *)webView delegate:(id<POPPopupBridgeDelegate>)delegate;
 
 /// Set the URL Scheme that you have registered in your Info.plist.
 + (void)setReturnURLScheme:(NSString *)returnURLScheme;
