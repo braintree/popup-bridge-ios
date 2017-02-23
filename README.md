@@ -107,42 +107,42 @@ Quick Start
   ```javascript
   var url = 'http://localhost:3099/';
 
-  if (window.popupBridge) {
-   // Open the popup in a browser, and give it the deep link back to the app
-   popupBridge.open(url + '?popupBridgeReturnUrlPrefix=' + popupBridge.getReturnUrlPrefix());
+    if (window.popupBridge) {
+    // Open the popup in a browser, and give it the deep link back to the app
+    popupBridge.open(url + '?popupBridgeReturnUrlPrefix=' + popupBridge.getReturnUrlPrefix());
 
-   // Optional: define a callback to process results of interaction with the popup
-   popupBridge.onComplete = function (err, payload) {
-     if (err) {
-       console.error('PopupBridge onComplete Error:', err);
-     } else if (!err && !payload) {
-       console.log('User closed popup.');
-     } else {
-       alert('Your favorite color is ' + payload.queryItems.color);
-     }
-   };
+    // Optional: define a callback to process results of interaction with the popup
+    popupBridge.onComplete = function (err, payload) {
+      if (err) {
+        console.error('PopupBridge onComplete Error:', err);
+      } else if (!err && !payload) {
+        console.log('User closed popup.');
+      } else {
+        alert('Your favorite color is ' + payload.queryItems.color);
+      }
+    };
   } else {
-   var popup = window.open(url);
+    var popup = window.open(url);
 
-   window.addEventListener('message', function (event) {
-     var color = JSON.parse(event.data).color;
+    window.addEventListener('message', function (event) {
+      var color = JSON.parse(event.data).color;
 
-     if (color) {
-       popup.close();
-       alert('Your favorite color is ' + color);
-     }
-   });
+      if (color) {
+        popup.close();
+        alert('Your favorite color is ' + color);
+      }
+    });
   }
-   ```
+  ```
 
 5. Redirect back to the app inside of the popup:
 
   ```html
   <h1>What is your favorite color?</h1>
 
-  <a href="#" data-color="red">Red</a>
-  <a href="#" data-color="green">Green</a>
-  <a href="#" data-color="blue">Blue</a>
+  <a href="#red" data-color="red">Red</a>
+  <a href="#green" data-color="green">Green</a>
+  <a href="#blue" data-color="blue">Blue</a>
 
   <script src="jquery.js"></script>
   <script>
@@ -203,13 +203,13 @@ However, WKWebViews do not display an address bar or an HTTPS lock icon. If the 
 
 ### Who built PopupBridge?
 
-We are a team of engineers who work on the Developer Experience team at [Braintree](https://www.braintreepayments.com).
+We are engineers who work on the Developer Experience team at [Braintree](https://www.braintreepayments.com).
 
 ### Why did Braintree build PopupBridge?
 
 Short answer: to accept PayPal as a payment option when mobile apps are using a WebView to power the checkout process.
 
-PayPal used to support authentication via a modal iframe, but authentication now occurs in a popup window to increase user confidence that their account information is protected from malicious actors (the address bar shows `https://checkout.paypal.com` with the HTTPS lock icon). However, this causes issues with Braintree merchants who use a web page to power payments within their apps: they can't accept PayPal because WebViews cannot open popups and return the PayPal payment authorization data to the parent checkout page.
+PayPal authentication occurs in a popup window. However, this causes issues with Braintree merchants who use a web page to power payments within their apps: they can't accept PayPal because WebViews cannot open popups and return the PayPal payment authorization data to the parent checkout page.
 
 PopupBridge solves this problem by allowing [`braintree-web`](https://github.com/braintree/braintree-web) to open the PayPal popup from a secure mini-browser.
 
