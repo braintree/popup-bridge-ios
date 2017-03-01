@@ -1,12 +1,19 @@
 PODS:
+  - Braintree/Core (4.7.4)
+  - Braintree/PayPalDataCollector (4.7.4):
+    - Braintree/Core
+    - Braintree/PayPalUtils
+  - Braintree/PayPalUtils (4.7.4)
   - OCMock (3.3.1)
 
 DEPENDENCIES:
+  - Braintree/PayPalDataCollector
   - OCMock
 
 SPEC CHECKSUMS:
+  Braintree: 85b7f6300aa5238df972b32ea58adc405c8ebfdc
   OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
 
-PODFILE CHECKSUM: 34af50f990d52eeea12aa558c68d511fe85e2232
+PODFILE CHECKSUM: 67bfbfb2be7c21436c55caf22aed154d6e629161
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0
