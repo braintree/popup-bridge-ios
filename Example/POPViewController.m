@@ -24,7 +24,7 @@
     
     self.webView.navigationDelegate = self;
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://localhost:3000"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
 }
 
 // Allow invalid SSL certificates. ** WARNING: DO NOT USE IN PRODUCTION CODE **
