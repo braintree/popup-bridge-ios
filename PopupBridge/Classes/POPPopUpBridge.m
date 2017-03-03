@@ -39,20 +39,19 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 - (NSString *)javascriptTemplate {
     // NB: This string does not maintain newlines, so you cannot use single-line JS comments.
     return @"\
-        ;(function () {\
             if (!window.popupBridge) { window.popupBridge = {}; };\
             \
-            window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {\
+            window.popupBridge.getReturnUrlPrefix = function () {\
                 return '%%SCHEME%%://%%HOST%%/';\
             };\
             \
-            window.popupBridge.open = function open(url) {\
+            window.popupBridge.open = function (url) {\
                 window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
                     url: url\
                 });\
             };\
             \
-            window.popupBridge.sendMessage = function sendMessage(message, data) {\
+            window.popupBridge.bridgeToNative = function (message, data) {\
                 window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({\
                     message: {\
                         name: message,\
@@ -60,9 +59,17 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                     }\
                 });\
             };\
-            \
-            return 0;\
-        })();";
+            ";
+}
+
+- (void)bridgeToWeb:(NSString *)messageName data:(NSString *)data completionHandler:(void (^)(id _Nullable, NSError * _Nullable))completionHandler {
+    NSString *javascript = [NSString stringWithFormat:@"\
+        if (!window.popupBridge.bridgeToWeb) {\
+            throw new Error('window.popupBridge.bridgeToWeb is undefined.');\
+        }\
+        window.popupBridge.bridgeToWeb('%@', %@);\
+    ", messageName, data ? [NSString stringWithFormat:@"'%@'", data] : @"null"];
+    [self.webView evaluateJavaScript:javascript completionHandler:completionHandler];
 }
 
 #pragma mark - SFSafariViewControllerDelegate

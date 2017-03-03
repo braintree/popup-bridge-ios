@@ -208,7 +208,7 @@ static void (^webviewReadyBlock)();
     XCTAssertFalse(result);
 }
 
-- (void)testDelegate_whenWebViewCallsPopupBridgeSendMessage_receivesMessage {
+- (void)testDelegate_whenWebViewCallsBridgeToNative_receivesMessage {
     id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
     webView.navigationDelegate = self;
@@ -217,7 +217,7 @@ static void (^webviewReadyBlock)();
     id expectation = [self expectationWithDescription:@"Called JS"];
 
     webviewReadyBlock = ^{
-        [webView evaluateJavaScript:@"window.popupBridge.sendMessage('myMessageName', JSON.stringify({foo: 'bar'}));" completionHandler:^(__unused id _Nullable returnValue, __unused NSError * _Nullable error) {
+        [webView evaluateJavaScript:@"window.popupBridge.bridgeToNative('myMessageName', JSON.stringify({foo: 'bar'}));" completionHandler:^(__unused id _Nullable returnValue, __unused NSError * _Nullable error) {
             OCMVerify([mockDelegate popupBridge:pub receivedMessage:@"myMessageName" data:@"{\"foo\":\"bar\"}"]);
             [expectation fulfill];
         }];
@@ -227,6 +227,88 @@ static void (^webviewReadyBlock)();
 
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
+
+- (void)testBridgeToWeb_whenCalled_invokesJavascript {
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+    webView.navigationDelegate = self;
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+
+    // Set up the bridgeToWeb listener function - this is typically done within the webpage JS
+    WKUserScript *script = [[WKUserScript alloc] initWithSource:@"window.popupBridge.bridgeToWeb = function (message, data) { window.bridgeToWebMessage = message; window.bridgeToWebData = data; return 'completed!'; };" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
+    [webView.configuration.userContentController addUserScript:script];
+
+    id expectation = [self expectationWithDescription:@"Called JS"];
+    webviewReadyBlock = ^{
+        [pub bridgeToWeb:@"myMessageName" data:@"this could be a json string but it is not" completionHandler:^(id _Nullable returnValue, __unused NSError * _Nullable error) {
+            XCTAssertEqualObjects(returnValue, @"completed!");
+            XCTAssertNil(error);
+
+            [webView evaluateJavaScript:@"window.bridgeToWebMessage" completionHandler:^(id _Nullable returnValue, NSError * _Nullable error) {
+                XCTAssertEqualObjects(returnValue, @"myMessageName");
+
+                [webView evaluateJavaScript:@"window.bridgeToWebData" completionHandler:^(id _Nullable returnValue, NSError * _Nullable error) {
+                    XCTAssertEqualObjects(returnValue, @"this could be a json string but it is not");
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    };
+
+    [webView loadHTMLString:@"<html></html>" baseURL:nil];
+
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testBridgeToWeb_whenNilData_invokesJavascriptWithNull {
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+    webView.navigationDelegate = self;
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+
+    // Set up the bridgeToWeb listener function - this is typically done within the webpage JS
+    WKUserScript *script = [[WKUserScript alloc] initWithSource:@"window.popupBridge.bridgeToWeb = function (message, data) { window.bridgeToWebMessage = message; window.bridgeToWebData = data; return 'completed!'; };" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
+    [webView.configuration.userContentController addUserScript:script];
+
+    id expectation = [self expectationWithDescription:@"Called JS"];
+    webviewReadyBlock = ^{
+        [pub bridgeToWeb:@"myMessageName" data:nil completionHandler:^(id _Nullable returnValue, __unused NSError * _Nullable error) {
+            XCTAssertEqualObjects(returnValue, @"completed!");
+            XCTAssertNil(error);
+
+            [webView evaluateJavaScript:@"window.bridgeToWebMessage" completionHandler:^(id _Nullable returnValue, NSError * _Nullable error) {
+                XCTAssertEqualObjects(returnValue, @"myMessageName");
+
+                [webView evaluateJavaScript:@"window.bridgeToWebData" completionHandler:^(id _Nullable returnValue, NSError * _Nullable error) {
+                    XCTAssertEqualObjects(returnValue, [NSNull null]);
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    };
+
+    [webView loadHTMLString:@"<html></html>" baseURL:nil];
+
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testBridgeToWeb_whenBridgeToWebInJSIsNotDefined_invokesCallbackWithError {
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+    webView.navigationDelegate = self;
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+
+    id expectation = [self expectationWithDescription:@"Called JS"];
+    webviewReadyBlock = ^{
+        [pub bridgeToWeb:@"myMessageName" data:nil completionHandler:^(id _Nullable returnValue, __unused NSError * _Nullable error) {
+            XCTAssertNil(returnValue);
+            XCTAssertEqualObjects(error.userInfo[@"WKJavaScriptExceptionMessage"], @"Error: window.popupBridge.bridgeToWeb is undefined.");
+            [expectation fulfill];
+        }];
+    };
+
+    [webView loadHTMLString:@"<html></html>" baseURL:nil];
+
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 
 // Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.
 
