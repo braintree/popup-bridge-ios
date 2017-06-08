@@ -1,11 +1,11 @@
 PopupBridge iOS
 ===============
 
-PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController browser and send data back to the WKWebView.
+PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController browser and send data back to the parent page in the WKWebView.
 
-PopupBridge is also available for Android.
+PopupBridge is also available for [Android](https://github.com/braintree/popup-bridge-android).
 
-See the [Frequently Asked Questions](#frequently-asked-questions) to learn more about PopupBridge.
+See the [Frequently Asked Questions](#frequently-asked-questions) to learn more about PopupBridge. See [Using PayPal in a WebView](#using-paypal-in-a-webview) to use PopupBridge with PayPal.
 
 Requirements
 ------------
@@ -151,12 +151,6 @@ Quick Start
 Frequently Asked Questions
 --------------------------
 
-### What does PopupBridge do?
-
-PopupBridge allows iOS apps to simulate the opening of a popup window from a WKWebView by opening the popup URL in an SFSafariViewController instead.
-
-It also allows the simulated popup window to send data back to the parent page.
-
 ### Why use PopupBridge?
 
 WKWebView can open popups through its [`WKUIDelegate`](https://developer.apple.com/reference/webkit/wkuidelegate), which can be implemented to present the popup in a new WKWebView.
@@ -200,6 +194,23 @@ Short answer: to accept PayPal as a payment option when mobile apps are using a 
 PayPal authentication occurs in a popup window. However, this causes issues with Braintree merchants who use a web page to power payments within their apps: they can't accept PayPal because WebViews cannot open popups and return the PayPal payment authorization data to the parent checkout page.
 
 PopupBridge solves this problem by allowing [`braintree-web`](https://github.com/braintree/braintree-web) to open the PayPal popup from a secure mini-browser.
+
+Using PayPal in a WebView
+-------------------------
+
+WebView-based checkout flows can accept PayPal with PopupBridge the Braintree JS SDK. For the authentication flow, PayPal requires a popup window—which can be simulated with PopupBridge.
+
+### Setup
+1. Create a web-based checkout that accepts PayPal using Braintree JS v3.9.0 or higher
+2. Show a loading indicator
+    - PopupBridge lacks the PayPal loading page that customers see when using PayPal through a real popup window. We recommend adding a loading indicator on your web page when the PayPal button is clicked. In the PayPal tokenize completion callback, hide the loading indicator.
+3. Create a native mobile app that opens the checkout in a `WKWebView`
+4. Integrate the PopupBridge library
+5. Collect device data
+    - To help detect fraudulent activity, collect device data before performing PayPal transactions. This is similar to collecting device data with our [native iOS SDK](https://developers.braintreepayments.com/guides/paypal/vault/ios/v4) with a few differences:
+        1. Rather than the entire data collector, you can add just PayPalDataCollector to your app: `pod 'Braintree/PayPalDataCollector'`
+        2. Implement methods in your native app depending on whether you are doing one-time payments or vaulted payments. See the [iOS code snippets for PayPal + PopupBridge](popupbridge-paypaldatacollector-ios.md)
+6. Profit!
 
 ## Author
 
