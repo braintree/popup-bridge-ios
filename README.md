@@ -36,7 +36,7 @@ Quick Start
   - Click **[+]** to add a new URL type
   - Under **URL Schemes**, enter a unique URL scheme, e.g. `com.my-app.popupbridge`
 
-2. In your application delegate, set up PopupBridge with the URL scheme:
+1. In your application delegate, set up PopupBridge with the URL scheme:
 
   ```objectivec
   #import "POPPopupBridge.h"
@@ -57,7 +57,7 @@ Quick Start
   }
   ```
 
-3. Integrate PopupBridge with the WKWebView:
+1. Integrate PopupBridge with the WKWebView:
 
   ```objectivec
   #import "POPPopupBridge.h"
@@ -90,7 +90,7 @@ Quick Start
   }
   ```
 
-4. Use PopupBridge from the web page by writing some JavaScript:
+1. Use PopupBridge from the web page by writing some JavaScript:
 
   ```javascript
   var url = 'http://localhost:3099/';
@@ -123,7 +123,7 @@ Quick Start
   }
   ```
 
-5. Redirect back to the app inside of the popup:
+1. Redirect back to the app inside of the popup:
 
   ```html
   <h1>What is your favorite color?</h1>
@@ -198,19 +198,21 @@ PopupBridge solves this problem by allowing [`braintree-web`](https://github.com
 Using PayPal in a WebView
 -------------------------
 
-WebView-based checkout flows can accept PayPal with PopupBridge the Braintree JS SDK. For the authentication flow, PayPal requires a popup window—which can be simulated with PopupBridge.
+WebView-based checkout flows can accept PayPal with PopupBridge and the Braintree JS SDK.
 
 ### Setup
 1. Create a web-based checkout that accepts PayPal using Braintree JS v3.9.0 or higher
-2. Show a loading indicator
-    - PopupBridge lacks the PayPal loading page that customers see when using PayPal through a real popup window. We recommend adding a loading indicator on your web page when the PayPal button is clicked. In the PayPal tokenize completion callback, hide the loading indicator.
-3. Create a native mobile app that opens the checkout in a `WKWebView`
-4. Integrate the PopupBridge library
-5. Collect device data
+1. Show a loading indicator when the PayPal button is clicked
+    - PopupBridge lacks the PayPal loading page that customers see when using PayPal through a mini-browser or popup window
+    - Add a loading indicator on your web page when the PayPal button is clicked
+    - In the PayPal tokenize completion callback, hide the loading indicator
+1. Create a native mobile app that opens the checkout in a `WKWebView`
+1. Integrate the PopupBridge library
+1. Collect device data
     - To help detect fraudulent activity, collect device data before performing PayPal transactions. This is similar to collecting device data with our [native iOS SDK](https://developers.braintreepayments.com/guides/paypal/vault/ios/v4) with a few differences:
-        1. Rather than the entire data collector, you can add just PayPalDataCollector to your app: `pod 'Braintree/PayPalDataCollector'`
-        2. Implement methods in your native app depending on whether you are doing one-time payments or vaulted payments. See the [iOS code snippets for PayPal + PopupBridge](popupbridge-paypaldatacollector-ios.md)
-6. Profit!
+        1. Rather than importing the entire data collector, you can add just PayPalDataCollector to your app: `pod 'Braintree/PayPalDataCollector'`
+        1. Implement methods in your native app depending on whether you are doing one-time payments or vaulted payments. See the [iOS code snippets for PayPal + PopupBridge](popupbridge-paypaldatacollector-ios.md)
+1. Profit!
 
 ## Author
 
