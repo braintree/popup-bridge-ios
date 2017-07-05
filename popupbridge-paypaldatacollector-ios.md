@@ -1,4 +1,6 @@
-## One time payment
+## One-time payments
+
+Device data is identified with a client metadata ID.
 
 Implement the method that receives the popup URL and use this sample code to parse the `clientMetadataID`:
 
@@ -15,6 +17,8 @@ Implement the method that receives the popup URL and use this sample code to par
     NSLog(@"Called PPDataCollector clientMetadataID:%@ and got %@", clientMetadataId, result);
 }
 ```
+
+The call to `+[PPDataCollector clientMetadataID:]` causes device data to be collected and sent to PayPal. The `result` is the client metadata ID. Typically, you do not need to do anything else with it.
 
 ## Charging a vaulted PayPal account
 
@@ -45,4 +49,4 @@ window.setDeviceData = function setDeviceData(deviceData) {
 window.popupBridge.sendMessage('requestDeviceData');
 ```
 
-If you have questions, create an Issue for this GitHub project.
+If you have questions, create an issue for this GitHub project.
