@@ -62,7 +62,7 @@ Quick Start
     ```objectivec
     #import "POPPopupBridge.h"
 
-    @interface MyViewController () <POPViewControllerPresentingDelegate>
+    @interface MyViewController () <POPPopupBridgeDelegate>
     @property (nonatomic, strong) WKWebView *webView;
     @property (nonatomic, strong) POPPopupBridge *popupBridge;
     @end
