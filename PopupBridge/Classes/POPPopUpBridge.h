@@ -38,6 +38,9 @@ extern NSString * const kPOPURLHost;
 /// @param delegate A delegate that presents and dismisses the Safari View Controllers.
 - (id)initWithWebView:(WKWebView *)webView delegate:(id<POPPopupBridgeDelegate>)delegate;
 
+// Call destroy before discarding the webView, otherwise the WebView instance will not be destroyed
+-(void)destroy;
+
 /// Set the URL Scheme that you have registered in your Info.plist.
 + (void)setReturnURLScheme:(NSString *)returnURLScheme;
 
@@ -52,5 +55,5 @@ extern NSString * const kPOPURLHost;
 + (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;
 
 @end
-
 NS_ASSUME_NONNULL_END
+
