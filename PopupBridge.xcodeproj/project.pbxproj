@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3055485E0BA8E1A26E7B80CB /* Pods_PopupBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */; };
+		419433E41F6753A400E83483 /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 419433E31F6753A400E83483 /* POPWeakScriptMessageDelegate.h */; };
+		419433E51F6753FD00E83483 /* POPWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 419433E11F67534E00E83483 /* POPWeakScriptMessageDelegate.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -70,6 +72,8 @@
 
 /* Begin PBXFileReference section */
 		317783C3F96DAB0943150A60 /* Pods-PopupBridge_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		419433E11F67534E00E83483 /* POPWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POPWeakScriptMessageDelegate.m; path = Classes/POPWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
+		419433E31F6753A400E83483 /* POPWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
 		4D9C5526F903288B5284342D /* Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example-PopupBridge_Tests/Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* PopupBridge_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopupBridge_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -265,6 +269,8 @@
 				A73D5A051DFA2E1500387737 /* POPPopupBridge.m */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 				A775A08D1DEE4EF0009E67C2 /* PopupBridge.h */,
+				419433E11F67534E00E83483 /* POPWeakScriptMessageDelegate.m */,
+				419433E31F6753A400E83483 /* POPWeakScriptMessageDelegate.h */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -278,6 +284,7 @@
 			files = (
 				A775A08F1DEE4EF0009E67C2 /* PopupBridge.h in Headers */,
 				A73D5A061DFA2E1500387737 /* POPPopupBridge.h in Headers */,
+				419433E41F6753A400E83483 /* POPWeakScriptMessageDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A73D5A071DFA2E1500387737 /* POPPopupBridge.m in Sources */,
+				419433E51F6753FD00E83483 /* POPWeakScriptMessageDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

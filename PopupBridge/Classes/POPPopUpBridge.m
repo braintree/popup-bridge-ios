@@ -1,4 +1,5 @@
-#import "POPPopUpBridge.h"
+#import "POPPopupBridge.h"
+#import "POPWeakScriptMessageDelegate.h"
 #import <SafariServices/SFSafariViewController.h>
 
 @interface POPPopupBridge () <SFSafariViewControllerDelegate>
@@ -27,7 +28,9 @@ NSString * const kPOPURLHost = @"popupbridgev1";
         self.delegate = delegate;
         self.webView = webView;
 
-        [webView.configuration.userContentController addScriptMessageHandler:self name:kPOPScriptMessageHandlerName];
+        // Use POPWeakScriptMessageDelegate to prevent a reference cycle where userContentController
+        // maintains a reference to this instance.
+        [webView.configuration.userContentController addScriptMessageHandler:[[POPWeakScriptMessageDelegate alloc] initWithDelegate:self] name:kPOPScriptMessageHandlerName];
 
         NSString *javascript = [[[[self javascriptTemplate] stringByReplacingOccurrencesOfString:@"%%SCHEME%%" withString:scheme]  stringByReplacingOccurrencesOfString:@"%%SCRIPT_MESSAGE_HANDLER_NAME%%" withString:kPOPScriptMessageHandlerName] stringByReplacingOccurrencesOfString:@"%%HOST%%" withString:kPOPURLHost];
         WKUserScript *script = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
