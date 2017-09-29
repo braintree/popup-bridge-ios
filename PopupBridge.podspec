@@ -18,7 +18,7 @@ Use cases for PopupBridge:
   s.author           = { 'Braintree' => 'code@getbraintree.com' }
   s.source           = { :git => 'https://github.com/braintree/popup-bridge-ios.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'PopupBridge/Classes/**/*.{h,m}'
   s.public_header_files = 'PopupBridge/Classes/**/*.h'
