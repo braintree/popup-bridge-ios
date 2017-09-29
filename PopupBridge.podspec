@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PopupBridge'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Use PopupBridge to enable your web view to open pages in a Safari View Controller'
   s.description      = <<-DESC
 PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController
