@@ -1,10 +1,24 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "POPPopupBridge.h"
+#import "POPWeakScriptMessageDelegate.h"
 #import <SafariServices/SafariServices.h>
 
-@interface PopupBridge_Tests : XCTestCase <WKNavigationDelegate>
+@interface MockUserContentController : WKUserContentController
+@property (nonatomic, strong) POPWeakScriptMessageDelegate *scriptMessageHandler;
+@property (nonatomic, copy) NSString *name;
+@end
 
+@implementation MockUserContentController
+
+- (void)addScriptMessageHandler:(id<WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name {
+    self.scriptMessageHandler = scriptMessageHandler;
+    self.name = name;
+}
+
+@end
+
+@interface PopupBridge_Tests : XCTestCase <WKNavigationDelegate>
 @end
 
 @implementation PopupBridge_Tests
@@ -37,14 +51,15 @@ static void (^webviewReadyBlock)();
 
 - (void)testInit_addsScriptMessageHandler {
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    id mockUserContentController = OCMClassMock([WKUserContentController class]);
+    MockUserContentController *mockUserContentController = [[MockUserContentController alloc] init];
     configuration.userContentController = mockUserContentController;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
     id<POPPopupBridgeDelegate> delegate = (id<POPPopupBridgeDelegate>)[[NSObject alloc] init];
 
     POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:delegate];
 
-    OCMVerify([mockUserContentController addScriptMessageHandler:pub name:kPOPScriptMessageHandlerName]);
+    XCTAssertEqual([mockUserContentController.scriptMessageHandler scriptDelegate], pub);
+    XCTAssertEqual(mockUserContentController.name, kPOPScriptMessageHandlerName);
 }
 
 - (void)testInit_whenSchemeIsNotSet_throwsError {
