@@ -118,6 +118,7 @@ NSString * const kPOPURLHost = @"popupbridgev1";
             returnBlock = ^(NSURL *url) {
                 NSString *err = @"null";
                 NSString *payload = @"null";
+                NSString *script;
 
                 if (url) {
                     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
@@ -142,13 +143,17 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                     } else {
                         payload = [[NSString alloc] initWithData:payloadData encoding:NSUTF8StringEncoding];
                     }
+                    script = [NSString stringWithFormat:@"window.popupBridge.onComplete(%@, %@);", err, payload];
+                } else {
+                    script = @""
+                    "if (typeof window.popupBridge.onCancel === 'function') {"
+                    "  window.popupBridge.onCancel();"
+                    "} else {"
+                    "  window.popupBridge.onComplete(null, null);"
+                    "}";
                 }
 
-                [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"window.popupBridge.onComplete(%@, %@);", err, payload] completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-                    if (error) {
-                        NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
-                    }
-                }];
+                [self.class injectWebView:weakSelf.webView withJavaScript:script];
 
                 return YES;
             };
@@ -197,6 +202,14 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
 + (NSString *)percentDecodedStringForString:(NSString *)string {
     return [[string stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByRemovingPercentEncoding];
+}
+
++ (void)injectWebView:(WKWebView *)webView withJavaScript:(NSString *)script {
+    [webView evaluateJavaScript:script completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error: PopupBridge requires onComplete callback. Details: %@", error.description);
+        }
+    }];
 }
 
 @end

@@ -136,7 +136,7 @@ static void (^webviewReadyBlock)();
 }
 
 
-- (void)testPopupBridge_whenDoneButtonTappedOnSafariViewController_callsOnCompleteWithNoPayloadOrError {
+- (void)testPopupBridge_whenDoneButtonTappedOnSafariViewController_callsOnCancelOrOnCompleteWithNoPayloadOrError {
     WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
     OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
@@ -148,8 +148,13 @@ static void (^webviewReadyBlock)();
 
     [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
 
-    OCMVerify([webView evaluateJavaScript:@"window.popupBridge.onComplete(null, null);" completionHandler:OCMOCK_ANY]);
-}
+    OCMVerify([webView evaluateJavaScript:@""
+        "if (typeof window.popupBridge.onCancel === 'function') {"
+        "  window.popupBridge.onCancel();"
+        "} else {"
+        "  window.popupBridge.onComplete(null, null);"
+        "}" completionHandler:OCMOCK_ANY]);
+    }
 
 - (void)testOpenURL_whenReturnURLHasQueryParams_passesPayloadWithQueryItemsToWebView {
     WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
