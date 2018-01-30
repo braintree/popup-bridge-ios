@@ -136,7 +136,7 @@ static void (^webviewReadyBlock)();
 }
 
 
-- (void)testPopupBridge_whenDoneButtonTappedOnSafariViewController_callsOnCloseOrOnCompleteWithNoPayloadOrError {
+- (void)testPopupBridge_whenDoneButtonTappedOnSafariViewController_callsOnCancelOrOnCompleteWithNoPayloadOrError {
     WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
     OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
