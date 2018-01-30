@@ -146,8 +146,8 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                     script = [NSString stringWithFormat:@"window.popupBridge.onComplete(%@, %@);", err, payload];
                 } else {
                     script = @""
-                    "if (typeof window.popupBridge.onClose === 'function') {"
-                    "  window.popupBridge.onClose();"
+                    "if (typeof window.popupBridge.onCancel === 'function') {"
+                    "  window.popupBridge.onCancel();"
                     "} else {"
                     "  window.popupBridge.onComplete(null, null);"
                     "}";

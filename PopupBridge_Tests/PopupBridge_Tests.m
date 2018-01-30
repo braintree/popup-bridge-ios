@@ -149,8 +149,8 @@ static void (^webviewReadyBlock)();
     [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
 
     OCMVerify([webView evaluateJavaScript:@""
-        "if (typeof window.popupBridge.onClose === 'function') {"
-        "  window.popupBridge.onClose();"
+        "if (typeof window.popupBridge.onCancel === 'function') {"
+        "  window.popupBridge.onCancel();"
         "} else {"
         "  window.popupBridge.onComplete(null, null);"
         "}" completionHandler:OCMOCK_ANY]);
