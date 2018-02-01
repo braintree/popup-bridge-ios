@@ -1,6 +1,6 @@
 # PopupBridge iOS Release Notes
 
-## unreleased
+## 1.0.0 (2019-01-31)
 
 * If page has created an `popupBridge.onCancel` function, it will be called when user closes the window
 
