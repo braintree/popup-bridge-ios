@@ -193,19 +193,15 @@ Short answer: to accept PayPal as a payment option when mobile apps are using a 
 
 PayPal authentication occurs in a popup window. However, this causes issues with Braintree merchants who use a web page to power payments within their apps: they can't accept PayPal because WebViews cannot open popups and return the PayPal payment authorization data to the parent checkout page.
 
-PopupBridge solves this problem by allowing [`braintree-web`](https://github.com/braintree/braintree-web) to open the PayPal popup from a secure mini-browser.
+PopupBridge solves this problem by allowing [`braintree-web`](https://github.com/braintree/braintree-web) or [PayPal's Checkout.js](https://github.com/paypal/paypal-checkout) to open the PayPal popup from a secure mini-browser.
 
 Using PayPal in a WebView
 -------------------------
 
-WebView-based checkout flows can accept PayPal with PopupBridge and the Braintree JS SDK.
+WebView-based checkout flows can accept PayPal with PopupBridge and the [Braintree JS SDK](https://github.com/braintree/braintree-web) or [PayPal's Checkout.js](https://github.com/paypal/paypal-checkout). For the authentication flow, PayPal requires a popup window—which can be simulated with PopupBridge.
 
 ### Setup
-1. Create a web-based checkout that accepts PayPal using Braintree JS v3.9.0 or higher
-1. Show a loading indicator when the PayPal button is clicked
-    - PopupBridge lacks the PayPal loading page that customers see when using PayPal through a mini-browser or popup window
-    - Add a loading indicator on your web page when the PayPal button is clicked
-    - In the PayPal tokenize completion callback, hide the loading indicator
+1. Create a web-based checkout that accepts PayPal using Checkout.js or the Braintree JS SDK
 1. Create a native mobile app that opens the checkout in a `WKWebView`
 1. Integrate the PopupBridge library
 1. Collect device data
