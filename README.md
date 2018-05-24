@@ -203,7 +203,7 @@ WebView-based checkout flows can accept PayPal with PopupBridge and the [Braintr
 
 ### Setup
 1. Create a web-based checkout that accepts PayPal using Checkout.js or the Braintree JS SDK
-1. Create a native mobile app that opens the checkout in a `WKWebView`
+1. Create a native mobile app that opens the checkout in a `WKWebView` (See steps 1-3 of the quick start instructions)
 1. Integrate the PopupBridge library
 1. Collect device data
     - To help detect fraudulent activity, collect device data before performing PayPal transactions. This is similar to collecting device data with our [native iOS SDK](https://developers.braintreepayments.com/guides/paypal/vault/ios/v4) with a few differences:
