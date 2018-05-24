@@ -78,6 +78,7 @@ Quick Start
 
         self.popupBridge = [[POPPopupBridge alloc] initWithWebView:self.webView delegate:self];
 
+        // replace http://localhost:3099/ with the webpage you want to open in the webview
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3099/"]]];
     }
 
@@ -93,9 +94,9 @@ Quick Start
 1. Use PopupBridge from the web page by writing some JavaScript:
 
     ```javascript
-    var url = 'http://localhost:3099/';
+    var url = 'http://localhost:3099/popup'; // or whatever the page is that you want to open in a popup
 
-      if (window.popupBridge) {
+    if (window.popupBridge) {
       // Open the popup in a browser, and give it the deep link back to the app
       popupBridge.open(url + '?popupBridgeReturnUrlPrefix=' + popupBridge.getReturnUrlPrefix());
 
