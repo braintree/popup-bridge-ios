@@ -134,6 +134,9 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                     NSMutableDictionary *payloadDictionary = [NSMutableDictionary new];
                     payloadDictionary[@"path"] = path;
                     payloadDictionary[@"queryItems"] = [self.class dictionaryForQueryString:url.query];
+                    if (url.fragment) {
+                        payloadDictionary[@"hash"] = url.fragment;
+                    }
 
                     NSError *error;
                     NSData *payloadData = [NSJSONSerialization dataWithJSONObject:payloadDictionary options:0 error:&error];

@@ -337,7 +337,6 @@
 				A775A0791DEE4E7E009E67C2 /* Frameworks */,
 				A775A07A1DEE4E7E009E67C2 /* Resources */,
 				D4096ACC7F2DB0696CEF479D /* [CP] Embed Pods Frameworks */,
-				137FD5E05624646989C7A489 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -449,21 +448,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		137FD5E05624646989C7A489 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CEC1F8AB75D9DBEDFA9FEBDF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
