@@ -133,8 +133,10 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
                     NSMutableDictionary *payloadDictionary = [NSMutableDictionary new];
                     payloadDictionary[@"path"] = path;
-                    payloadDictionary[@"queryItems"] = [self.class dictionaryForKeyValueString:url.query];
-                    payloadDictionary[@"hashItems"] = [self.class dictionaryForKeyValueString:url.fragment];
+                    payloadDictionary[@"queryItems"] = [self.class dictionaryForQueryString:url.query];
+                    if (url.fragment) {
+                        payloadDictionary[@"hash"] = url.fragment;
+                    }
 
                     NSError *error;
                     NSData *payloadData = [NSJSONSerialization dataWithJSONObject:payloadDictionary options:0 error:&error];
@@ -178,9 +180,9 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
 #pragma mark - Helpers
 
-+ (NSDictionary *)dictionaryForKeyValueString:(NSString *)keyValueString {
++ (NSDictionary *)dictionaryForQueryString:(NSString *)queryString {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSArray *components = [keyValueString componentsSeparatedByString:@"&"];
+    NSArray *components = [queryString componentsSeparatedByString:@"&"];
     for (NSString *keyValueString in components) {
         if ([keyValueString length] == 0) {
             continue;
