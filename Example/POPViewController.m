@@ -31,4 +31,8 @@
     [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)popupBridge:(POPPopupBridge *)bridge receivedMessage:(NSString *)messageName data:(NSString *)data {
+    NSLog(@"Received message %@ with data %@", messageName, data);
+}
+
 @end

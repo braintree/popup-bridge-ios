@@ -23,7 +23,7 @@
 
 @implementation PopupBridge_Tests
 
-static void (^webviewReadyBlock)();
+static void (^webviewReadyBlock)(void);
 
 - (void)setUp {
     [super setUp];
@@ -268,24 +268,43 @@ static void (^webviewReadyBlock)();
     XCTAssertFalse(result);
 }
 
+- (void)testIsIosWebview_returnsTrue {
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [webView loadHTMLString:@"<html><head></head><body>hi</body></html>" baseURL:nil];
+    webView.navigationDelegate = self;
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+
+    id expectation = [self expectationWithDescription:@"Called JS"];
+
+    webviewReadyBlock = ^{
+        [webView evaluateJavaScript:@"window.popupBridge.isIosWebview" completionHandler:^(id _Nullable returnValue, __unused NSError * _Nullable error) {
+            XCTAssertEqual(returnValue, @YES);
+            [expectation fulfill];
+        }];
+    };
+
+    // Takes the simulator a really long time to load the webview & get it ready to evalute the JS
+    [self waitForExpectationsWithTimeout:20 handler:nil];
+}
+
 - (void)testDelegate_whenWebViewCallsPopupBridgeSendMessage_receivesMessage {
     id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [webView loadHTMLString:@"<html><head></head><body>hi</body></html>" baseURL:nil];
     webView.navigationDelegate = self;
     POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:mockDelegate];
 
     id expectation = [self expectationWithDescription:@"Called JS"];
 
     webviewReadyBlock = ^{
-        [webView evaluateJavaScript:@"window.popupBridge.sendMessage('myMessageName', JSON.stringify({foo: 'bar'}));" completionHandler:^(__unused id _Nullable returnValue, __unused NSError * _Nullable error) {
-            OCMVerify([mockDelegate popupBridge:pub receivedMessage:@"myMessageName" data:@"{\"foo\":\"bar\"}"]);
+        [webView evaluateJavaScript:@"window.popupBridge.sendMessage('myMessageName', 'some data');" completionHandler:^(__unused id _Nullable returnValue, __unused NSError * _Nullable error) {
+            OCMVerify([mockDelegate popupBridge:pub receivedMessage:@"myMessageName" data:@"some data"]);
             [expectation fulfill];
         }];
     };
 
-    [webView loadHTMLString:@"<html></html>" baseURL:nil];
-
-    [self waitForExpectationsWithTimeout:1 handler:nil];
+    // Takes the simulator a really long time to load the webview & get it ready to evalute the JS
+    [self waitForExpectationsWithTimeout:20 handler:nil];
 }
 
 // Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.

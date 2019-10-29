@@ -90,7 +90,7 @@ NSString * const kPOPURLHost = @"popupbridgev1";
     // NB: This string does not maintain newlines, so you cannot use single-line JS comments.
     return @"\
         ;(function () {\
-            if (!window.popupBridge) { window.popupBridge = {}; };\
+            if (!window.popupBridge) { window.popupBridge = {isIosWebview: true}; };\
             \
             window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {\
                 return '%%SCHEME%%://%%HOST%%/';\
