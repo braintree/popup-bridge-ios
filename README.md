@@ -254,10 +254,40 @@ Although PopupBridge's primary purpose is to handle popups, it can be used in a 
    console.log("Payload fragment:", payload.hash); // "baz=qux"
    ```
 
+## Development
+
+This project depends on [CocoaPods][cocoapods] for dependency management.
+[xcpretty][xcpretty] provides nice console output as well as JUnit-compatible
+test reports.
+
+To ensure consistency and host-system isolation, we bootstrap dependencies
+with [Bundler][bundler]:
+
+```bash
+gem install bundler
+bundle install
+bundle exec pod install
+```
+
+### Building
+You can either open the app in Xcode with `open DHLPaket.xcworkspace` or by
+building it in a terminal:
+
+```bash
+xcodebuild build -workspace PopupBridge.xcworkspace -scheme PopupBridge \
+    | bundle exec xcpretty
+```
+
+
 ## Author
 
 Braintree, code@getbraintree.com
 
 ## License
 
-PopupBridge is available under the MIT license. See the LICENSE file for more info.
+    PopupBridge is available under the MIT license. See the LICENSE file for more info.
+
+
+[bundler]: https://bundler.io/
+[cocoapods]: https://cocoapods.org
+[xcpretty]: https://github.com/xcpretty/xcpretty

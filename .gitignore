@@ -20,7 +20,12 @@ DerivedData
 *.ipa
 
 # Bundler
-.bundle
+.bundle/bin
+.bundle/cache
+.bundle/extensions
+.bundle/gems
+.bundle/ruby
+.bundle/specifications
 
 Carthage
 
