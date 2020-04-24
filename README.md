@@ -36,7 +36,7 @@ Quick Start
     - Click **[+]** to add a new URL type
     - Under **URL Schemes**, enter a unique URL scheme, e.g. `com.my-app.popupbridge`
 
-1. In your application delegate, set up PopupBridge with the URL scheme:
+1. In your application delegate's `didFinishLaunchingWithOptions` method, set the return URL scheme.
 
     ```objectivec
     #import "POPPopupBridge.h"
@@ -46,12 +46,31 @@ Quick Start
         [POPPopupBridge setReturnURLScheme:@"com.my-app.popupbridge"];
         return YES;
     }
-
+    ```
+    
+    1. Inspect the return URL and then call `PopupBridge:openURL` from either your app delegate or your scene delegate.
+     
+     If you're using the `SceneDelegate` class introduced in iOS 13, call `PopupBridge:openURL` from within the  `scene:openURLContexts` delegate method. Pass the URL on the appropriate `UIOpenURLContext`. 
+     
+     ```objectivec
+     - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+        for (UIOpenURLContext *urlContext in URLContexts) {
+            NSURL *url = [urlContext URL];
+            if ([url.scheme localizedCaseInsensitiveCompare:@"com.my-app.popupbridge"] == NSOrderedSame) {
+            [POPPopupBridge openURL:urlContext.URL];
+            }
+        }
+    }
+    ```
+    
+    If you aren't using `SceneDelegate`, call `PopupBridge:openURL` from within the  `application:openURL:` delegate method of your app delegate.
+    
+    ```objectivec
     - (BOOL)application:(UIApplication *)app
                 openURL:(NSURL *)url
                 options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
         if ([url.scheme localizedCaseInsensitiveCompare:@"com.my-app.popupbridge"] == NSOrderedSame) {
-            return [POPPopupBridge openURL:url options:options];
+            return [POPPopupBridge openURL:url];
         }
         return NO;
     }

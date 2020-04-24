@@ -45,7 +45,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     if ([url.scheme localizedCaseInsensitiveCompare:kReturnURLScheme] == NSOrderedSame) {
-        return [POPPopupBridge openURL:url sourceApplication:sourceApplication];
+        return [POPPopupBridge openURL:url];
     }
     return NO;
 }
@@ -55,7 +55,7 @@
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     if ([url.scheme localizedCaseInsensitiveCompare:kReturnURLScheme] == NSOrderedSame) {
-        return [POPPopupBridge openURL:url options:options];
+        return [POPPopupBridge openURL:url];
     }
     return NO;
 }
