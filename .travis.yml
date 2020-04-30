@@ -2,7 +2,8 @@ language: objective-c
 osx_image: xcode11.3
 
 cache:
+  bundler: true
   cocoapods: true
 
 script:
-  - set -o pipefail && xcodebuild -workspace PopupBridge.xcworkspace -scheme PopupBridge-Example -destination platform\=iOS\ Simulator,OS\=13.3,name\=iPhone\ 11 test | xcpretty -c
+  - set -o pipefail && xcodebuild -workspace PopupBridge.xcworkspace -scheme PopupBridge-Example -destination platform\=iOS\ Simulator,OS\=13.3,name\=iPhone\ 11 test | bundle exec xcpretty -c
