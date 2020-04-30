@@ -270,7 +270,7 @@ bundle exec pod install
 ```
 
 ### Building
-You can either open the app in Xcode with `open DHLPaket.xcworkspace` or by
+You can either open the app in Xcode with `open PopupBridge.xcworkspace` or by
 building it in a terminal:
 
 ```bash
