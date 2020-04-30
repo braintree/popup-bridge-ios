@@ -285,7 +285,7 @@ static void (^webviewReadyBlock)();
 
     [webView loadHTMLString:@"<html></html>" baseURL:nil];
 
-    [self waitForExpectationsWithTimeout:1 handler:nil];
+    [self waitForExpectationsWithTimeout:5 handler:nil];
 }
 
 // Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.
