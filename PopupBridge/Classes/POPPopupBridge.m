@@ -55,7 +55,7 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
                 NSMutableDictionary *payloadDictionary = [NSMutableDictionary new];
                 payloadDictionary[@"path"] = path;
-                payloadDictionary[@"queryItems"] = [self.class dictionaryForQueryString:url.query];
+                payloadDictionary[@"queryItems"] = [weakSelf.class dictionaryForQueryString:url.query];
                 if (url.fragment) {
                     payloadDictionary[@"hash"] = url.fragment;
                 }
@@ -78,7 +78,7 @@ NSString * const kPOPURLHost = @"popupbridgev1";
                 "}";
             }
 
-            [self.class injectWebView:weakSelf.webView withJavaScript:script];
+            [weakSelf.class injectWebView:weakSelf.webView withJavaScript:script];
 
             return YES;
         };
@@ -121,7 +121,6 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 - (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
     if (returnBlock) {
         returnBlock(nil);
-        returnBlock = nil;
     }
 }
 
@@ -135,9 +134,7 @@ NSString * const kPOPURLHost = @"popupbridgev1";
 
 + (BOOL)openURL:(NSURL *)url {
     if (returnBlock) {
-        BOOL result = returnBlock(url);
-        returnBlock = nil;
-        return result;
+        return returnBlock(url);
     }
     return NO;
 }

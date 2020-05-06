@@ -5,6 +5,7 @@
 * Add `PopupBridge:openURL` method
 * Deprecate `PopupBridge:openURL:options` and `PopupBridge:openURL:sourceApplication`
 * Update README to include `SceneDelegate` usage instructions
+* Fix a bug that prevented returning from the pop-up more than once
 
 ## 1.0.0 (2019-01-31)
 
