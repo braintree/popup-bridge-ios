@@ -63,7 +63,7 @@ Quick Start
     }
     ```
     
-    If you aren't using `SceneDelegate`, call `PopupBridge:openURL` from within the  `application:openURL:` delegate method of your app delegate.
+    If you aren't using `UISceneDelegate`, call `PopupBridge:openURL` from within the  `application:openURL:` delegate method of your app delegate.
     
     ```objectivec
     - (BOOL)application:(UIApplication *)app
