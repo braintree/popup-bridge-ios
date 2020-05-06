@@ -50,7 +50,7 @@ Quick Start
     
     1. Inspect the return URL and then call `PopupBridge:openURL` from either your app delegate or your scene delegate.
      
-     If you're using the `SceneDelegate` class introduced in iOS 13, call `PopupBridge:openURL` from within the  `scene:openURLContexts` delegate method. Pass the URL on the appropriate `UIOpenURLContext`. 
+     If you're using `UISceneDelegate` (introduced in iOS 13), call `PopupBridge:openURL` from within the  `scene:openURLContexts` delegate method. Pass the URL on the appropriate `UIOpenURLContext`. 
      
      ```objectivec
      - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
