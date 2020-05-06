@@ -1,5 +1,11 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+
+* Add `PopupBridge:openURL` method
+* Deprecate `PopupBridge:openURL:options` and `PopupBridge:openURL:sourceApplication`
+* Update README to include `SceneDelegate` usage instructions
+
 ## 1.0.0 (2019-01-31)
 
 * If page has created an `popupBridge.onCancel` function, it will be called when user closes the window

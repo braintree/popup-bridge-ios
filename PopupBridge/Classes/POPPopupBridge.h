@@ -44,12 +44,17 @@ extern NSString * const kPOPURLHost;
 /// Handle completion of the popup flow by calling this method from your
 /// -application:openURL:sourceApplication:annotation: app delegate method.
 /// Required by iOS 8.
-+ (BOOL)openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication;
++ (BOOL)openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication DEPRECATED_MSG_ATTRIBUTE("Use openURL: instead.");
 
 /// Handle completion of the popup flow by calling this method from your
 /// -application:openURL:sourceApplication:annotation: app delegate method.
 /// Used by iOS 9+.
-+ (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;
++ (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options DEPRECATED_MSG_ATTRIBUTE("Use openURL: instead.");
+
+/// Handle completion of the popup flow by calling this method from either
+/// your -scene:openURLContexts: scene delegate method or
+/// your -application:openURL:sourceApplication:annotation: app delegate method.
++ (BOOL)openURL:(NSURL *)url;
 
 @end
 
