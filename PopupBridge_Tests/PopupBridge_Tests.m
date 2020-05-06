@@ -23,7 +23,7 @@
 
 @implementation PopupBridge_Tests
 
-static void (^webviewReadyBlock)();
+static void (^webviewReadyBlock)(void);
 
 - (void)setUp {
     [super setUp];
