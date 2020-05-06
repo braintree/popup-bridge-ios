@@ -1,6 +1,10 @@
 language: objective-c
 osx_image: xcode11.3
 
+branches:
+  only:
+  - master
+  
 cache:
   bundler: true
   cocoapods: true
