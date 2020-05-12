@@ -36,16 +36,16 @@
     [launchPopupButton tap];
 
     XCUIElement *text = app.staticTexts[@"What's your favorite color?"];
-    [self waitForElement:text timeout:5];
+    [self waitForElement:text timeout:10];
 
     XCUIElement *colorLink = app.links[color];
-    [self waitForElement:colorLink timeout:1];
+    [self waitForElement:colorLink timeout:5];
 
     [colorLink tap];
 
-    [self waitForElement:app.staticTexts[@"PopupBridge Example"] timeout:1];
-    [self waitForElement:app.staticTexts[@"Your favorite color:"] timeout:1];
-    [self waitForElement:app.staticTexts[color.lowercaseString] timeout:1];
+    [self waitForElement:app.staticTexts[@"PopupBridge Example"] timeout:5];
+    [self waitForElement:app.staticTexts[@"Your favorite color:"] timeout:5];
+    [self waitForElement:app.staticTexts[color.lowercaseString] timeout:5];
 }
 
 #pragma mark - Tests
@@ -65,14 +65,14 @@
     [launchPopupButton tap];
 
     XCUIElement *text = app.staticTexts[@"What's your favorite color?"];
-    [self waitForElement:text timeout:5];
+    [self waitForElement:text timeout:10];
 
     XCUIElement *doNotLikeLink = app.links[@"I don't like any of these colors"];
-    [self waitForElement:doNotLikeLink timeout:1];
+    [self waitForElement:doNotLikeLink timeout:10];
 
     [doNotLikeLink tap];
 
-    [self waitForElement:app.staticTexts[@"You did not like any of our colors"] timeout:1];
+    [self waitForElement:app.staticTexts[@"You did not like any of our colors"] timeout:10];
 }
 
 - (void)testClickingSafariDone_returnsCancel {
@@ -87,7 +87,7 @@
     [self waitForElement:doneButton timeout:5];
     [doneButton tap];
 
-    [self waitForElement:app.staticTexts[@"You did not choose a color"] timeout:1];
+    [self waitForElement:app.staticTexts[@"You did not choose a color"] timeout:10];
 }
 
 @end
