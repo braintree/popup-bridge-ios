@@ -1,6 +1,6 @@
 # PopupBridge iOS Release Notes
 
-## unreleased
+## 1.1.0 (2020-05-13)
 
 * Add `PopupBridge:openURL` method
 * Deprecate `PopupBridge:openURL:options` and `PopupBridge:openURL:sourceApplication`
