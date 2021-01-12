@@ -51,13 +51,13 @@
 		804CC0D325AE166A0015D5D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		804CC0D825AE166A0015D5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		804CC0D925AE166A0015D5D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		804CC0EB25AE17B30015D5D7 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = UITests.xctest; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/UITests.xctest"; sourceTree = "<absolute>"; };
 		804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_DemoUITests.m; sourceTree = "<group>"; };
 		804CC0EF25AE17B30015D5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		804CC0F925AE18D90015D5D7 /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
 		804CC0FA25AE18D90015D5D7 /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		804CC10F25AE19EC0015D5D7 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		804CC11225AE19EC0015D5D7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Demo.app; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/Demo.app"; sourceTree = "<absolute>"; };
+		804CC13625AE22BF0015D5D7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Demo.app; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/Demo.app"; sourceTree = "<absolute>"; };
+		804CC13725AE22BF0015D5D7 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = UITests.xctest; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/UITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +140,7 @@
 			);
 			name = Demo;
 			productName = Demo;
-			productReference = 804CC11225AE19EC0015D5D7 /* Demo.app */;
+			productReference = 804CC13625AE22BF0015D5D7 /* Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		804CC0EA25AE17B30015D5D7 /* UITests */ = {
@@ -158,7 +158,7 @@
 			);
 			name = UITests;
 			productName = UITests;
-			productReference = 804CC0EB25AE17B30015D5D7 /* UITests.xctest */;
+			productReference = 804CC13725AE22BF0015D5D7 /* UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
