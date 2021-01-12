@@ -18,8 +18,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A775A07B1DEE4E7E009E67C2"
-               BuildableName = "PopupBridge_Tests.xctest"
-               BlueprintName = "PopupBridge_Tests"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:PopupBridge.xcodeproj">
             </BuildableReference>
          </TestableReference>

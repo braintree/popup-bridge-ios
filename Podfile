@@ -5,6 +5,6 @@ project 'PopupBridge.xcodeproj'
 
 use_frameworks!
 
-target 'PopupBridge_Tests' do
+target 'UnitTests' do
   pod 'OCMock'
 end
