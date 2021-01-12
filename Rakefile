@@ -54,7 +54,7 @@ class << self
   end
 
   def xcodebuild(scheme, command, configuration)
-    return "set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration '#{configuration}' -scheme '#{scheme}' -destination 'name=iPhone 11,platform=iOS Simulator,OS=13.3' #{command} | xcpretty -c -r junit"
+    return "set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration '#{configuration}' -scheme '#{scheme}' -destination 'name=iPhone 12,platform=iOS Simulator,OS=14.3' #{command} | xcpretty -c -r junit"
   end
 
 end
