@@ -5,13 +5,13 @@ require 'bundler'
 Bundler.require
 HighLine.color_scheme = HighLine::SampleColorScheme.new
 
-task :default => %w[demo:build spec]
+task :default => %w[spec:all]
 
 desc "Run tests"
 task :spec => %w[spec:all]
 
 desc "Run internal release steps"
-task :release => %w[release:assumptions demo:build release:check_working_directory release:bump_version release:lint_podspec release:tag]
+task :release => %w[release:assumptions demo_app:build_demo release:check_working_directory release:bump_version release:lint_podspec release:tag]
 
 desc "Publish code and pod to public github.com"
 task :publish => %w[publish:push publish:push_pod]
@@ -78,9 +78,9 @@ namespace :spec do
   task :all => %w[spec:unit spec:ui]
 end
 
-namespace :demo do
+namespace :demo_app do
   desc 'Verify that the demo app builds successfully'
-  task :build do
+  task :build_demo do
     run! xcodebuild('PopupBridge-Example', 'build', 'Release')
   end
 end
