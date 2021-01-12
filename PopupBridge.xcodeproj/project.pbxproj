@@ -10,20 +10,13 @@
 		3055485E0BA8E1A26E7B80CB /* Pods_PopupBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872803D34D74C00ACDF1EC3C /* Pods_PopupBridge_Tests.framework */; };
 		419433E41F6753A400E83483 /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 419433E31F6753A400E83483 /* POPWeakScriptMessageDelegate.h */; };
 		419433E51F6753FD00E83483 /* POPWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 419433E11F67534E00E83483 /* POPWeakScriptMessageDelegate.m */; };
-		4235C04F24635D1000731083 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4235C04E24635D1000731083 /* Assets.xcassets */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A73D5A061DFA2E1500387737 /* POPPopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = A73D5A041DFA2E1500387737 /* POPPopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A73D5A071DFA2E1500387737 /* POPPopupBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A73D5A051DFA2E1500387737 /* POPPopupBridge.m */; };
-		A73D5A0E1DFA2FA600387737 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A73D5A0B1DFA2FA600387737 /* main.m */; };
-		A73D5A171DFA2FC000387737 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A73D5A111DFA2FC000387737 /* Main.storyboard */; };
-		A73D5A181DFA2FC000387737 /* POPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A73D5A131DFA2FC000387737 /* POPAppDelegate.m */; };
-		A73D5A191DFA2FC000387737 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A73D5A151DFA2FC000387737 /* POPViewController.m */; };
-		A73D5A1C1DFA321800387737 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A73D5A1A1DFA321800387737 /* InfoPlist.strings */; };
 		A73D5A1D1DFA339500387737 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
 		A73D5A1E1DFA339500387737 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A764C9AF1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_Tests.m */; };
 		A775A08F1DEE4EF0009E67C2 /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = A775A08D1DEE4EF0009E67C2 /* PopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -74,7 +67,6 @@
 		317783C3F96DAB0943150A60 /* Pods-PopupBridge_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Tests/Pods-PopupBridge_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		419433E11F67534E00E83483 /* POPWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POPWeakScriptMessageDelegate.m; path = Classes/POPWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
 		419433E31F6753A400E83483 /* POPWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POPWeakScriptMessageDelegate.h; path = Classes/POPWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
-		4235C04E24635D1000731083 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Example/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		4D9C5526F903288B5284342D /* Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PopupBridge_Example-PopupBridge_Tests/Pods-PopupBridge_Example-PopupBridge_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* PopupBridge_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopupBridge_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -91,18 +83,7 @@
 		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A73D5A091DFA2E9A00387737 /* PopupBridge.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopupBridge.podspec; sourceTree = "<group>"; };
 		A73D5A0A1DFA2E9A00387737 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		A73D5A0B1DFA2FA600387737 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Example/main.m; sourceTree = SOURCE_ROOT; };
-		A73D5A0C1DFA2FA600387737 /* PopupBridge-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PopupBridge-Info.plist"; path = "Example/PopupBridge-Info.plist"; sourceTree = SOURCE_ROOT; };
-		A73D5A0D1DFA2FA600387737 /* PopupBridge-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PopupBridge-Prefix.pch"; path = "Example/PopupBridge-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		A73D5A111DFA2FC000387737 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Example/Main.storyboard; sourceTree = SOURCE_ROOT; };
-		A73D5A121DFA2FC000387737 /* POPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POPAppDelegate.h; path = Example/POPAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		A73D5A131DFA2FC000387737 /* POPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POPAppDelegate.m; path = Example/POPAppDelegate.m; sourceTree = SOURCE_ROOT; };
-		A73D5A141DFA2FC000387737 /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POPViewController.h; path = Example/POPViewController.h; sourceTree = SOURCE_ROOT; };
-		A73D5A151DFA2FC000387737 /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POPViewController.m; path = Example/POPViewController.m; sourceTree = SOURCE_ROOT; };
-		A73D5A1B1DFA321800387737 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Example/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		A764C9AC1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopupBridge_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_ExampleUITests.m; sourceTree = "<group>"; };
-		A764C9B01DCBEAE50074C4B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A775A07C1DEE4E7E009E67C2 /* PopupBridge_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopupBridge_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A775A07E1DEE4E7E009E67C2 /* PopupBridge_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_Tests.m; sourceTree = "<group>"; };
 		A775A0801DEE4E7E009E67C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -159,8 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
-				6003F593195388D20070C39A /* Example */,
-				A764C9AD1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests */,
 				A775A07D1DEE4E7E009E67C2 /* PopupBridge_Tests */,
 				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
 				6003F58C195388D20070C39A /* Frameworks */,
@@ -197,32 +176,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6003F593195388D20070C39A /* Example */ = {
-			isa = PBXGroup;
-			children = (
-				4235C04E24635D1000731083 /* Assets.xcassets */,
-				A73D5A111DFA2FC000387737 /* Main.storyboard */,
-				A73D5A121DFA2FC000387737 /* POPAppDelegate.h */,
-				A73D5A131DFA2FC000387737 /* POPAppDelegate.m */,
-				A73D5A141DFA2FC000387737 /* POPViewController.h */,
-				A73D5A151DFA2FC000387737 /* POPViewController.m */,
-				6003F594195388D20070C39A /* Supporting Files */,
-			);
-			name = Example;
-			path = PopupBridge;
-			sourceTree = "<group>";
-		};
-		6003F594195388D20070C39A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A73D5A1A1DFA321800387737 /* InfoPlist.strings */,
-				A73D5A0B1DFA2FA600387737 /* main.m */,
-				A73D5A0C1DFA2FA600387737 /* PopupBridge-Info.plist */,
-				A73D5A0D1DFA2FA600387737 /* PopupBridge-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,15 +195,6 @@
 				9FCB8B395B31A5F7E2EA96DE /* Pods-PopupBridge_Example-PopupBridge_Tests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		A764C9AD1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests */ = {
-			isa = PBXGroup;
-			children = (
-				A764C9AE1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m */,
-				A764C9B01DCBEAE50074C4B8 /* Info.plist */,
-			);
-			path = PopupBridge_ExampleUITests;
 			sourceTree = "<group>";
 		};
 		A775A07D1DEE4E7E009E67C2 /* PopupBridge_Tests */ = {
@@ -419,9 +363,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A73D5A1C1DFA321800387737 /* InfoPlist.strings in Resources */,
-				4235C04F24635D1000731083 /* Assets.xcassets in Resources */,
-				A73D5A171DFA2FC000387737 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,9 +433,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A73D5A191DFA2FC000387737 /* POPViewController.m in Sources */,
-				A73D5A181DFA2FC000387737 /* POPAppDelegate.m in Sources */,
-				A73D5A0E1DFA2FA600387737 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +440,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A764C9AF1DCBEAE50074C4B8 /* PopupBridge_ExampleUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,17 +479,6 @@
 			targetProxy = A775A0811DEE4E7E009E67C2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		A73D5A1A1DFA321800387737 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A73D5A1B1DFA321800387737 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		6003F5BD195388D20070C39A /* Debug */ = {

@@ -1,10 +1,10 @@
 #import <XCTest/XCTest.h>
 
-@interface PopupBridge_ExampleUITests : XCTestCase
+@interface PopupBridge_DemoUITests : XCTestCase
 
 @end
 
-@implementation PopupBridge_ExampleUITests {
+@implementation PopupBridge_DemoUITests {
     XCUIApplication *app;
 }
 

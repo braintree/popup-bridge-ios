@@ -13,8 +13,8 @@
 		804CC0D425AE166A0015D5D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 804CC0D325AE166A0015D5D7 /* Assets.xcassets */; };
 		804CC0D725AE166A0015D5D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 804CC0D525AE166A0015D5D7 /* LaunchScreen.storyboard */; };
 		804CC0DA25AE166A0015D5D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0D925AE166A0015D5D7 /* main.m */; };
-		804CC0E325AE17110015D5D7 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0E225AE17110015D5D7 /* POPViewController.m */; };
-		804CC0EE25AE17B30015D5D7 /* UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0ED25AE17B30015D5D7 /* UITests.m */; };
+		804CC0EE25AE17B30015D5D7 /* PopupBridge_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */; };
+		804CC0FB25AE18D90015D5D7 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0FA25AE18D90015D5D7 /* POPViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,11 +38,11 @@
 		804CC0D625AE166A0015D5D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		804CC0D825AE166A0015D5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		804CC0D925AE166A0015D5D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		804CC0E125AE17110015D5D7 /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POPViewController.h; path = ../../Example/POPViewController.h; sourceTree = "<group>"; };
-		804CC0E225AE17110015D5D7 /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POPViewController.m; path = ../../Example/POPViewController.m; sourceTree = "<group>"; };
 		804CC0EB25AE17B30015D5D7 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = UITests.xctest; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/UITests.xctest"; sourceTree = "<absolute>"; };
-		804CC0ED25AE17B30015D5D7 /* UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UITests.m; sourceTree = "<group>"; };
+		804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_DemoUITests.m; sourceTree = "<group>"; };
 		804CC0EF25AE17B30015D5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		804CC0F925AE18D90015D5D7 /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
+		804CC0FA25AE18D90015D5D7 /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,15 +76,15 @@
 			children = (
 				804CC0C725AE16690015D5D7 /* AppDelegate.h */,
 				804CC0C825AE16690015D5D7 /* AppDelegate.m */,
-				804CC0CA25AE16690015D5D7 /* SceneDelegate.h */,
-				804CC0E125AE17110015D5D7 /* POPViewController.h */,
-				804CC0E225AE17110015D5D7 /* POPViewController.m */,
-				804CC0CB25AE16690015D5D7 /* SceneDelegate.m */,
-				804CC0D025AE16690015D5D7 /* Main.storyboard */,
 				804CC0D325AE166A0015D5D7 /* Assets.xcassets */,
-				804CC0D525AE166A0015D5D7 /* LaunchScreen.storyboard */,
 				804CC0D825AE166A0015D5D7 /* Info.plist */,
+				804CC0D525AE166A0015D5D7 /* LaunchScreen.storyboard */,
 				804CC0D925AE166A0015D5D7 /* main.m */,
+				804CC0D025AE16690015D5D7 /* Main.storyboard */,
+				804CC0F925AE18D90015D5D7 /* POPViewController.h */,
+				804CC0FA25AE18D90015D5D7 /* POPViewController.m */,
+				804CC0CA25AE16690015D5D7 /* SceneDelegate.h */,
+				804CC0CB25AE16690015D5D7 /* SceneDelegate.m */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -92,7 +92,7 @@
 		804CC0EC25AE17B30015D5D7 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
-				804CC0ED25AE17B30015D5D7 /* UITests.m */,
+				804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */,
 				804CC0EF25AE17B30015D5D7 /* Info.plist */,
 			);
 			path = UITests;
@@ -197,8 +197,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				804CC0FB25AE18D90015D5D7 /* POPViewController.m in Sources */,
 				804CC0C925AE16690015D5D7 /* AppDelegate.m in Sources */,
-				804CC0E325AE17110015D5D7 /* POPViewController.m in Sources */,
 				804CC0DA25AE166A0015D5D7 /* main.m in Sources */,
 				804CC0CC25AE16690015D5D7 /* SceneDelegate.m in Sources */,
 			);
@@ -208,7 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804CC0EE25AE17B30015D5D7 /* UITests.m in Sources */,
+				804CC0EE25AE17B30015D5D7 /* PopupBridge_DemoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
