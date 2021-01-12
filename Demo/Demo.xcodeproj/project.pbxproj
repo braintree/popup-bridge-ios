@@ -57,7 +57,7 @@
 		804CC0F925AE18D90015D5D7 /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
 		804CC0FA25AE18D90015D5D7 /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		804CC10F25AE19EC0015D5D7 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		804CC11225AE19EC0015D5D7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		804CC11225AE19EC0015D5D7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Demo.app; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/Demo.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,6 @@
 				804CC0C625AE16690015D5D7 /* Demo */,
 				804CC0EC25AE17B30015D5D7 /* UITests */,
 				804CC10E25AE19EC0015D5D7 /* Frameworks */,
-				804CC11225AE19EC0015D5D7 /* Demo.app */,
 			);
 			sourceTree = "<group>";
 		};
