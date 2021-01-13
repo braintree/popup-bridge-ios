@@ -1,5 +1,9 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+
+* Exclude arm64 simulator architectures via Podspec
+
 ## 1.1.0 (2020-05-13)
 
 * Add `PopupBridge:openURL` method
