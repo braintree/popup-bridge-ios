@@ -6,5 +6,4 @@ FOUNDATION_EXPORT double PopupBridgeVersionNumber;
 //! Project version string for PopupBridge.
 FOUNDATION_EXPORT const unsigned char PopupBridgeVersionString[];
 
-#import "POPPopupBridge.h"
-
+#import <PopupBridge/POPPopupBridge.h>
