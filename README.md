@@ -25,10 +25,10 @@ pod 'PopupBridge'
 
 To integrate using Carthage, add `github "braintree/popup-bridge-ios"` to your `Cartfile`, and [add the frameworks to your project](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
-Example
+Sample App
 -------
 
-To run the example app, clone the repo, open `PopupBridge.xcworkspace` and run the `PopupBridge-Example` app target.
+To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
 
 Quick Start
 -----------
@@ -275,30 +275,13 @@ Although PopupBridge's primary purpose is to handle popups, it can be used in a 
    console.log("Payload fragment:", payload.hash); // "baz=qux"
    ```
 
-## Development
-
-This project depends on [CocoaPods][cocoapods] for dependency management.
-[xcpretty][xcpretty] provides nice console output as well as JUnit-compatible
-test reports.
-
-To ensure consistency and host-system isolation, we bootstrap dependencies
-with [Bundler][bundler]:
+## Running Tests
 
 ```bash
 gem install bundler
-bundle install
-bundle exec pod install
+bundle exec pod install // The UnitTests target uses CocoaPods to pull in the OCMock dependency
+bundle exec rake spec:all
 ```
-
-### Building
-You can either open the app in Xcode with `open PopupBridge.xcworkspace` or by
-building it in a terminal:
-
-```bash
-xcodebuild build -workspace PopupBridge.xcworkspace -scheme PopupBridge \
-    | bundle exec xcpretty
-```
-
 
 ## Author
 
