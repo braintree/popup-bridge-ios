@@ -275,14 +275,6 @@ Although PopupBridge's primary purpose is to handle popups, it can be used in a 
    console.log("Payload fragment:", payload.hash); // "baz=qux"
    ```
 
-## Running Tests
-
-```bash
-gem install bundler
-bundle exec pod install // The UnitTests target uses CocoaPods to pull in the OCMock dependency
-bundle exec rake spec:all
-```
-
 ## Author
 
 Braintree, code@getbraintree.com
