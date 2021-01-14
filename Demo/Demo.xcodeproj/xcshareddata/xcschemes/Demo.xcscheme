@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "804CC0C325AE16690015D5D7"
-               BuildableName = "Demo"
+               BlueprintIdentifier = "806D558025AFD733005ED326"
+               BuildableName = "Demo.app"
                BlueprintName = "Demo"
                ReferencedContainer = "container:Demo.xcodeproj">
             </BuildableReference>
@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "804CC0EA25AE17B30015D5D7"
-               BuildableName = "UITests"
+               BlueprintIdentifier = "806D55B325AFD877005ED326"
+               BuildableName = "UITests.xctest"
                BlueprintName = "UITests"
                ReferencedContainer = "container:Demo.xcodeproj">
             </BuildableReference>
@@ -54,8 +54,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "804CC0C325AE16690015D5D7"
-            BuildableName = "Demo"
+            BlueprintIdentifier = "806D558025AFD733005ED326"
+            BuildableName = "Demo.app"
             BlueprintName = "Demo"
             ReferencedContainer = "container:Demo.xcodeproj">
          </BuildableReference>
@@ -71,8 +71,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "804CC0C325AE16690015D5D7"
-            BuildableName = "Demo"
+            BlueprintIdentifier = "806D558025AFD733005ED326"
+            BuildableName = "Demo.app"
             BlueprintName = "Demo"
             ReferencedContainer = "container:Demo.xcodeproj">
          </BuildableReference>
