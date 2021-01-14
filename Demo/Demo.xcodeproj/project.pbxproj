@@ -7,69 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		804CC0C925AE16690015D5D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0C825AE16690015D5D7 /* AppDelegate.m */; };
-		804CC0CC25AE16690015D5D7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0CB25AE16690015D5D7 /* SceneDelegate.m */; };
-		804CC0D225AE16690015D5D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 804CC0D025AE16690015D5D7 /* Main.storyboard */; };
-		804CC0D425AE166A0015D5D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 804CC0D325AE166A0015D5D7 /* Assets.xcassets */; };
-		804CC0DA25AE166A0015D5D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0D925AE166A0015D5D7 /* main.m */; };
-		804CC0EE25AE17B30015D5D7 /* PopupBridge_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */; };
-		804CC0FB25AE18D90015D5D7 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 804CC0FA25AE18D90015D5D7 /* POPViewController.m */; };
-		804CC11025AE19EC0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804CC10F25AE19EC0015D5D7 /* PopupBridge.framework */; };
-		804CC11125AE19EC0015D5D7 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 804CC10F25AE19EC0015D5D7 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		806D558625AFD733005ED326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558525AFD733005ED326 /* AppDelegate.m */; };
+		806D558925AFD733005ED326 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558825AFD733005ED326 /* SceneDelegate.m */; };
+		806D558C25AFD733005ED326 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558B25AFD733005ED326 /* POPViewController.m */; };
+		806D558F25AFD733005ED326 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806D558D25AFD733005ED326 /* Main.storyboard */; };
+		806D559125AFD735005ED326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806D559025AFD735005ED326 /* Assets.xcassets */; };
+		806D559725AFD735005ED326 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D559625AFD735005ED326 /* main.m */; };
+		806D55B725AFD877005ED326 /* PopupBridge_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D55B625AFD877005ED326 /* PopupBridge_DemoUITests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		804CC0F025AE17B30015D5D7 /* PBXContainerItemProxy */ = {
+		806D55B925AFD877005ED326 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 804CC0BC25AE16690015D5D7 /* Project object */;
+			containerPortal = 806D557925AFD732005ED326 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 804CC0C325AE16690015D5D7;
+			remoteGlobalIDString = 806D558025AFD733005ED326;
 			remoteInfo = Demo;
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		804CC11325AE19EC0015D5D7 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				804CC11125AE19EC0015D5D7 /* PopupBridge.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		804CC0C725AE16690015D5D7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		804CC0C825AE16690015D5D7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		804CC0CA25AE16690015D5D7 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		804CC0CB25AE16690015D5D7 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		804CC0D125AE16690015D5D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		804CC0D325AE166A0015D5D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		804CC0D825AE166A0015D5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		804CC0D925AE166A0015D5D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_DemoUITests.m; sourceTree = "<group>"; };
-		804CC0EF25AE17B30015D5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		804CC0F925AE18D90015D5D7 /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
-		804CC0FA25AE18D90015D5D7 /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
-		804CC10F25AE19EC0015D5D7 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		804CC14825AE2B4D0015D5D7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Demo.app; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/Demo.app"; sourceTree = "<absolute>"; };
-		804CC14925AE2B4D0015D5D7 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = UITests.xctest; path = "/Users/scannillo/bt/popup-bridge-ios/Demo/build/Debug-iphoneos/UITests.xctest"; sourceTree = "<absolute>"; };
+		806D558125AFD733005ED326 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		806D558425AFD733005ED326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		806D558525AFD733005ED326 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		806D558725AFD733005ED326 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		806D558825AFD733005ED326 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		806D558A25AFD733005ED326 /* POPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
+		806D558B25AFD733005ED326 /* POPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
+		806D558E25AFD733005ED326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		806D559025AFD735005ED326 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		806D559525AFD735005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		806D559625AFD735005ED326 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		806D55B425AFD877005ED326 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		806D55B625AFD877005ED326 /* PopupBridge_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_DemoUITests.m; sourceTree = "<group>"; };
+		806D55B825AFD877005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		804CC0C125AE16690015D5D7 /* Frameworks */ = {
+		806D557E25AFD733005ED326 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804CC11025AE19EC0015D5D7 /* PopupBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		804CC0E825AE17B30015D5D7 /* Frameworks */ = {
+		806D55B125AFD877005ED326 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -79,60 +61,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		804CC0BB25AE16690015D5D7 = {
+		806D557825AFD732005ED326 = {
 			isa = PBXGroup;
 			children = (
-				804CC0C625AE16690015D5D7 /* Demo */,
-				804CC0EC25AE17B30015D5D7 /* UITests */,
-				804CC10E25AE19EC0015D5D7 /* Frameworks */,
+				806D558325AFD733005ED326 /* Demo */,
+				806D55B525AFD877005ED326 /* UITests */,
+				806D558225AFD733005ED326 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		804CC0C625AE16690015D5D7 /* Demo */ = {
+		806D558225AFD733005ED326 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				804CC0C725AE16690015D5D7 /* AppDelegate.h */,
-				804CC0C825AE16690015D5D7 /* AppDelegate.m */,
-				804CC0D325AE166A0015D5D7 /* Assets.xcassets */,
-				804CC0D825AE166A0015D5D7 /* Info.plist */,
-				804CC0D925AE166A0015D5D7 /* main.m */,
-				804CC0D025AE16690015D5D7 /* Main.storyboard */,
-				804CC0F925AE18D90015D5D7 /* POPViewController.h */,
-				804CC0FA25AE18D90015D5D7 /* POPViewController.m */,
-				804CC0CA25AE16690015D5D7 /* SceneDelegate.h */,
-				804CC0CB25AE16690015D5D7 /* SceneDelegate.m */,
+				806D558125AFD733005ED326 /* Demo.app */,
+				806D55B425AFD877005ED326 /* UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		806D558325AFD733005ED326 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				806D558425AFD733005ED326 /* AppDelegate.h */,
+				806D558525AFD733005ED326 /* AppDelegate.m */,
+				806D558725AFD733005ED326 /* SceneDelegate.h */,
+				806D558825AFD733005ED326 /* SceneDelegate.m */,
+				806D558A25AFD733005ED326 /* POPViewController.h */,
+				806D558B25AFD733005ED326 /* POPViewController.m */,
+				806D558D25AFD733005ED326 /* Main.storyboard */,
+				806D559025AFD735005ED326 /* Assets.xcassets */,
+				806D559525AFD735005ED326 /* Info.plist */,
+				806D559625AFD735005ED326 /* main.m */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
 		};
-		804CC0EC25AE17B30015D5D7 /* UITests */ = {
+		806D55B525AFD877005ED326 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
-				804CC0ED25AE17B30015D5D7 /* PopupBridge_DemoUITests.m */,
-				804CC0EF25AE17B30015D5D7 /* Info.plist */,
+				806D55B625AFD877005ED326 /* PopupBridge_DemoUITests.m */,
+				806D55B825AFD877005ED326 /* Info.plist */,
 			);
 			path = UITests;
-			sourceTree = "<group>";
-		};
-		804CC10E25AE19EC0015D5D7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				804CC10F25AE19EC0015D5D7 /* PopupBridge.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		804CC0C325AE16690015D5D7 /* Demo */ = {
+		806D558025AFD733005ED326 /* Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 804CC0DD25AE166A0015D5D7 /* Build configuration list for PBXNativeTarget "Demo" */;
+			buildConfigurationList = 806D559A25AFD735005ED326 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
-				804CC0C025AE16690015D5D7 /* Sources */,
-				804CC0C125AE16690015D5D7 /* Frameworks */,
-				804CC0C225AE16690015D5D7 /* Resources */,
-				804CC11325AE19EC0015D5D7 /* Embed Frameworks */,
+				806D557D25AFD733005ED326 /* Sources */,
+				806D557E25AFD733005ED326 /* Frameworks */,
+				806D557F25AFD733005ED326 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -140,43 +122,45 @@
 			);
 			name = Demo;
 			productName = Demo;
+			productReference = 806D558125AFD733005ED326 /* Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		804CC0EA25AE17B30015D5D7 /* UITests */ = {
+		806D55B325AFD877005ED326 /* UITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 804CC0F225AE17B30015D5D7 /* Build configuration list for PBXNativeTarget "UITests" */;
+			buildConfigurationList = 806D55BB25AFD877005ED326 /* Build configuration list for PBXNativeTarget "UITests" */;
 			buildPhases = (
-				804CC0E725AE17B30015D5D7 /* Sources */,
-				804CC0E825AE17B30015D5D7 /* Frameworks */,
-				804CC0E925AE17B30015D5D7 /* Resources */,
+				806D55B025AFD877005ED326 /* Sources */,
+				806D55B125AFD877005ED326 /* Frameworks */,
+				806D55B225AFD877005ED326 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				804CC0F125AE17B30015D5D7 /* PBXTargetDependency */,
+				806D55BA25AFD877005ED326 /* PBXTargetDependency */,
 			);
 			name = UITests;
 			productName = UITests;
+			productReference = 806D55B425AFD877005ED326 /* UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		804CC0BC25AE16690015D5D7 /* Project object */ = {
+		806D557925AFD732005ED326 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
-					804CC0C325AE16690015D5D7 = {
+					806D558025AFD733005ED326 = {
 						CreatedOnToolsVersion = 12.3;
 					};
-					804CC0EA25AE17B30015D5D7 = {
+					806D55B325AFD877005ED326 = {
 						CreatedOnToolsVersion = 12.3;
-						TestTargetID = 804CC0C325AE16690015D5D7;
+						TestTargetID = 806D558025AFD733005ED326;
 					};
 				};
 			};
-			buildConfigurationList = 804CC0BF25AE16690015D5D7 /* Build configuration list for PBXProject "Demo" */;
+			buildConfigurationList = 806D557C25AFD732005ED326 /* Build configuration list for PBXProject "Demo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -184,28 +168,28 @@
 				en,
 				Base,
 			);
-			mainGroup = 804CC0BB25AE16690015D5D7;
-			productRefGroup = 804CC0BB25AE16690015D5D7;
+			mainGroup = 806D557825AFD732005ED326;
+			productRefGroup = 806D558225AFD733005ED326 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				804CC0C325AE16690015D5D7 /* Demo */,
-				804CC0EA25AE17B30015D5D7 /* UITests */,
+				806D558025AFD733005ED326 /* Demo */,
+				806D55B325AFD877005ED326 /* UITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		804CC0C225AE16690015D5D7 /* Resources */ = {
+		806D557F25AFD733005ED326 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804CC0D425AE166A0015D5D7 /* Assets.xcassets in Resources */,
-				804CC0D225AE16690015D5D7 /* Main.storyboard in Resources */,
+				806D559125AFD735005ED326 /* Assets.xcassets in Resources */,
+				806D558F25AFD733005ED326 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		804CC0E925AE17B30015D5D7 /* Resources */ = {
+		806D55B225AFD877005ED326 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -215,40 +199,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		804CC0C025AE16690015D5D7 /* Sources */ = {
+		806D557D25AFD733005ED326 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804CC0FB25AE18D90015D5D7 /* POPViewController.m in Sources */,
-				804CC0C925AE16690015D5D7 /* AppDelegate.m in Sources */,
-				804CC0DA25AE166A0015D5D7 /* main.m in Sources */,
-				804CC0CC25AE16690015D5D7 /* SceneDelegate.m in Sources */,
+				806D558C25AFD733005ED326 /* POPViewController.m in Sources */,
+				806D558625AFD733005ED326 /* AppDelegate.m in Sources */,
+				806D559725AFD735005ED326 /* main.m in Sources */,
+				806D558925AFD733005ED326 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		804CC0E725AE17B30015D5D7 /* Sources */ = {
+		806D55B025AFD877005ED326 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804CC0EE25AE17B30015D5D7 /* PopupBridge_DemoUITests.m in Sources */,
+				806D55B725AFD877005ED326 /* PopupBridge_DemoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		804CC0F125AE17B30015D5D7 /* PBXTargetDependency */ = {
+		806D55BA25AFD877005ED326 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 804CC0C325AE16690015D5D7 /* Demo */;
-			targetProxy = 804CC0F025AE17B30015D5D7 /* PBXContainerItemProxy */;
+			target = 806D558025AFD733005ED326 /* Demo */;
+			targetProxy = 806D55B925AFD877005ED326 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		804CC0D025AE16690015D5D7 /* Main.storyboard */ = {
+		806D558D25AFD733005ED326 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				804CC0D125AE16690015D5D7 /* Base */,
+				806D558E25AFD733005ED326 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -256,7 +240,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		804CC0DB25AE166A0015D5D7 /* Debug */ = {
+		806D559825AFD735005ED326 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -315,7 +299,7 @@
 			};
 			name = Debug;
 		};
-		804CC0DC25AE166A0015D5D7 /* Release */ = {
+		806D559925AFD735005ED326 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -368,7 +352,7 @@
 			};
 			name = Release;
 		};
-		804CC0DE25AE166A0015D5D7 /* Debug */ = {
+		806D559B25AFD735005ED326 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -386,7 +370,7 @@
 			};
 			name = Debug;
 		};
-		804CC0DF25AE166A0015D5D7 /* Release */ = {
+		806D559C25AFD735005ED326 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -404,7 +388,7 @@
 			};
 			name = Release;
 		};
-		804CC0F325AE17B30015D5D7 /* Debug */ = {
+		806D55BC25AFD877005ED326 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -422,7 +406,7 @@
 			};
 			name = Debug;
 		};
-		804CC0F425AE17B30015D5D7 /* Release */ = {
+		806D55BD25AFD877005ED326 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -443,34 +427,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		804CC0BF25AE16690015D5D7 /* Build configuration list for PBXProject "Demo" */ = {
+		806D557C25AFD732005ED326 /* Build configuration list for PBXProject "Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				804CC0DB25AE166A0015D5D7 /* Debug */,
-				804CC0DC25AE166A0015D5D7 /* Release */,
+				806D559825AFD735005ED326 /* Debug */,
+				806D559925AFD735005ED326 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		804CC0DD25AE166A0015D5D7 /* Build configuration list for PBXNativeTarget "Demo" */ = {
+		806D559A25AFD735005ED326 /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				804CC0DE25AE166A0015D5D7 /* Debug */,
-				804CC0DF25AE166A0015D5D7 /* Release */,
+				806D559B25AFD735005ED326 /* Debug */,
+				806D559C25AFD735005ED326 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		804CC0F225AE17B30015D5D7 /* Build configuration list for PBXNativeTarget "UITests" */ = {
+		806D55BB25AFD877005ED326 /* Build configuration list for PBXNativeTarget "UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				804CC0F325AE17B30015D5D7 /* Debug */,
-				804CC0F425AE17B30015D5D7 /* Release */,
+				806D55BC25AFD877005ED326 /* Debug */,
+				806D55BD25AFD877005ED326 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 804CC0BC25AE16690015D5D7 /* Project object */;
+	rootObject = 806D557925AFD732005ED326 /* Project object */;
 }
