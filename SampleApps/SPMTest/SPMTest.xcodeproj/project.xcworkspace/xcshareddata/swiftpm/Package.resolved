@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "PopupBridge",
+        "repositoryURL": "git@github.com:braintree/popup-bridge-ios.git",
+        "state": {
+          "branch": "spm-support",
+          "revision": "c91608d15593376cb3e1b8463fbf652518f86716",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
