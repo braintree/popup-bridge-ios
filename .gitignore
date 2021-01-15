@@ -34,3 +34,4 @@ Pods/
 # SPM
 .swiftpm
 .build
+SampleApps/SPMTest/SPMTest.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
