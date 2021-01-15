@@ -12,8 +12,8 @@
 		806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */; };
 		806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EE25B12B31001754AF /* POPPopupBridge.m */; };
 		806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */; };
-		806F553925B1380D001754AF /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553725B1380D001754AF /* PopupBridge.h */; };
-		806F553A25B1380D001754AF /* POPPopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553825B1380D001754AF /* POPPopupBridge.h */; };
+		806F553925B1380D001754AF /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553725B1380D001754AF /* PopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		806F553A25B1380D001754AF /* POPPopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553825B1380D001754AF /* POPPopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
@@ -504,7 +504,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/PopupBridge/PopupBridge-Framework-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -537,7 +537,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/PopupBridge/PopupBridge-Framework-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
