@@ -125,6 +125,7 @@
 		806F54EA25B12864001754AF /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				806F553225B13709001754AF /* PopupBridge */,
 				A775A08D1DEE4EF0009E67C2 /* PopupBridge.h */,
 				A73D5A041DFA2E1500387737 /* POPPopupBridge.h */,
 			);
@@ -137,6 +138,13 @@
 				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		806F553225B13709001754AF /* PopupBridge */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PopupBridge;
 			sourceTree = "<group>";
 		};
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
