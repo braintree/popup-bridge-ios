@@ -30,3 +30,7 @@ DerivedData
 Carthage
 
 Pods/
+
+# SPM
+.swiftpm
+.build
