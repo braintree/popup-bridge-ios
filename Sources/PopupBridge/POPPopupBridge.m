@@ -1,4 +1,4 @@
-#import "POPPopupBridge.h"
+#import <PopupBridge/POPPopupBridge.h>
 #import "POPWeakScriptMessageDelegate.h"
 #import <SafariServices/SFSafariViewController.h>
 
