@@ -80,8 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
+				806F552D25B13211001754AF /* Sources */,
 				A775A07D1DEE4E7E009E67C2 /* UnitTests */,
-				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				089BA8CF5FAA4A7D83B81A93 /* Pods */,
@@ -129,6 +129,14 @@
 				A73D5A041DFA2E1500387737 /* POPPopupBridge.h */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		806F552D25B13211001754AF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
