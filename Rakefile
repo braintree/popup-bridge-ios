@@ -11,7 +11,7 @@ desc "Run tests"
 task :spec => %w[spec:all]
 
 desc "Run internal release steps"
-task :release => %w[release:assumptions demo_app:build_demo release:check_working_directory release:bump_version release:lint_podspec release:tag]
+task :release => %w[release:assumptions demo_app:build_demo spm:build_demo release:check_working_directory release:bump_version release:lint_podspec release:tag]
 
 desc "Publish code and pod to public github.com"
 task :publish => %w[publish:push publish:push_pod]
@@ -82,6 +82,28 @@ namespace :demo_app do
   desc 'Verify that the demo app builds successfully'
   task :build_demo do
     run! xcodebuild('Demo', 'build', 'Release')
+  end
+end
+
+namespace :spm do
+  def update_xcodeproj
+    project_file = "SampleApps/SPMTest/SPMTest.xcodeproj/project.pbxproj"
+    proj = File.read(project_file)
+    proj.gsub!(/(repositoryURL = )(.*);/, "\\1\"file://#{Dir.pwd}/\";")
+    proj.gsub!(/(branch = )(.*);/, "\\1\"#{current_branch}\";")
+    File.open(project_file, "w") { |f| f.puts proj }
+  end
+
+  task :build_demo do
+    update_xcodeproj
+
+    # Build SPMTest app
+    run! "cd SampleApps/SPMTest && swift package resolve"
+    run! "xcodebuild -project 'SampleApps/SPMTest/SPMTest.xcodeproj' -scheme 'SPMTest' clean build"
+
+    # Cleanup
+    run! 'rm -rf ~/Library/Developers/Xcode/DerivedData'
+    run! 'git checkout SampleApps/SPMTest'
   end
 end
 

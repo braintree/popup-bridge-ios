@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; };
+		8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		806D558625AFD733005ED326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558525AFD733005ED326 /* AppDelegate.m */; };
 		806D558925AFD733005ED326 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558825AFD733005ED326 /* SceneDelegate.m */; };
 		806D558C25AFD733005ED326 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558B25AFD733005ED326 /* POPViewController.m */; };
@@ -26,7 +28,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		806F556225B1400A001754AF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8018D88425B7891E00D877F3 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558125AFD733005ED326 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558425AFD733005ED326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		806D558525AFD733005ED326 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -48,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +85,7 @@
 				806D558325AFD733005ED326 /* Demo */,
 				806D55B525AFD877005ED326 /* UITests */,
 				806D558225AFD733005ED326 /* Products */,
+				806F554125B13E21001754AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +124,14 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
+		806F554125B13E21001754AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8018D88425B7891E00D877F3 /* PopupBridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,6 +142,7 @@
 				806D557D25AFD733005ED326 /* Sources */,
 				806D557E25AFD733005ED326 /* Frameworks */,
 				806D557F25AFD733005ED326 /* Resources */,
+				806F556225B1400A001754AF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
