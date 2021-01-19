@@ -66,12 +66,12 @@ namespace :spec do
 
   desc 'Run unit tests'
   task :unit do
-    run_test_scheme! 'PopupBridge_Tests'
+    run_test_scheme! 'UnitTests'
   end
 
   desc 'Run UI tests'
   task :ui do
-    run_test_scheme! 'PopupBridge_ExampleUITests'
+    run_test_scheme! 'UITests'
   end
 
   desc 'Run all spec schemes'
@@ -81,7 +81,7 @@ end
 namespace :demo_app do
   desc 'Verify that the demo app builds successfully'
   task :build_demo do
-    run! xcodebuild('PopupBridge-Example', 'build', 'Release')
+    run! xcodebuild('Demo', 'build', 'Release')
   end
 end
 

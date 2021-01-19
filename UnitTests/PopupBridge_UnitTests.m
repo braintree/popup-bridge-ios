@@ -18,10 +18,10 @@
 
 @end
 
-@interface PopupBridge_Tests : XCTestCase <WKNavigationDelegate>
+@interface PopupBridge_UnitTests : XCTestCase <WKNavigationDelegate>
 @end
 
-@implementation PopupBridge_Tests
+@implementation PopupBridge_UnitTests
 
 static void (^webviewReadyBlock)(void);
 
