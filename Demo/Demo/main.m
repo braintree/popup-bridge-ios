@@ -1,10 +1,3 @@
-//
-//  main.m
-//  Demo
-//
-//  Created by Cannillo, Sammy on 1/13/21.
-//
-
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
