@@ -2,8 +2,8 @@ language: objective-c
 osx_image: xcode12.3
 
 branches:
-  only: 
-    - master
+  only:
+  - master
 
 cache:
   bundler: true
