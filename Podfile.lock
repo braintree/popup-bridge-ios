@@ -5,7 +5,7 @@ DEPENDENCIES:
   - OCMock
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - OCMock
 
 SPEC CHECKSUMS:
