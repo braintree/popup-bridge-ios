@@ -3,6 +3,7 @@
 ## unreleased
 
 * Exclude arm64 simulator architectures via Podspec
+* Add Swift Package Manager support
 
 ## 1.1.0 (2020-05-13)
 
