@@ -1,9 +1,9 @@
 # PopupBridge iOS Release Notes
 
-## unreleased
+## 1.2.0 (2021-01-22)
 
 * Exclude arm64 simulator architectures via Podspec
-* Add Swift Package Manager support
+* Add Swift Package Manager support (resolves #27)
 
 ## 1.1.0 (2020-05-13)
 
