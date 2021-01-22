@@ -18,8 +18,8 @@ task :publish => %w[publish:push publish:push_pod]
 
 SEMVER = /\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?/
 PODSPEC = "PopupBridge.podspec"
-DEMO_PLIST = "Example/PopupBridge-Info.plist"
-POPUPBRIDGE_FRAMEWORKS_PLIST = "PopupBridge/PopupBridge-Framework-Info.plist"
+DEMO_PLIST = "Demo/Demo/Info.plist"
+POPUPBRIDGE_FRAMEWORKS_PLIST = "Sources/PopupBridge/PopupBridge-Framework-Info.plist"
 PUBLIC_REMOTE_NAME = "origin"
 
 class << self
