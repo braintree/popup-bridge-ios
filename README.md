@@ -1,6 +1,8 @@
 PopupBridge iOS
 ===============
 
+![GitHub Actions Tests](https://github.com/braintree/popup-bridge-ios/workflows/Tests/badge.svg)
+
 PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController browser and send data back to the parent page in the WKWebView.
 
 PopupBridge is also available for [Android](https://github.com/braintree/popup-bridge-android).
