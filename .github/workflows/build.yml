@@ -30,7 +30,7 @@ jobs:
         run: xcodebuild -project 'SampleApps/SPMTest/SPMTest.xcodeproj' -scheme 'SPMTest' clean build archive CODE_SIGNING_ALLOWED=NO
 
   # Xcode 13-beta Jobs
-  cocoapods:
+  cocoapods_xcode_beta:
     name: CocoaPods (Xcode 13-beta)
     runs-on: macOS-11
     steps:
@@ -42,7 +42,7 @@ jobs:
         run: pod install
       - name: Run pod lib lint
         run: pod lib lint
-  spm:
+  spm_xcode_beta:
     name: SPM (Xcode 13-beta)
     runs-on: macOS-11
     steps:
