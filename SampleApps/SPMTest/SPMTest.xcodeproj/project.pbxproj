@@ -12,7 +12,7 @@
 		806F551C25B1319E001754AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F551B25B1319E001754AF /* ViewController.swift */; };
 		806F551F25B1319E001754AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806F551D25B1319E001754AF /* Main.storyboard */; };
 		806F552125B131A1001754AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806F552025B131A1001754AF /* Assets.xcassets */; };
-		806F556825B143D0001754AF /* PopupBridge in Frameworks */ = {isa = PBXBuildFile; productRef = 806F556725B143D0001754AF /* PopupBridge */; };
+		80ADC8E426AF605D00F25520 /* PopupBridge in Frameworks */ = {isa = PBXBuildFile; productRef = 80ADC8E326AF605D00F25520 /* PopupBridge */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806F556825B143D0001754AF /* PopupBridge in Frameworks */,
+				80ADC8E426AF605D00F25520 /* PopupBridge in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +83,7 @@
 			);
 			name = SPMTest;
 			packageProductDependencies = (
-				806F556725B143D0001754AF /* PopupBridge */,
+				80ADC8E326AF605D00F25520 /* PopupBridge */,
 			);
 			productName = SPMTest;
 			productReference = 806F551425B1319E001754AF /* SPMTest.app */;
@@ -113,7 +113,7 @@
 			);
 			mainGroup = 806F550B25B1319E001754AF;
 			packageReferences = (
-				806F556625B143D0001754AF /* XCRemoteSwiftPackageReference "popup-bridge-ios" */,
+				80ADC8E226AF605D00F25520 /* XCRemoteSwiftPackageReference "popup-bridge-ios" */,
 			);
 			productRefGroup = 806F551525B1319E001754AF /* Products */;
 			projectDirPath = "";
@@ -339,20 +339,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		806F556625B143D0001754AF /* XCRemoteSwiftPackageReference "popup-bridge-ios" */ = {
+		80ADC8E226AF605D00F25520 /* XCRemoteSwiftPackageReference "popup-bridge-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:braintree/popup-bridge-ios.git";
+			repositoryURL = "https://github.com/braintree/popup-bridge-ios.git";
 			requirement = {
-				branch = "spm-support";
+				branch = master;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		806F556725B143D0001754AF /* PopupBridge */ = {
+		80ADC8E326AF605D00F25520 /* PopupBridge */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806F556625B143D0001754AF /* XCRemoteSwiftPackageReference "popup-bridge-ios" */;
+			package = 80ADC8E226AF605D00F25520 /* XCRemoteSwiftPackageReference "popup-bridge-ios" */;
 			productName = PopupBridge;
 		};
 /* End XCSwiftPackageProductDependency section */
