@@ -27,8 +27,8 @@ jobs:
       - name: Run UI Tests
         run: xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 12,platform=iOS Simulator' test #TODO: add some sort of xcpretty or xcbeautify
 
-   # Xcode 13-beta Jobs
-   ui_test_job_xcode_beta:
+  # Xcode 13-beta Jobs
+  ui_test_job_xcode_beta:
     name: UI (Xcode 13-beta)
     runs-on: macOS-11
     steps:
