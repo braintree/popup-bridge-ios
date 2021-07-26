@@ -1,0 +1,28 @@
+name: Tests
+on: [pull_request, workflow_dispatch]
+jobs:
+  unit_test_job:
+    name: Unit
+    runs-on: macOS-11
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Xcode 12.5
+        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
+      - name: Install CocoaPod dependencies
+        run: pod install
+      - name: Run Unit Tests
+        run: xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 12,platform=iOS Simulator' test
+  ui_test_job:
+    name: UI
+    runs-on: macOS-11
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Xcode 12.5
+        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
+      - name: Install CocoaPod dependencies
+        run: pod install
+      - name: Run UI Tests
+        run: xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 12,platform=iOS Simulator' test
+ 
