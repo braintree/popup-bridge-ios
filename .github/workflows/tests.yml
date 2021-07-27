@@ -13,7 +13,7 @@ jobs:
       - name: Install CocoaPod dependencies
         run: pod install
       - name: Run Unit Tests
-        run: xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 12,platform=iOS Simulator' test #TODO: add some sort of xcpretty or xcbeautify
+        run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 12,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
   ui_test_job:
     name: UI (Xcode 12.5)
     runs-on: macOS-11
@@ -25,7 +25,7 @@ jobs:
       - name: Install CocoaPod dependencies
         run: pod install
       - name: Run UI Tests
-        run: xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 12,platform=iOS Simulator' test #TODO: add some sort of xcpretty or xcbeautify
+        run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 12,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
 
   # Xcode 13-beta Jobs
   ui_test_job_xcode_beta:
@@ -39,4 +39,4 @@ jobs:
       - name: Install CocoaPod dependencies
         run: pod install
       - name: Run UI Tests
-        run: xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 12,platform=iOS Simulator' test #TODO: add some sort of xcpretty or xcbeautify
+        run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 12,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
