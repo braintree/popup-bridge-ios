@@ -236,7 +236,7 @@ WebView-based checkout flows can accept PayPal with PopupBridge and the [Braintr
 1. Create a native mobile app that opens the checkout in a `WKWebView` (See steps 1-3 of the quick start instructions)
 1. Integrate the PopupBridge library
 1. Collect device data
-    - To help detect fraudulent activity, collect device data before performing PayPal transactions. This is similar to collecting device data with our [native iOS SDK](https://developers.braintreepayments.com/guides/paypal/vault/ios/v4) with a few differences:
+    - To help detect fraudulent activity, collect device data before performing PayPal transactions. This is similar to collecting device data with our [native iOS SDK](https://developer.paypal.com/braintree/docs/guides/paypal/vault/ios/v5) with a few differences:
         1. Rather than importing the entire data collector, you can add just PayPalDataCollector to your app: `pod 'Braintree/PayPalDataCollector'`
         1. Implement methods in your native app depending on whether you are doing one-time payments or vaulted payments. See the [iOS code snippets for PayPal + PopupBridge](popupbridge-paypaldatacollector-ios.md)
 1. Profit!
