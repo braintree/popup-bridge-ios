@@ -22,7 +22,7 @@ The call to `+[PPDataCollector clientMetadataID:]` causes device data to be coll
 
 ## Charging a vaulted PayPal account
 
-1. Create a global JavaScript function on your web page to receive the device data object and [provide it to your server](https://developer.paypal.com/braintree/docs/guides/paypal/vault/ios/v5#collecting-device-data), e.g. by injecting it into your form as a hidden input.
+1. Create a global JavaScript function on your web page to receive the device data object and [provide it to your server](https://developer.paypal.com/braintree/docs/guides/paypal/vault/javascript/v3#collecting-device-data), e.g. by injecting it into your form as a hidden input.
 ```javascript
 window.setDeviceData = function setDeviceData(deviceData) {
   console.log('Web view got device data:', deviceData);
