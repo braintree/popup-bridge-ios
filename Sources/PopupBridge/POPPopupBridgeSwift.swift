@@ -61,7 +61,34 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         self.scheme = returnURLScheme
     }
 
-    let javascriptTemplate = "        ;(function () {            if (!window.popupBridge) { window.popupBridge = {}; };                        window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {                return '%%SCHEME%%://%%HOST%%/';            };                        window.popupBridge.open = function open(url) {                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({                    url: url                });            };                        window.popupBridge.sendMessage = function sendMessage(message, data) {                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({                    message: {                        name: message,                        data: data                    }                });            };                        return 0;        })();"
+    let javascriptTemplate = """
+        ;(function () {
+            if (!window.popupBridge) { window.popupBridge = {}; };
+
+            window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
+                return '%%SCHEME%%://%%HOST%%/';
+            };
+            
+            window.popupBridge.open = function open(url) {
+                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%
+                    .postMessage({
+                    url: url
+                });
+            };
+        
+            window.popupBridge.sendMessage = function sendMessage(message, data) {
+                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%
+                    .postMessage({
+                    message: {
+                        name: message,
+                        data: data
+                    }
+                });
+            };
+        
+            return 0;
+        })();
+        """
 
     public static func openURL(url: URL, sourceApplication: String) -> Bool {
         return POPPopupBridgeSwift.openURL(url: url)
