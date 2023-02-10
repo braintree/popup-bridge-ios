@@ -14,7 +14,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     static var scheme: String?
     var safariViewController: SFSafariViewController?
     
-    private static var returnBlock: ((URL?) -> Bool)?
+    private static var returnBlock: ((URL) -> Bool)?
     
     // TODO: - make unfailable
     @objc public init?(webView: WKWebView, delegate: POPPopupBridgeDelegateSwift) {
@@ -47,48 +47,9 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         webView.configuration.userContentController.addUserScript(script)
         
 //        weak var weakSelf = self
-        POPPopupBridgeSwift.returnBlock = { (url : URL?) -> Bool in
-            let error = "null"
-            let payload = "null"
-            let script: String
-    
-            if let url {
-                let urlComponents = URLComponents.init(url: url, resolvingAgainstBaseURL: false)
-                let path = urlComponents?.path
-    
-                if (urlComponents?.scheme?.localizedCaseInsensitiveCompare(scheme) != ComparisonResult.orderedSame ||
-                    urlComponents?.host?.localizedCaseInsensitiveCompare(self.kPOPURLHost) != ComparisonResult.orderedSame) {
-                    return false
-                }
-                
-                self.dismissSafariViewController()
-                
-                var payloadDictionary: [String: Any] = [:]
-                payloadDictionary["path"] = path
-                payloadDictionary["queryItems"] = self.dictionaryFor(queryString: url.query!)
-                if let fragment = url.fragment {
-                    payloadDictionary["hash"] = fragment
-                }
-                
-                do {
-                    let payloadData = try JSONSerialization.data(withJSONObject: payloadDictionary)
-                    
-                    let load = NSString.init(data: payloadData, encoding: NSUTF8StringEncoding) // why formatted different?
-                    let payload = String(data: payloadData, encoding: .utf8)!
-                    
-                    script = "window.popupBridge.onComplete(null, \(payload));"
-                } catch {
-                    script = "window.popupBridge.onComplete(null, null);"
-                }
-
-            } else {
-                script = """
-                if (typeof window.popupBridge.onCancel === 'function') {\
-                  window.popupBridge.onCancel();\
-                } else {\
-                  window.popupBridge.onComplete(null, null);\
-                }
-                """
+        POPPopupBridgeSwift.returnBlock = { (url : URL) -> Bool in
+            guard let script = self.parseResponseFromPopUpToPassBacktoWebView(url: url) else {
+                return false
             }
             
             self.injectWebView(webView: webView, withJavaScript: script)
@@ -118,6 +79,41 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         }
     }
     
+    func parseResponseFromPopUpToPassBacktoWebView(url: URL) -> String? {
+        let urlComponents = URLComponents.init(url: url, resolvingAgainstBaseURL: false)
+        let path = urlComponents?.path
+        
+        guard let scheme = POPPopupBridgeSwift.scheme,
+              urlComponents?.scheme?.caseInsensitiveCompare(scheme) == .orderedSame,
+              urlComponents?.host?.caseInsensitiveCompare(kPOPURLHost) == .orderedSame
+        else {
+            return nil
+        }
+        
+        self.dismissSafariViewController()
+        
+        var payloadDictionary: [String: Any] = [:]
+        payloadDictionary["path"] = path
+        payloadDictionary["queryItems"] = self.dictionaryFor(queryString: url.query!)
+        if let fragment = url.fragment {
+            payloadDictionary["hash"] = fragment
+        }
+        
+        do {
+            let payloadData = try JSONSerialization.data(withJSONObject: payloadDictionary)
+            
+            let load = NSString.init(data: payloadData, encoding: NSUTF8StringEncoding) // why formatted different?
+            let payload = String(data: payloadData, encoding: .utf8)!
+            
+            return "window.popupBridge.onComplete(null, \(payload));"
+        } catch {
+            let errorMessage = "Failed to parse query items from return URL. \(error.localizedDescription)"
+            let errorResponse = "new Error(\"\(errorMessage)\")"
+            return "window.popupBridge.onComplete(\(errorResponse), null);"
+        }
+        
+    }
+    
     func dismissSafariViewController() {
         if let safariViewController {
             if delegate.responds(to: #selector(POPPopupBridgeDelegate.popupBridge(_:requestsDismissalOf:))) {
@@ -128,8 +124,16 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     
     // MARK: - SFSafariViewControllerDelegate
     
+    // User clicked "Done"
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        //
+        let script = """
+            if (typeof window.popupBridge.onCancel === 'function') {\
+              window.popupBridge.onCancel();\
+            } else {\
+              window.popupBridge.onComplete(null, null);\
+            }
+            """
+        injectWebView(webView: webView, withJavaScript: script)
     }
     
     // MARK: - WKScriptMessageHandler conformance
