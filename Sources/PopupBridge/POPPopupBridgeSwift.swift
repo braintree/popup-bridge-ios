@@ -72,9 +72,11 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
                 
                 do {
                     let payloadData = try JSONSerialization.data(withJSONObject: payloadDictionary)
+                    
+                    let load = NSString.init(data: payloadData, encoding: NSUTF8StringEncoding) // why formatted different?
                     let payload = String(data: payloadData, encoding: .utf8)!
                     
-                    script = "window.popupBridge.onComplete(null, \(payload);"
+                    script = "window.popupBridge.onComplete(null, \(payload));"
                 } catch {
                     script = "window.popupBridge.onComplete(null, null);"
                 }
