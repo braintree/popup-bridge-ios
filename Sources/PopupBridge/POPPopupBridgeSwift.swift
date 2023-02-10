@@ -95,7 +95,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         
         var payloadDictionary: [String: Any] = [:]
         payloadDictionary["path"] = path
-        payloadDictionary["queryItems"] = self.dictionaryFor(queryString: url.query!)
+        payloadDictionary["queryItems"] = url.queryDictionary
         if let fragment = url.fragment {
             payloadDictionary["hash"] = fragment
         }
@@ -168,34 +168,6 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     }
     
     // MARK: - Helpers
-    
-    func dictionaryFor(queryString: String) -> Dictionary<String, String?> {
-        var parameters: [String: String?] = [:]
-        let components = queryString.components(separatedBy: "&")
-        for keyValueString in components {
-            if keyValueString.count == 0 {
-                continue
-            }
-            
-            let keyValueArray = keyValueString.components(separatedBy: "=")
-            let key = percentDecodedStringFor(string: keyValueArray[0])
-//            if (key = nil) {
-//                continue
-//            }
-            if keyValueArray.count == 2 {
-                let value = percentDecodedStringFor(string: keyValueArray[1])
-                parameters[key] = value
-            } else {
-                parameters[key] = nil
-            }
-        }
-        
-        return parameters
-    }
-    
-    func percentDecodedStringFor(string: String) -> String {
-        return string.replacingOccurrences(of: "+", with: " ").removingPercentEncoding ?? "" // todo
-    }
     
     func injectWebView(webView: WKWebView, withJavaScript script: String) {
         webView.evaluateJavaScript(script) { _, error in
