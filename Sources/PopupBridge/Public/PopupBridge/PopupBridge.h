@@ -7,3 +7,4 @@ FOUNDATION_EXPORT double PopupBridgeVersionNumber;
 FOUNDATION_EXPORT const unsigned char PopupBridgeVersionString[];
 
 #import <PopupBridge/POPPopupBridge.h>
+//#import <PopupBridge/PopupBridge-Swift.h>

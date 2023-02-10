@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import <PopupBridge/POPPopupBridge.h>
+#import <PopupBridge/PopupBridge-Swift.h>
 
 @interface AppDelegate ()
 
@@ -9,7 +10,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [POPPopupBridge setReturnURLScheme:@"com.braintreepayments.popupbridgeexample"];
+    [POPPopupBridgeSwift setReturnURLScheme:@"com.braintreepayments.popupbridgeexample"];
     return YES;
 }
 

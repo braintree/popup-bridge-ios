@@ -1,5 +1,6 @@
 #import "SceneDelegate.h"
 #import <PopupBridge/POPPopupBridge.h>
+#import <PopupBridge/PopupBridge-Swift.h>
 
 @interface SceneDelegate ()
 
@@ -11,7 +12,7 @@
    for (UIOpenURLContext *urlContext in URLContexts) {
        NSURL *url = [urlContext URL];
        if ([url.scheme localizedCaseInsensitiveCompare:@"com.braintreepayments.popupbridgeexample"] == NSOrderedSame) {
-       [POPPopupBridge openURL:urlContext.URL];
+       [POPPopupBridgeSwift openURLWithUrl:urlContext.URL];
        }
    }
 }

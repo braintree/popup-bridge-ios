@@ -1,6 +1,7 @@
 import Foundation
 import SafariServices
 
+@objcMembers
 public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariViewControllerDelegate {
     
     // Constants
@@ -10,14 +11,14 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     // Properties
     let webView: WKWebView
     let delegate: POPPopupBridgeDelegateSwift
-    var scheme: String?
+    static var scheme: String?
     var safariViewController: SFSafariViewController?
     
     private static var returnBlock: ((URL?) -> Bool)?
     
     // TODO: - make unfailable
-    init?(webView: WKWebView, delegate: POPPopupBridgeDelegateSwift) {
-        guard let scheme = scheme else {
+    @objc public init?(webView: WKWebView, delegate: POPPopupBridgeDelegateSwift) {
+        guard let scheme = POPPopupBridgeSwift.scheme else {
             // TODO: - Raise exception
             return nil
         }
@@ -93,21 +94,21 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         }
     }
     
-    func setReturlURLScheme(returnURLScheme: String) {
-        scheme = returnURLScheme
+    public static func setReturnURLScheme(_ returnURLScheme: String) {
+        self.scheme = returnURLScheme
     }
 
     let javascriptTemplate = "        ;(function () {            if (!window.popupBridge) { window.popupBridge = {}; };                        window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {                return '%%SCHEME%%://%%HOST%%/';            };                        window.popupBridge.open = function open(url) {                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({                    url: url                });            };                        window.popupBridge.sendMessage = function sendMessage(message, data) {                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%.postMessage({                    message: {                        name: message,                        data: data                    }                });            };                        return 0;        })();"
 
-    static func openURL(url: URL, sourceApplication: String) -> Bool {
+    public static func openURL(url: URL, sourceApplication: String) -> Bool {
         return POPPopupBridgeSwift.openURL(url: url)
     }
     
-    static func openURL(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
+    public static func openURL(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         return POPPopupBridgeSwift.openURL(url: url)
     }
     
-    static func openURL(url: URL) -> Bool {
+    public static func openURL(url: URL) -> Bool {
         if let returnBlock {
             return returnBlock(url)
         } else {
@@ -136,15 +137,17 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         if message.name == kPOPScriptMessageHandlerName {
             let params = message.body as! [String: Any]
             let urlString = params["url"] as! String?
-            if urlString != nil {
+            if let url = URL(string: urlString!) {
                 dismissSafariViewController()
-                
-                let url = URL(string: urlString!)
-                
-                // do we need to do this responds to selector thing?
+                                
+//                 do we need to do this responds to selector thing?
                 if delegate.responds(to: #selector(POPPopupBridgeDelegate.popupBridge(_:willOpen:))) {
-                    delegate.popupBridge?(self, willOpenURL: url!)
+                    delegate.popupBridge?(self, willOpenURL: url)
                 }
+                
+                safariViewController = SFSafariViewController(url: url)
+                safariViewController?.delegate = self
+                self.delegate.popupBridge(self, requestsPresentationOfViewController: safariViewController)
                 return
             }
             
