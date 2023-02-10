@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		79DB9F7F53319F206CDE119E /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */; };
+		800A09D62995F021003ED16E /* POPWeakScriptMessageDelegateSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */; };
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
 		806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */; };
 		806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EE25B12B31001754AF /* POPPopupBridge.m */; };
@@ -26,6 +27,7 @@
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPWeakScriptMessageDelegateSwift.swift; sourceTree = "<group>"; };
 		806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
 		806F54EE25B12B31001754AF /* POPPopupBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPPopupBridge.m; sourceTree = "<group>"; };
 		806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
+				800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */,
 				806F54EE25B12B31001754AF /* POPPopupBridge.m */,
 				806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */,
 				806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */,
@@ -237,6 +240,7 @@
 					};
 					A775A08A1DEE4EF0009E67C2 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 1420;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -335,6 +339,7 @@
 			files = (
 				806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */,
 				806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */,
+				800A09D62995F021003ED16E /* POPWeakScriptMessageDelegateSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -513,6 +519,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -523,6 +531,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -546,6 +555,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
