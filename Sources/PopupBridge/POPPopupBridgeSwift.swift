@@ -35,10 +35,12 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         
         
         // Step 3 - Create javascript code and inject into WebView
-        let javascript = javascriptTemplate
-            .replacingOccurrences(of: "%%SCHEME%%", with: scheme)
-            .replacingOccurrences(of: "%%SCRIPT_MESSAGE_HANDLER_NAME%%", with: kPOPScriptMessageHandlerName)
-            .replacingOccurrences(of: "%%HOST%%", with: kPOPURLHost)
+        let javascript = UserScript(
+            scheme: scheme,
+            scriptMessageHandlerName: kPOPScriptMessageHandlerName,
+            host: kPOPURLHost
+        ).rawJavascript
+        
         let script = WKUserScript(
             source: javascript,
             injectionTime: .atDocumentStart,
@@ -60,35 +62,6 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     public static func setReturnURLScheme(_ returnURLScheme: String) {
         self.scheme = returnURLScheme
     }
-
-    let javascriptTemplate = """
-        ;(function () {
-            if (!window.popupBridge) { window.popupBridge = {}; };
-
-            window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
-                return '%%SCHEME%%://%%HOST%%/';
-            };
-            
-            window.popupBridge.open = function open(url) {
-                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%
-                    .postMessage({
-                    url: url
-                });
-            };
-        
-            window.popupBridge.sendMessage = function sendMessage(message, data) {
-                window.webkit.messageHandlers.%%SCRIPT_MESSAGE_HANDLER_NAME%%
-                    .postMessage({
-                    message: {
-                        name: message,
-                        data: data
-                    }
-                });
-            };
-        
-            return 0;
-        })();
-        """
 
     public static func openURL(url: URL, sourceApplication: String) -> Bool {
         return POPPopupBridgeSwift.openURL(url: url)
