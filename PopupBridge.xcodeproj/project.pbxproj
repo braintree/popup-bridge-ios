@@ -170,12 +170,12 @@
 				800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */,
 				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */,
+				8079D7192996F6C200A2E336 /* UserScript.swift */,
 				806F54EE25B12B31001754AF /* POPPopupBridge.m */,
 				806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */,
 				806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 				806F54EA25B12864001754AF /* Public */,
-				8079D7192996F6C200A2E336 /* UserScript.swift */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";

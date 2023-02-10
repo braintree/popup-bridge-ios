@@ -49,6 +49,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         webView.configuration.userContentController.addUserScript(script)
         
 //        weak var weakSelf = self
+        // Handle URL from pop up
         POPPopupBridgeSwift.returnBlock = { (url : URL) -> Bool in
             guard let script = self.parseResponseFromPopUpToPassBacktoWebView(url: url) else {
                 return false
@@ -197,9 +198,9 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     }
     
     func injectWebView(webView: WKWebView, withJavaScript script: String) {
-        webView.evaluateJavaScript(script) { result, error in
+        webView.evaluateJavaScript(script) { _, error in
             if let error {
-                // TODO log error
+                NSLog("Error: PopupBridge requires onComplete callback. Details: %@", error.localizedDescription)
             }
         }
     }
