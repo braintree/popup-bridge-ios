@@ -5,6 +5,8 @@
 * Convert PopupBridge to Swift
 * Breaking Changes
   * Remove deprecated `POPPopupBridge.open(url:, sourceApplication:)` & `POPPopupBridge.open(url:, options:)` methods
+  * Remove `POPPopupBridge.set(returnURLScheme:)`.
+  * Add required `urlScheme` param to `POPPopupBridge.init()`.
 
 ## 1.2.0 (2021-01-22)
 
