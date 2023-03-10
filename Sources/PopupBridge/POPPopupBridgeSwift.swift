@@ -50,7 +50,6 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         )
         webView.configuration.userContentController.addUserScript(script)
         
-//        weak var weakSelf = self
         // Handle URL from pop up
         POPPopupBridgeSwift.returnBlock = { (url : URL) -> Bool in
             guard let script = self.parseResponseFromPopUpToPassBacktoWebView(url: url) else {
@@ -66,17 +65,9 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     public static func setReturnURLScheme(_ returnURLScheme: String?) {
         self.scheme = returnURLScheme
     }
-
-    public static func openURL(url: URL, sourceApplication: String) -> Bool {
-        return POPPopupBridgeSwift.openURL(url)
-    }
     
-    // TODO: - Remove unused methods
-    public static func openURL(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-        return POPPopupBridgeSwift.openURL(url)
-    }
-    
-    public static func openURL(_ url: URL) -> Bool {
+    @objc(openURL:)
+    public static func open(url: URL) -> Bool {
         if let returnBlock {
             return returnBlock(url)
         } else {

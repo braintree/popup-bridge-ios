@@ -1,5 +1,9 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+* Breaking Changes
+  * Remove `POPPopupBridge.open(url:, sourceApplication:)` and `POPPopupBridge.open(url:, options:)` in favor of `POPPopupBridge.open(url:)`
+
 ## 1.2.0 (2021-01-22)
 
 * Exclude arm64 simulator architectures via Podspec
