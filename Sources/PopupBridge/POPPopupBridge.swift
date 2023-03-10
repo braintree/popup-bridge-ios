@@ -114,9 +114,14 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         do {
             let payloadData = try JSONSerialization.data(withJSONObject: payloadDictionary)
             
-            let payload = String(data: payloadData, encoding: .utf8)!
-            
-            return "window.popupBridge.onComplete(null, \(payload));"
+            if let payload = String(data: payloadData, encoding: .utf8) {
+                return "window.popupBridge.onComplete(null, \(payload));"
+            } else {
+                // TODO: - Add unit test for this case & refactor error creation logic
+                let errorMessage = "Failed to encode URL parameters to JSON."
+                let errorResponse = "new Error(\"\(errorMessage)\")"
+                return "window.popupBridge.onComplete(null, \(errorResponse));"
+            }
         } catch {
             let errorMessage = "Failed to parse query items from return URL. \(error.localizedDescription)"
             let errorResponse = "new Error(\"\(errorMessage)\")"
@@ -159,20 +164,26 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == messageHandlerName {
-            let params = message.body as! [String: Any]
-            if let urlString = params["url"] as! String?,
+            guard let params = message.body as? [String: Any] else {
+                // TODO: - create error case & add unit test
+                return
+            }
+            
+            if let urlString = params["url"] as? String,
                let url = URL(string: urlString) {
                 dismissSafariViewController()
                 
                 delegate.popupBridge?(self, willOpenURL: url)
                 
-                safariViewController = SFSafariViewController(url: url)
+                let viewController = SFSafariViewController(url: url)
+                self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
+                
+                safariViewController = viewController
                 safariViewController?.delegate = self
-                self.delegate.popupBridge(self, requestsPresentationOfViewController: safariViewController!)
                 return
             }
             
-            // TODO - this parsing is awful
+            // TODO: - Use struct for nested dictionary decoding instead
             if let name = (params as? [String: [String: String]])?["message"]?["name"] {
                 let data = (params as? [String: [String: String]])?["message"]?["data"]
                 delegate.popupBridge?(self, receivedMessage: name, data: data)
