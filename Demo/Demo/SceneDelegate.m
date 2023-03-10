@@ -1,5 +1,4 @@
 #import "SceneDelegate.h"
-#import <PopupBridge/POPPopupBridge.h>
 #import <PopupBridge/PopupBridge-Swift.h>
 
 @interface SceneDelegate ()

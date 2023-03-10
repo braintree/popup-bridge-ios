@@ -1,7 +1,7 @@
-import Foundation
+import UIKit
 
 /// Set a delegate to handle various events the "popup" lifecycle.
-@objc public protocol POPPopupBridgeDelegateSwift : NSObjectProtocol {
+@objc public protocol POPPopupBridgeDelegate: NSObjectProtocol {
     
     /// Popup Bridge will provide a Safari View Controller to your delegate.
     /// You must present the view controller in this method.

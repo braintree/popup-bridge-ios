@@ -1,7 +1,6 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "POPPopupBridge.h"
-#import "POPWeakScriptMessageDelegate.h"
+#import <WebKit/WebKit.h>
 #import <SafariServices/SafariServices.h>
 #import <PopupBridge/PopupBridge-Swift.h>
 #import <UnitTests-Swift.h>
@@ -13,6 +12,8 @@
 
 
 @implementation MockUserContentController
+
+NSString * const kPOPScriptMessageHandlerName = @"POPPopupBridge";
 
 - (void)addScriptMessageHandler:(id<WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name {
     self.scriptMessageHandler = scriptMessageHandler;
@@ -40,7 +41,7 @@ static void (^webviewReadyBlock)(void);
 
 - (void)testInit_addsUserScript {
     WKWebView *webView = [[WKWebView alloc] init];
-    id<POPPopupBridgeDelegateSwift> delegate = (id<POPPopupBridgeDelegateSwift>)[[NSObject alloc] init];
+    id<POPPopupBridgeDelegate> delegate = (id<POPPopupBridgeDelegate>)[[NSObject alloc] init];
 
     XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 0);
 
@@ -74,7 +75,7 @@ static void (^webviewReadyBlock)(void);
     NSException *thrownException;
     POPPopupBridgeSwift *popupBridge;
     @try {
-        popupBridge = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegateSwift>)[[NSObject alloc] init]];
+        popupBridge = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
     } @catch (NSException *exception) {
         thrownException = exception;
     } @finally {

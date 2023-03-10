@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import <PopupBridge/POPPopupBridge.h>
 #import <PopupBridge/PopupBridge-Swift.h>
 
 @interface AppDelegate ()

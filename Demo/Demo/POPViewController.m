@@ -1,6 +1,5 @@
 #import "POPViewController.h"
 #import <WebKit/WebKit.h>
-#import <PopupBridge/POPPopupBridge.h>
 #import <PopupBridge/PopupBridge-Swift.h>
 
 @interface POPViewController () <POPPopupBridgeDelegateSwift>

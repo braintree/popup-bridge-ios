@@ -1,5 +1,6 @@
 import Foundation
 import SafariServices
+import WebKit
 
 @objcMembers
 public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariViewControllerDelegate {
@@ -10,7 +11,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     private let hostName = "popupbridgev1"
     
     private let webView: WKWebView
-    private let delegate: POPPopupBridgeDelegateSwift
+    private let delegate: POPPopupBridgeDelegate
     private var safariViewController: SFSafariViewController?
     
     private static var scheme: String?
@@ -19,7 +20,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     // MARK: - Initializer
     
     // TODO: - make unfailable
-    public init?(webView: WKWebView, delegate: POPPopupBridgeDelegateSwift) {
+    public init?(webView: WKWebView, delegate: POPPopupBridgeDelegate) {
         // TODO: - require scheme in init, versus injecting via static method.
         guard let scheme = POPPopupBridgeSwift.scheme else {
             let exception = NSException(
@@ -157,7 +158,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     // MARK: - WKScriptMessageHandler conformance
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == kPOPScriptMessageHandlerName {
+        if message.name == messageHandlerName {
             let params = message.body as! [String: Any]
             if let urlString = params["url"] as! String?,
                let url = URL(string: urlString) {

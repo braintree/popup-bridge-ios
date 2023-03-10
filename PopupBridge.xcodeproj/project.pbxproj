@@ -10,11 +10,6 @@
 		79DB9F7F53319F206CDE119E /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */; };
 		800A09D82995F143003ED16E /* POPPopupBridgeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */; };
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
-		806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */; };
-		806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EE25B12B31001754AF /* POPPopupBridge.m */; };
-		806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */; };
-		806F553925B1380D001754AF /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553725B1380D001754AF /* PopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		806F553A25B1380D001754AF /* POPPopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553825B1380D001754AF /* POPPopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift */; };
 		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
 		8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */; };
@@ -32,11 +27,6 @@
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeSwift.swift; sourceTree = "<group>"; };
-		806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
-		806F54EE25B12B31001754AF /* POPPopupBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPPopupBridge.m; sourceTree = "<group>"; };
-		806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
-		806F553725B1380D001754AF /* PopupBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupBridge.h; sourceTree = "<group>"; };
-		806F553825B1380D001754AF /* POPPopupBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPPopupBridge.h; sourceTree = "<group>"; };
 		8079D7172996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeDelegateSwift.swift; sourceTree = "<group>"; };
 		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryDictionary.swift"; sourceTree = "<group>"; };
@@ -133,29 +123,12 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		806F54EA25B12864001754AF /* Public */ = {
-			isa = PBXGroup;
-			children = (
-				806F553225B13709001754AF /* PopupBridge */,
-			);
-			path = Public;
-			sourceTree = "<group>";
-		};
 		806F552D25B13211001754AF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		806F553225B13709001754AF /* PopupBridge */ = {
-			isa = PBXGroup;
-			children = (
-				806F553825B1380D001754AF /* POPPopupBridge.h */,
-				806F553725B1380D001754AF /* PopupBridge.h */,
-			);
-			path = PopupBridge;
 			sourceTree = "<group>";
 		};
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
@@ -176,11 +149,7 @@
 				800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */,
-				806F54EE25B12B31001754AF /* POPPopupBridge.m */,
-				806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */,
-				806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
-				806F54EA25B12864001754AF /* Public */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -192,9 +161,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806F553925B1380D001754AF /* PopupBridge.h in Headers */,
-				806F553A25B1380D001754AF /* POPPopupBridge.h in Headers */,
-				806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,8 +319,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */,
-				806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */,
 				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift in Sources */,
 				8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridgeSwift.swift in Sources */,

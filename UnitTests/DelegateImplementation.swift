@@ -1,8 +1,8 @@
-import Foundation
+import UIKit
 import PopupBridge
 
 // TODO: - Can we get rid of NSObj requirement
-public class DelegateImplementation: NSObject, POPPopupBridgeDelegateSwift {
+public class DelegateImplementation: NSObject, POPPopupBridgeDelegate {
     
     override init() { }
     
