@@ -7,7 +7,7 @@
 #import <UnitTests-Swift.h>
 
 @interface MockUserContentController : WKUserContentController
-@property (nonatomic, strong) POPWeakScriptMessageDelegateSwift *scriptMessageHandler;
+@property (nonatomic) id<WKScriptMessageHandler> scriptMessageHandler;
 @property (nonatomic, copy) NSString *name;
 @end
 
@@ -59,8 +59,8 @@ static void (^webviewReadyBlock)(void);
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
 
     POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
-
-    XCTAssertEqual([mockUserContentController.scriptMessageHandler delegate], pub);
+        
+    XCTAssertEqual(mockUserContentController.scriptMessageHandler, pub);
     XCTAssertEqualObjects(mockUserContentController.name, @"POPPopupBridge");
 }
 

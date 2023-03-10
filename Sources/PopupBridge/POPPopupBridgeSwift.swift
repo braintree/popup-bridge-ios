@@ -34,9 +34,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         super.init() // do we need this?
         
         // Step 2 - construct a POPMessageDelegate
-        let scriptMessageHandler = POPWeakScriptMessageDelegateSwift(delegate: self)
-        webView.configuration.userContentController.add(scriptMessageHandler, name: kPOPScriptMessageHandlerName)
-        
+        webView.configuration.userContentController.add(self, name: kPOPScriptMessageHandlerName)
         
         // Step 3 - Create javascript code and inject into WebView
         let javascript = UserScript(
