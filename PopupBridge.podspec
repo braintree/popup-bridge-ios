@@ -19,7 +19,8 @@ Use cases for PopupBridge:
   s.source           = { :git => 'https://github.com/braintree/popup-bridge-ios.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '9.0'
-
+  s.swift_version    = "5.7"
+  
   s.source_files = 'Sources/PopupBridge/**/*.swift'
 
   # https://github.com/CocoaPods/CocoaPods/issues/10065#issuecomment-694266259
