@@ -61,7 +61,7 @@ static void (^webviewReadyBlock)(void);
     POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
         
     XCTAssertEqual(mockUserContentController.scriptMessageHandler, pub);
-    XCTAssertEqualObjects(mockUserContentController.name, @"POPPopupBridge");
+    XCTAssertEqualObjects(mockUserContentController.name, kPOPScriptMessageHandlerName);
 }
 
 - (void)testInit_whenSchemeIsNotSet_throwsError {
