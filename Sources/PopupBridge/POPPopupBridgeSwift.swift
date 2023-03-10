@@ -16,9 +16,8 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     
     private static var returnBlock: ((URL) -> Bool)?
     
-    // TODO: - make unfailable
+    // TODO: - make unfailable & require scheme in init, versus injecting via static method.
     @objc public init?(webView: WKWebView, delegate: POPPopupBridgeDelegateSwift) {
-        // TODO: - Require scheme in init, instead.
         guard let scheme = POPPopupBridgeSwift.scheme else {
             let exception = NSException(
                 name: NSExceptionName(rawValue: "POPPopupBridgeSchemeNotSet"),
@@ -74,6 +73,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         return POPPopupBridgeSwift.openURL(url)
     }
     
+    // TODO: - Remove unused methods
     public static func openURL(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         return POPPopupBridgeSwift.openURL(url)
     }
@@ -86,30 +86,28 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         }
     }
     
+    // URL from SceneDelegate --> JS, to be injected back into merchant WebView
     func parseResponseFromPopUpToPassBacktoWebView(url: URL) -> String? {
-        let urlComponents = URLComponents.init(url: url, resolvingAgainstBaseURL: false)
-        let path = urlComponents?.path
-        
-        guard let scheme = POPPopupBridgeSwift.scheme,
-              urlComponents?.scheme?.caseInsensitiveCompare(scheme) == .orderedSame,
-              urlComponents?.host?.caseInsensitiveCompare(kPOPURLHost) == .orderedSame
+        guard let urlComponents = URLComponents.init(url: url, resolvingAgainstBaseURL: false),
+              let scheme = POPPopupBridgeSwift.scheme,
+              urlComponents.scheme?.caseInsensitiveCompare(scheme) == .orderedSame,
+              urlComponents.host?.caseInsensitiveCompare(kPOPURLHost) == .orderedSame
         else {
             return nil
         }
         
         self.dismissSafariViewController()
         
+        print(urlComponents)
+        
         var payloadDictionary: [String: Any] = [:]
-        payloadDictionary["path"] = path
+        payloadDictionary["path"] = urlComponents.path
         payloadDictionary["queryItems"] = url.queryDictionary
-        if let fragment = url.fragment {
-            payloadDictionary["hash"] = fragment
-        }
+        payloadDictionary["hash"] = urlComponents.fragment
         
         do {
             let payloadData = try JSONSerialization.data(withJSONObject: payloadDictionary)
             
-            let load = NSString.init(data: payloadData, encoding: NSUTF8StringEncoding) // why formatted different?
             let payload = String(data: payloadData, encoding: .utf8)!
             
             return "window.popupBridge.onComplete(null, \(payload));"

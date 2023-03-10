@@ -4,8 +4,8 @@ import Foundation
 
 extension URL {
     
-    var queryDictionary: [String: String]? {
-        guard let query = self.query else { return nil}
+    var queryDictionary: [String: String] {
+        guard let query = self.query else { return [:] }
 
         var queryStrings = [String: String]()
         for pair in query.components(separatedBy: "&") {
