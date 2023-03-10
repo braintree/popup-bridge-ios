@@ -32,7 +32,7 @@ static void (^webviewReadyBlock)(void);
 - (void)setUp {
     [super setUp];
 
-    [POPPopupBridgeSwift setReturnURLScheme:@"com.braintreepayments.popupbridgeexample"];
+    [POPPopupBridge setReturnURLScheme:@"com.braintreepayments.popupbridgeexample"];
 }
 
 - (void)tearDown {
@@ -45,7 +45,7 @@ static void (^webviewReadyBlock)(void);
 
     XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 0);
 
-    __unused POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:delegate];
+    __unused POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:delegate];
 
     XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 1);
     WKUserScript *userScript = webView.configuration.userContentController.userScripts[0];
@@ -59,7 +59,7 @@ static void (^webviewReadyBlock)(void);
     configuration.userContentController = mockUserContentController;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
         
     XCTAssertEqual(mockUserContentController.scriptMessageHandler, pub);
     XCTAssertEqualObjects(mockUserContentController.name, @"POPPopupBridge");
@@ -68,14 +68,14 @@ static void (^webviewReadyBlock)(void);
 - (void)testInit_whenSchemeIsNotSet_throwsError {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnonnull"
-    [POPPopupBridgeSwift setReturnURLScheme:nil];
+    [POPPopupBridge setReturnURLScheme:nil];
 #pragma clang diagnostic pop
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
 
     NSException *thrownException;
-    POPPopupBridgeSwift *popupBridge;
+    POPPopupBridge *popupBridge;
     @try {
-        popupBridge = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+        popupBridge = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
     } @catch (NSException *exception) {
         thrownException = exception;
     } @finally {
@@ -92,7 +92,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub([stubWebView configuration]).andDo(nil);
     id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
 
     OCMVerify([mockDelegate popupBridge:pub requestsPresentationOfViewController:[OCMArg checkWithBlock:^BOOL(UIViewController *viewController) {
@@ -108,7 +108,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub([stubWebView configuration]).andDo(nil);
     id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
 
     OCMVerify([mockDelegate popupBridge:pub willOpenURL:[NSURL URLWithString:@"http://example.com/?hello=world"]]);
@@ -122,7 +122,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub([stubWebView configuration]).andDo(nil);
     id mockDelegate = OCMStrictProtocolMock(@protocol(POPPopupBridgeDelegate));
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
 }
 
@@ -134,7 +134,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub([stubWebView configuration]).andDo(nil);
     id mockDelegate = OCMStrictProtocolMock(@protocol(POPPopupBridgeDelegate));
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:stubWebView delegate:mockDelegate];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView delegate:mockDelegate];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
 }
 
@@ -146,7 +146,7 @@ static void (^webviewReadyBlock)(void);
     WKWebView *webView = OCMClassMock([WKWebView class]);
     SFSafariViewController *stubSafari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"http://example.com"]];
     
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
 
     [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
@@ -165,9 +165,9 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
-    [POPPopupBridgeSwift openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar"]];
+    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar"]];
 
     OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
         NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
@@ -186,9 +186,9 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
-    [POPPopupBridgeSwift openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"]];
+    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"]];
 
     OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
         NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
@@ -207,9 +207,9 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
-    [POPPopupBridgeSwift openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return#something=foo&other=bar"]];
+    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return#something=foo&other=bar"]];
 
     OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
         NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
@@ -227,9 +227,9 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
-    [POPPopupBridgeSwift openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"]];
+    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"]];
 
     OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
         NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
@@ -249,10 +249,10 @@ static void (^webviewReadyBlock)(void);
     WKWebView *webView = OCMStrictClassMock([WKWebView class]);
     OCMStub([webView configuration]).andReturn(nil);
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
 
-    BOOL result = [POPPopupBridgeSwift openURL:[NSURL URLWithString:@"not.the.right.scheme://popupbridgev1/return?something=foo"]];
+    BOOL result = [POPPopupBridge openURL:[NSURL URLWithString:@"not.the.right.scheme://popupbridgev1/return?something=foo"]];
     XCTAssertFalse(result);
 }
 
@@ -264,10 +264,10 @@ static void (^webviewReadyBlock)(void);
     WKWebView *webView = OCMStrictClassMock([WKWebView class]);
     OCMStub([webView configuration]).andReturn(nil);
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
 
-    BOOL result = [POPPopupBridgeSwift openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://notcorrect/return?something=foo"]];
+    BOOL result = [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://notcorrect/return?something=foo"]];
     XCTAssertFalse(result);
 }
 
@@ -275,7 +275,7 @@ static void (^webviewReadyBlock)(void);
     id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
     webView.navigationDelegate = self;
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:mockDelegate];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:mockDelegate];
 
     id expectation = [self expectationWithDescription:@"Called JS"];
 

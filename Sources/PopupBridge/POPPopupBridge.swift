@@ -3,7 +3,7 @@ import SafariServices
 import WebKit
 
 @objcMembers
-public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariViewControllerDelegate {
+public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewControllerDelegate {
     
     // MARK: - Private Properties
     
@@ -22,7 +22,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     // TODO: - make unfailable
     public init?(webView: WKWebView, delegate: POPPopupBridgeDelegate) {
         // TODO: - require scheme in init, versus injecting via static method.
-        guard let scheme = POPPopupBridgeSwift.scheme else {
+        guard let scheme = POPPopupBridge.scheme else {
             let exception = NSException(
                 name: NSExceptionName(rawValue: "POPPopupBridgeSchemeNotSet"),
                 reason: "PopupBridge requires a URL scheme to be set"
@@ -39,7 +39,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         configureWebView(scheme: scheme)
         
         // TODO: - Remove returnBlock definition from init
-        POPPopupBridgeSwift.returnBlock = { (url : URL) -> Bool in
+        POPPopupBridge.returnBlock = { (url : URL) -> Bool in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
                 return false
             }
@@ -95,7 +95,7 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     /// - Returns: JavaScript formatted completion.
     private func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents.init(url: returnURL, resolvingAgainstBaseURL: false),
-              let scheme = POPPopupBridgeSwift.scheme,
+              let scheme = POPPopupBridge.scheme,
               urlComponents.scheme?.caseInsensitiveCompare(scheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {

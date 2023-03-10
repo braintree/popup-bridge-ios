@@ -6,11 +6,11 @@ public class DelegateImplementation: NSObject, POPPopupBridgeDelegate {
     
     override init() { }
     
-    public func popupBridge(_ bridge: PopupBridge.POPPopupBridgeSwift, requestsPresentationOfViewController viewController: UIViewController) {
+    public func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsPresentationOfViewController viewController: UIViewController) {
         // fake implementation
     }
     
-    public func popupBridge(_ bridge: PopupBridge.POPPopupBridgeSwift, requestsDismissalOfViewController viewController: UIViewController) {
+    public func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsDismissalOfViewController viewController: UIViewController) {
         // fake implementation
     }
     
