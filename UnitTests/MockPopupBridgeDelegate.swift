@@ -1,7 +1,6 @@
 import UIKit
 import PopupBridge
 
-// TODO: - Can we get rid of NSObj requirement
 public class MockPopupBridgeDelegate: NSObject, POPPopupBridgeDelegate {
     
     override init() { }
