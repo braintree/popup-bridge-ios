@@ -13,7 +13,6 @@
 		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */; };
 		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
 		8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */; };
-		80E78A7F29BB8E24002994EA /* MockPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E78A7E29BB8E24002994EA /* MockPopupBridgeDelegate.swift */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
@@ -30,8 +29,6 @@
 		8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryDictionary.swift"; sourceTree = "<group>"; };
-		80E78A7D29BB8E23002994EA /* UnitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		80E78A7E29BB8E24002994EA /* MockPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A73D5A091DFA2E9A00387737 /* PopupBridge.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopupBridge.podspec; sourceTree = "<group>"; };
@@ -136,8 +133,6 @@
 			children = (
 				A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
-				80E78A7E29BB8E24002994EA /* MockPopupBridgeDelegate.swift */,
-				80E78A7D29BB8E23002994EA /* UnitTests-Bridging-Header.h */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -310,7 +305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80E78A7F29BB8E24002994EA /* MockPopupBridgeDelegate.swift in Sources */,
 				A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
