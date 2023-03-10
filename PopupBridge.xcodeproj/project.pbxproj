@@ -19,6 +19,7 @@
 		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift */; };
 		8079D71A2996F6C200A2E336 /* UserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* UserScript.swift */; };
 		8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */; };
+		80E78A7F29BB8E24002994EA /* DelegateImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E78A7E29BB8E24002994EA /* DelegateImplementation.swift */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
@@ -41,6 +42,8 @@
 		8079D7172996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeDelegateSwift.swift; sourceTree = "<group>"; };
 		8079D7192996F6C200A2E336 /* UserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScript.swift; sourceTree = "<group>"; };
 		8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryDictionary.swift"; sourceTree = "<group>"; };
+		80E78A7D29BB8E23002994EA /* UnitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		80E78A7E29BB8E24002994EA /* DelegateImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateImplementation.swift; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A73D5A091DFA2E9A00387737 /* PopupBridge.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopupBridge.podspec; sourceTree = "<group>"; };
@@ -162,6 +165,8 @@
 			children = (
 				A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
+				80E78A7E29BB8E24002994EA /* DelegateImplementation.swift */,
+				80E78A7D29BB8E23002994EA /* UnitTests-Bridging-Header.h */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 				TargetAttributes = {
 					A775A07B1DEE4E7E009E67C2 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 1420;
 						ProvisioningStyle = Automatic;
 					};
 					A775A08A1DEE4EF0009E67C2 = {
@@ -341,6 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80E78A7F29BB8E24002994EA /* DelegateImplementation.swift in Sources */,
 				A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,6 +477,7 @@
 			baseConfigurationReference = 4EF7C7DDAB0B99FF28DD6541 /* Pods-UnitTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -483,6 +491,9 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UnitTests/UnitTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -491,6 +502,7 @@
 			baseConfigurationReference = E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -505,6 +517,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UnitTests/UnitTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

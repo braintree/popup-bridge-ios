@@ -12,7 +12,7 @@
    for (UIOpenURLContext *urlContext in URLContexts) {
        NSURL *url = [urlContext URL];
        if ([url.scheme localizedCaseInsensitiveCompare:@"com.braintreepayments.popupbridgeexample"] == NSOrderedSame) {
-       [POPPopupBridgeSwift openURLWithUrl:urlContext.URL];
+           [POPPopupBridgeSwift openURL:urlContext.URL];
        }
    }
 }

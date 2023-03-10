@@ -6,11 +6,10 @@ import Foundation
     
     /// Popup Bridge will provide a Safari View Controller to your delegate.
     /// You must present the view controller in this method.
-    @objc func popupBridge(_ bridge: POPPopupBridgeSwift, requestsPresentationOfViewController viewController: Any!)
+    @objc func popupBridge(_ bridge: POPPopupBridgeSwift, requestsPresentationOfViewController viewController: UIViewController)
 
-    
     /// You must dismiss the view controller in this method.
-    @objc func popupBridge(_ bridge: POPPopupBridgeSwift, requestsDismissalOfViewController viewController: Any!)
+    @objc func popupBridge(_ bridge: POPPopupBridgeSwift, requestsDismissalOfViewController viewController: UIViewController)
 
     
     /// Optional: Receive the URL that will be opened

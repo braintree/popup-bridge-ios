@@ -65,14 +65,14 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     }
 
     public static func openURL(url: URL, sourceApplication: String) -> Bool {
-        return POPPopupBridgeSwift.openURL(url: url)
+        return POPPopupBridgeSwift.openURL(url)
     }
     
     public static func openURL(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-        return POPPopupBridgeSwift.openURL(url: url)
+        return POPPopupBridgeSwift.openURL(url)
     }
     
-    public static func openURL(url: URL) -> Bool {
+    public static func openURL(_ url: URL) -> Bool {
         if let returnBlock {
             return returnBlock(url)
         } else {
@@ -143,18 +143,18 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == kPOPScriptMessageHandlerName {
             let params = message.body as! [String: Any]
-            let urlString = params["url"] as! String?
-            if let url = URL(string: urlString!) {
+            if let urlString = params["url"] as! String?,
+               let url = URL(string: urlString) {
                 dismissSafariViewController()
                                 
 //                 do we need to do this responds to selector thing?
-                if delegate.responds(to: #selector(POPPopupBridgeDelegate.popupBridge(_:willOpen:))) {
-                    delegate.popupBridge?(self, willOpenURL: url)
-                }
+//                if delegate.responds(to: #selector(POPPopupBridgeDelegate.popupBridge(_:willOpen:))) {
+                delegate.popupBridge?(self, willOpenURL: url)
+//                }
                 
                 safariViewController = SFSafariViewController(url: url)
                 safariViewController?.delegate = self
-                self.delegate.popupBridge(self, requestsPresentationOfViewController: safariViewController)
+                self.delegate.popupBridge(self, requestsPresentationOfViewController: safariViewController!)
                 return
             }
             
