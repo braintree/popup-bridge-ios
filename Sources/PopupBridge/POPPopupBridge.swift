@@ -18,9 +18,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     private static var returnBlock: ((URL) -> Bool)?
     
     // MARK: - Initializer
-    
-    /// Set the URL Scheme that you have registered in your Info.plist.
-
+        
+    /// Initialize a Popup Bridge.
+    /// - Parameters:
+    ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
+    ///   - urlScheme: The URL Scheme that you have registered in your Info.plist.
+    ///   - delegate: A delegate that presents and dismisses the pop-up (a SFSafariViewController).
     public init(
         webView: WKWebView,
         urlScheme: String,
