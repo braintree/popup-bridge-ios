@@ -57,12 +57,11 @@ static void (^webviewReadyBlock)(void);
     MockUserContentController *mockUserContentController = [[MockUserContentController alloc] init];
     configuration.userContentController = mockUserContentController;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
-    id<POPPopupBridgeDelegateSwift> delegate = (id<POPPopupBridgeDelegateSwift>)[[NSObject alloc] init];
 
-    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:delegate];
+    POPPopupBridgeSwift *pub = [[POPPopupBridgeSwift alloc] initWithWebView:webView delegate:[DelegateImplementation new]];
 
-//    XCTAssertEqual([mockUserContentController.scriptMessageHandler scriptDelegate], pub);
-    XCTAssertEqual(mockUserContentController.name, kPOPScriptMessageHandlerName);
+    XCTAssertEqual([mockUserContentController.scriptMessageHandler delegate], pub);
+    XCTAssertEqualObjects(mockUserContentController.name, @"POPPopupBridge");
 }
 
 - (void)testInit_whenSchemeIsNotSet_throwsError {

@@ -2,7 +2,7 @@ import Foundation
 
 @objc public class POPWeakScriptMessageDelegateSwift: NSObject, WKScriptMessageHandler {
     
-    let delegate: WKScriptMessageHandler // must be weak?
+    @objc public let delegate: WKScriptMessageHandler // must be weak?
     
     @objc public init(delegate: WKScriptMessageHandler) {
         self.delegate = delegate
