@@ -18,8 +18,13 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
     
     // TODO: - make unfailable
     @objc public init?(webView: WKWebView, delegate: POPPopupBridgeDelegateSwift) {
+        // TODO: - Require scheme in init, instead.
         guard let scheme = POPPopupBridgeSwift.scheme else {
-            // TODO: - Raise exception
+            let exception = NSException(
+                name: NSExceptionName(rawValue: "POPPopupBridgeSchemeNotSet"),
+                reason: "PopupBridge requires a URL scheme to be set"
+            )
+            exception.raise()
             return nil
         }
         
@@ -60,7 +65,8 @@ public class POPPopupBridgeSwift: NSObject, WKScriptMessageHandler, SFSafariView
         }
     }
     
-    public static func setReturnURLScheme(_ returnURLScheme: String) {
+    // TODO: - Remove this static method and require scheme in init
+    public static func setReturnURLScheme(_ returnURLScheme: String?) {
         self.scheme = returnURLScheme
     }
 
