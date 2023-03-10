@@ -14,8 +14,7 @@ let package = Package(
     targets: [
         .target(
             name: "PopupBridge",
-            exclude: ["PopupBridge-Framework-Info.plist"],
-            publicHeadersPath: "Public"
+            exclude: ["PopupBridge-Framework-Info.plist"]
         ),
     ]
 )

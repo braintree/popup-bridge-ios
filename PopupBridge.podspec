@@ -20,8 +20,7 @@ Use cases for PopupBridge:
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'Sources/PopupBridge/**/*.{h,m}'
-  s.public_header_files = 'Sources/PopupBridge/Public/**/*.h'
+  s.source_files = 'Sources/PopupBridge/**/*.swift'
 
   # https://github.com/CocoaPods/CocoaPods/issues/10065#issuecomment-694266259
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
