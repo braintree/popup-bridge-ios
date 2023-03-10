@@ -1,7 +1,6 @@
 import Foundation
 
 // Source: - https://stackoverflow.com/questions/46603220/how-do-i-convert-url-query-to-a-dictionary-in-swift
-
 extension URL {
     
     var queryDictionary: [String: String] {

@@ -2,7 +2,8 @@
 
 ## unreleased
 * Breaking Changes
-  * Remove `POPPopupBridge.open(url:, sourceApplication:)` and `POPPopupBridge.open(url:, options:)` in favor of `POPPopupBridge.open(url:)`
+  * Remove deprecated `POPPopupBridge.open(url:, sourceApplication:)` 
+  * Remove deprecated `POPPopupBridge.open(url:, options:)`
 
 ## 1.2.0 (2021-01-22)
 
