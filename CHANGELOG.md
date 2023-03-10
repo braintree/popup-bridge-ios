@@ -1,9 +1,9 @@
 # PopupBridge iOS Release Notes
 
 ## unreleased
+* Convert PopupBridge to Swift
 * Breaking Changes
-  * Remove deprecated `POPPopupBridge.open(url:, sourceApplication:)` 
-  * Remove deprecated `POPPopupBridge.open(url:, options:)`
+  * Remove deprecated `POPPopupBridge.open(url:, sourceApplication:)` & `POPPopupBridge.open(url:, options:)`
 
 ## 1.2.0 (2021-01-22)
 
