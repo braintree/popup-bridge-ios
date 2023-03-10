@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		79DB9F7F53319F206CDE119E /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */; };
-		800A09D62995F021003ED16E /* POPWeakScriptMessageDelegateSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */; };
 		800A09D82995F143003ED16E /* POPPopupBridgeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */; };
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
 		806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */; };
@@ -32,7 +31,6 @@
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPWeakScriptMessageDelegateSwift.swift; sourceTree = "<group>"; };
 		800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeSwift.swift; sourceTree = "<group>"; };
 		806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
 		806F54EE25B12B31001754AF /* POPPopupBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPPopupBridge.m; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
-				800A09D42995EAA4003ED16E /* POPWeakScriptMessageDelegateSwift.swift */,
 				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridgeSwift.swift */,
 				8079D7192996F6C200A2E336 /* UserScript.swift */,
@@ -359,7 +356,6 @@
 				806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */,
 				806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */,
 				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegateSwift.swift in Sources */,
-				800A09D62995F021003ED16E /* POPWeakScriptMessageDelegateSwift.swift in Sources */,
 				8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridgeSwift.swift in Sources */,
 				8079D71A2996F6C200A2E336 /* UserScript.swift in Sources */,
