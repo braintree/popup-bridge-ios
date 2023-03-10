@@ -1,5 +1,6 @@
 import Foundation
 
+// TODO: - Remove in favor of using URLComponents.queryItems
 // Source: - https://stackoverflow.com/questions/46603220/how-do-i-convert-url-query-to-a-dictionary-in-swift
 extension URL {
     
