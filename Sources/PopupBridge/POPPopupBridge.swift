@@ -3,7 +3,7 @@ import SafariServices
 import WebKit
 
 @objcMembers
-public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewControllerDelegate {
+public class POPPopupBridge: NSObject {
     
     // MARK: - Private Properties
     
@@ -14,6 +14,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     private let urlScheme: String
     private let delegate: POPPopupBridgeDelegate
     private var safariViewController: SFSafariViewController?
+    
+    private var wkHelper: WKHelper?
     
     private static var returnBlock: ((URL) -> Bool)?
     
@@ -67,7 +69,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView(scheme: String) {
-        webView.configuration.userContentController.add(self, name: messageHandlerName)
+        let wkHelper = WKHelper(callback: handleJSResponse())
+        webView.configuration.userContentController.add(wkHelper, name: messageHandlerName)
         
         let javascript = PopupBridgeUserScript(
             scheme: scheme,
@@ -81,6 +84,56 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
             forMainFrameOnly: true
         )
         webView.configuration.userContentController.addUserScript(script)
+    }
+    
+    private func handleJSResponse() -> UserContentControllerDidReceiveMessage {
+        return { [weak self] message in
+            guard let self = self else { return }
+            
+            if message.name == messageHandlerName {
+                guard let params = message.body as? [String: Any] else {
+                    // TODO: - create error case & add unit test
+                    return
+                }
+                
+                if let urlString = params["url"] as? String,
+                   let url = URL(string: urlString) {
+                    dismissSafariViewController()
+                    
+                    delegate.popupBridge?(self, willOpenURL: url)
+                    
+                    let viewController = SFSafariViewController(url: url)
+                    self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
+                    
+                    safariViewController = viewController
+                    
+                    let safariHelper = SafariHelper(callback: handleSafariResponse())
+                    safariViewController?.delegate = safariHelper
+                    return
+                }
+                
+                // TODO: - Use struct for nested dictionary decoding instead
+                if let name = (params as? [String: [String: String]])?["message"]?["name"] {
+                    let data = (params as? [String: [String: String]])?["message"]?["data"]
+                    delegate.popupBridge?(self, receivedMessage: name, data: data)
+                }
+            }
+        }
+    }
+    
+    private func handleSafariResponse() -> (() -> Void) {
+        return { [weak self] in
+            guard let self = self else { return }
+            
+            let script = """
+            if (typeof window.popupBridge.onCancel === 'function') {\
+              window.popupBridge.onCancel();\
+            } else {\
+              window.popupBridge.onComplete(null, null);\
+            }
+            """
+            injectWebView(webView: webView, withJavaScript: script)
+        }
     }
     
     /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
@@ -135,52 +188,4 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
             }
         }
     }
-    
-    // TODO: - Make below methods private by moving protocol conformances into helper classes.
-    
-    // MARK: - SFSafariViewControllerDelegate conformance
-    
-    /// Called when the user exits the pop-up (SFSafariViewController) by clicking "Done"
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        let script = """
-            if (typeof window.popupBridge.onCancel === 'function') {\
-              window.popupBridge.onCancel();\
-            } else {\
-              window.popupBridge.onComplete(null, null);\
-            }
-            """
-        injectWebView(webView: webView, withJavaScript: script)
-    }
-    
-    // MARK: - WKScriptMessageHandler conformance
-    
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == messageHandlerName {
-            guard let params = message.body as? [String: Any] else {
-                // TODO: - create error case & add unit test
-                return
-            }
-            
-            if let urlString = params["url"] as? String,
-               let url = URL(string: urlString) {
-                dismissSafariViewController()
-                
-                delegate.popupBridge?(self, willOpenURL: url)
-                
-                let viewController = SFSafariViewController(url: url)
-                self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
-                
-                safariViewController = viewController
-                safariViewController?.delegate = self
-                return
-            }
-            
-            // TODO: - Use struct for nested dictionary decoding instead
-            if let name = (params as? [String: [String: String]])?["message"]?["name"] {
-                let data = (params as? [String: [String: String]])?["message"]?["data"]
-                delegate.popupBridge?(self, receivedMessage: name, data: data)
-            }
-        }
-    }
-    
 }
