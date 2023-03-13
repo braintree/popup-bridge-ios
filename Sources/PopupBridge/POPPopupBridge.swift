@@ -105,6 +105,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         
         self.dismissSafariViewController()
                 
+        // TODO: - Use URLComponents.queryItems and move parsing logic into Encodable struct
         var payloadDictionary: [String: Any] = [:]
         payloadDictionary["path"] = urlComponents.path
         payloadDictionary["queryItems"] = returnURL.queryDictionary
