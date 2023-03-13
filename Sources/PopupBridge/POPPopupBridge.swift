@@ -80,6 +80,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
             injectionTime: .atDocumentStart,
             forMainFrameOnly: true
         )
+        
         webView.configuration.userContentController.addUserScript(script)
     }
     
@@ -87,7 +88,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     /// - Parameter url: returnURL from the result of the SFSafariViewController being dismissed. Provided via the merchant's AppDelegate or SceneDelegate.
     /// - Returns: JavaScript formatted completion.
     private func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
-        guard let urlComponents = URLComponents.init(url: returnURL, resolvingAgainstBaseURL: false),
+        guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
               urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
@@ -95,9 +96,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         }
         
         self.dismissSafariViewController()
-        
-        print(urlComponents)
-        
+                
+        // TODO: - Use URLComponents.queryItems and move parsing logic into Encodable struct
         var payloadDictionary: [String: Any] = [:]
         payloadDictionary["path"] = urlComponents.path
         payloadDictionary["queryItems"] = returnURL.queryDictionary
@@ -119,7 +119,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
             let errorResponse = "new Error(\"\(errorMessage)\")"
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
-        
     }
     
     private func dismissSafariViewController() {
