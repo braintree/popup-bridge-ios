@@ -119,6 +119,7 @@ public class POPPopupBridge: NSObject {
         }
     }
     
+    /// Block to execute when the user cancels the SFSafariVC pop-up by clicking "Done"
     private func handleSafariFinishedEvent() -> (() -> Void) {
         return { [weak self] in
             guard let self = self else { return }
