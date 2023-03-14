@@ -14,9 +14,7 @@ public class POPPopupBridge: NSObject {
     private let urlScheme: String
     private let delegate: POPPopupBridgeDelegate
     private var safariViewController: SFSafariViewController?
-    
-    private var wkHelper: WKHelper?
-    
+        
     private static var returnBlock: ((URL) -> Bool)?
     
     // MARK: - Initializer
@@ -69,8 +67,8 @@ public class POPPopupBridge: NSObject {
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView(scheme: String) {
-        let wkHelper = WKHelper(callback: handleJSResponse())
-        webView.configuration.userContentController.add(wkHelper, name: messageHandlerName)
+        let messageHandler = JavaScriptMessageHandler(didReceiveMessage: handleJSFromWebView())
+        webView.configuration.userContentController.add(messageHandler, name: messageHandlerName)
         
         let javascript = PopupBridgeUserScript(
             scheme: scheme,
@@ -86,7 +84,7 @@ public class POPPopupBridge: NSObject {
         webView.configuration.userContentController.addUserScript(script)
     }
     
-    private func handleJSResponse() -> UserContentControllerDidReceiveMessage {
+    private func handleJSFromWebView() -> ((WKScriptMessage) -> Void) {
         return { [weak self] message in
             guard let self = self else { return }
             
@@ -107,8 +105,8 @@ public class POPPopupBridge: NSObject {
                     
                     safariViewController = viewController
                     
-                    let safariHelper = SafariHelper(callback: handleSafariResponse())
-                    safariViewController?.delegate = safariHelper
+                    let safariEventHandler = SafariViewControllerEventHandler(didFinish: handleSafariFinishedEvent())
+                    safariViewController?.delegate = safariEventHandler
                     return
                 }
                 
@@ -121,7 +119,7 @@ public class POPPopupBridge: NSObject {
         }
     }
     
-    private func handleSafariResponse() -> (() -> Void) {
+    private func handleSafariFinishedEvent() -> (() -> Void) {
         return { [weak self] in
             guard let self = self else { return }
             

@@ -13,8 +13,8 @@
 		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */; };
 		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
 		8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */; };
-		80FCC7CD29BC24D9003C3EC9 /* WKHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FCC7CC29BC24D9003C3EC9 /* WKHelper.swift */; };
-		80FCC7CF29BC2CE7003C3EC9 /* SafariHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FCC7CE29BC2CE7003C3EC9 /* SafariHelper.swift */; };
+		80FCC7CD29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FCC7CC29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift */; };
+		80FCC7CF29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FCC7CE29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
@@ -31,8 +31,8 @@
 		8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryDictionary.swift"; sourceTree = "<group>"; };
-		80FCC7CC29BC24D9003C3EC9 /* WKHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKHelper.swift; sourceTree = "<group>"; };
-		80FCC7CE29BC2CE7003C3EC9 /* SafariHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariHelper.swift; sourceTree = "<group>"; };
+		80FCC7CC29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptMessageHandler.swift; sourceTree = "<group>"; };
+		80FCC7CE29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariViewControllerEventHandler.swift; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A73D5A091DFA2E9A00387737 /* PopupBridge.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopupBridge.podspec; sourceTree = "<group>"; };
@@ -145,8 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
-				80FCC7CC29BC24D9003C3EC9 /* WKHelper.swift */,
-				80FCC7CE29BC2CE7003C3EC9 /* SafariHelper.swift */,
+				80FCC7CC29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift */,
+				80FCC7CE29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */,
@@ -321,10 +321,10 @@
 			files = (
 				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */,
 				8079D71C299706F200A2E336 /* URL+QueryDictionary.swift in Sources */,
-				80FCC7CD29BC24D9003C3EC9 /* WKHelper.swift in Sources */,
+				80FCC7CD29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
 				8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */,
-				80FCC7CF29BC2CE7003C3EC9 /* SafariHelper.swift in Sources */,
+				80FCC7CF29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
