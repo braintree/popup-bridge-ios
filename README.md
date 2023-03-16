@@ -50,7 +50,7 @@ Quick Start
 1. In your application delegate's `didFinishLaunchingWithOptions` method, set the return URL scheme.
 
     ```objectivec
-    #import <PopupBridge/POPPopupBridge.h>
+    #import <PopupBridge/PopupBridge-Swift.h>
 
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {
@@ -90,7 +90,7 @@ Quick Start
 1. Integrate PopupBridge with the WKWebView:
 
     ```objectivec
-    #import <PopupBridge/POPPopupBridge.h>
+    #import <PopupBridge/PopupBridge-Swift.h>
 
     @interface MyViewController () <POPPopupBridgeDelegate>
     @property (nonatomic, strong) WKWebView *webView;
@@ -250,7 +250,7 @@ Although PopupBridge's primary purpose is to handle popups, it can be used in a 
 1. In your application delegate, set up PopupBridge with the URL scheme:
 
     ```objectivec
-    #import <PopupBridge/POPPopupBridge.h>
+    #import <PopupBridge/PopupBridge-Swift.h>
 
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {

@@ -1,15 +1,18 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "POPPopupBridge.h"
-#import "POPWeakScriptMessageDelegate.h"
+#import <WebKit/WebKit.h>
 #import <SafariServices/SafariServices.h>
+#import <PopupBridge/PopupBridge-Swift.h>
 
 @interface MockUserContentController : WKUserContentController
-@property (nonatomic, strong) POPWeakScriptMessageDelegate *scriptMessageHandler;
+@property (nonatomic) id<WKScriptMessageHandler> scriptMessageHandler;
 @property (nonatomic, copy) NSString *name;
 @end
 
+
 @implementation MockUserContentController
+
+NSString * const kPOPScriptMessageHandlerName = @"POPPopupBridge";
 
 - (void)addScriptMessageHandler:(id<WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name {
     self.scriptMessageHandler = scriptMessageHandler;
@@ -54,12 +57,11 @@ static void (^webviewReadyBlock)(void);
     MockUserContentController *mockUserContentController = [[MockUserContentController alloc] init];
     configuration.userContentController = mockUserContentController;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
-    id<POPPopupBridgeDelegate> delegate = (id<POPPopupBridgeDelegate>)[[NSObject alloc] init];
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:delegate];
-
-    XCTAssertEqual([mockUserContentController.scriptMessageHandler scriptDelegate], pub);
-    XCTAssertEqual(mockUserContentController.name, kPOPScriptMessageHandlerName);
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+        
+    XCTAssertEqual(mockUserContentController.scriptMessageHandler, pub);
+    XCTAssertEqualObjects(mockUserContentController.name, kPOPScriptMessageHandlerName);
 }
 
 - (void)testInit_whenSchemeIsNotSet_throwsError {
@@ -142,8 +144,8 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
     SFSafariViewController *stubSafari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"http://example.com"]];
-
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
 
     [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
@@ -162,7 +164,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
     [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar"]];
 
@@ -183,7 +185,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
     [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"]];
 
@@ -204,7 +206,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
     [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return#something=foo&other=bar"]];
 
@@ -224,7 +226,7 @@ static void (^webviewReadyBlock)(void);
     OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
     WKWebView *webView = OCMClassMock([WKWebView class]);
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
     [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return"]];
 
@@ -246,7 +248,7 @@ static void (^webviewReadyBlock)(void);
     WKWebView *webView = OCMStrictClassMock([WKWebView class]);
     OCMStub([webView configuration]).andReturn(nil);
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
 
     BOOL result = [POPPopupBridge openURL:[NSURL URLWithString:@"not.the.right.scheme://popupbridgev1/return?something=foo"]];
@@ -261,7 +263,7 @@ static void (^webviewReadyBlock)(void);
     WKWebView *webView = OCMStrictClassMock([WKWebView class]);
     OCMStub([webView configuration]).andReturn(nil);
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:(id<POPPopupBridgeDelegate>)[[NSObject alloc] init]];
+    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
     [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
 
     BOOL result = [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://notcorrect/return?something=foo"]];
