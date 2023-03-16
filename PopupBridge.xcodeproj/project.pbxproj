@@ -123,7 +123,11 @@
 		806F552D25B13211001754AF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
+				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
+				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
+				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
+				8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */,
+				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -135,18 +139,6 @@
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
 			);
 			path = UnitTests;
-			sourceTree = "<group>";
-		};
-		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
-			isa = PBXGroup;
-			children = (
-				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
-				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
-				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
-				8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */,
-				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
-			);
-			path = PopupBridge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,7 +486,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -530,7 +522,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
