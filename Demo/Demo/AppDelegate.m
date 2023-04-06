@@ -9,7 +9,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [POPPopupBridge setReturnURLScheme:@"com.braintreepayments.popupbridgeexample"];
     return YES;
 }
 

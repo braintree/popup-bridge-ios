@@ -11,32 +11,31 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     private let hostName = "popupbridgev1"
     
     private let webView: WKWebView
+    private let urlScheme: String
     private let delegate: POPPopupBridgeDelegate
     private var safariViewController: SFSafariViewController?
     
-    private static var scheme: String?
     private static var returnBlock: ((URL) -> Bool)?
     
     // MARK: - Initializer
-    
-    // TODO: - make unfailable
-    public init?(webView: WKWebView, delegate: POPPopupBridgeDelegate) {
-        // TODO: - require scheme in init, versus injecting via static method.
-        guard let scheme = POPPopupBridge.scheme else {
-            let exception = NSException(
-                name: NSExceptionName(rawValue: "POPPopupBridgeSchemeNotSet"),
-                reason: "PopupBridge requires a URL scheme to be set"
-            )
-            exception.raise()
-            return nil
-        }
         
+    /// Initialize a Popup Bridge.
+    /// - Parameters:
+    ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
+    ///   - urlScheme: The URL Scheme that you have registered in your Info.plist.
+    ///   - delegate: A delegate that presents and dismisses the pop-up (a SFSafariViewController).
+    public init(
+        webView: WKWebView,
+        urlScheme: String,
+        delegate: POPPopupBridgeDelegate
+    ) {
         self.webView = webView
+        self.urlScheme = urlScheme
         self.delegate = delegate
         
         super.init()
         
-        configureWebView(scheme: scheme)
+        configureWebView(scheme: urlScheme)
         
         // TODO: - Remove returnBlock definition from init
         POPPopupBridge.returnBlock = { (url : URL) -> Bool in
@@ -50,12 +49,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     }
     
     // MARK: - Public Methods
-    
-    // TODO: - Remove this static method and require scheme in init
-    /// Set the URL Scheme that you have registered in your Info.plist.
-    public static func setReturnURLScheme(_ returnURLScheme: String?) {
-        self.scheme = returnURLScheme
-    }
     
     /// Handle completion of the popup flow by calling this method from either
     /// your scene:openURLContexts: scene delegate method or
@@ -96,8 +89,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     /// - Returns: JavaScript formatted completion.
     private func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
-              let scheme = POPPopupBridge.scheme,
-              urlComponents.scheme?.caseInsensitiveCompare(scheme) == .orderedSame,
+              urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
             return nil

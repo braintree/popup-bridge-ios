@@ -6,6 +6,8 @@
 * Breaking Changes
   * Remove deprecated `POPPopupBridge.open(url:sourceApplication:)` & `POPPopupBridge.open(url:options:)` methods
   * Bump Package.swift and PopupBridge.podspec to Swift version 5.7
+  * Remove `POPPopupBridge.set(returnURLScheme:)`
+  * Add required `urlScheme` parameter to `POPPopupBridge.init()`
 
 ## 1.2.0 (2021-01-22)
 
