@@ -95,26 +95,22 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         }
         
         self.dismissSafariViewController()
-                
-        // TODO: - Use URLComponents.queryItems and move parsing logic into Encodable struct
-        var payloadDictionary: [String: Any] = [:]
-        payloadDictionary["path"] = urlComponents.path
-        payloadDictionary["queryItems"] = returnURL.queryDictionary
-        payloadDictionary["hash"] = urlComponents.fragment
+
+        let queryItems = urlComponents.queryItems?.reduce(into: [:], { partialResult, queryItem in
+            partialResult[queryItem.name] = queryItem.value
+        })
         
-        do {
-            let payloadData = try JSONSerialization.data(withJSONObject: payloadDictionary)
-            
-            if let payload = String(data: payloadData, encoding: .utf8) {
-                return "window.popupBridge.onComplete(null, \(payload));"
-            } else {
-                // TODO: - Add unit test for this case & refactor error creation logic
-                let errorMessage = "Failed to encode URL parameters to JSON."
-                let errorResponse = "new Error(\"\(errorMessage)\")"
-                return "window.popupBridge.onComplete(null, \(errorResponse));"
-            }
-        } catch {
-            let errorMessage = "Failed to parse query items from return URL. \(error.localizedDescription)"
+        let payload = URLDetailsPayload(
+            path: urlComponents.path,
+            queryItems: queryItems ?? [:],
+            hash: urlComponents.fragment
+        )
+                
+        if let payloadData = try? JSONEncoder().encode(payload),
+           let payload = String(data: payloadData, encoding: .utf8) {
+            return "window.popupBridge.onComplete(null, \(payload));"
+        } else {
+            let errorMessage = "Failed to parse query items from return URL."
             let errorResponse = "new Error(\"\(errorMessage)\")"
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
