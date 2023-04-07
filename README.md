@@ -39,6 +39,18 @@ Sample App
 
 To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
 
+Tests
+-------
+
+To run the tests:
+1. Fetch test dependencies via [CocoaPods](https://cocoapods.org/)
+    * `pod install`
+1. Run tests
+    * `xcodebuild test -workspace PopupBridge.xcworkspace -scheme UnitTests -destination 'platform=iOS Simulator,name=iPhone 14'`
+    * **OR** via the Xcode UI by selecting the `UnitTests` scheme + `⌘U`
+
+_Note:_ Running the `UITests` scheme follows the same steps as above, just replacing the `UnitTests` scheme name in step 2.
+
 Quick Start
 -----------
 
@@ -291,8 +303,3 @@ Braintree, code@getbraintree.com
 ## License
 
     PopupBridge is available under the MIT license. See the LICENSE file for more info.
-
-
-[bundler]: https://bundler.io/
-[cocoapods]: https://cocoapods.org
-[xcpretty]: https://github.com/xcpretty/xcpretty
