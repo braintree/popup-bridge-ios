@@ -47,77 +47,67 @@ Quick Start
     - Click **[+]** to add a new URL type
     - Under **URL Schemes**, enter a unique URL scheme, e.g. `com.my-app.popupbridge`
 
-1. In your application delegate's `didFinishLaunchingWithOptions` method, set the return URL scheme.
-
-    ```objectivec
-    #import <PopupBridge/PopupBridge-Swift.h>
-
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-    {
-        [POPPopupBridge setReturnURLScheme:@"com.my-app.popupbridge"];
-        return YES;
-    }
-    ```
+    This scheme must start with your app's Bundle ID and be dedicated to PopupBridge app switch returns. For example, if the app bundle ID is `com.your-company.your-app`, then your URL scheme could be `com.your-company.your-app.popupbridge`.
     
-    1. Inspect the return URL and then call `PopupBridge:openURL` from either your app delegate or your scene delegate.
-     
-     If you're using `UISceneDelegate` (introduced in iOS 13), call `PopupBridge:openURL` from within the  `scene:openURLContexts` delegate method. Pass the URL on the appropriate `UIOpenURLContext`. 
-     
-     ```objectivec
-     - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
-        for (UIOpenURLContext *urlContext in URLContexts) {
-            NSURL *url = [urlContext URL];
-            if ([url.scheme localizedCaseInsensitiveCompare:@"com.my-app.popupbridge"] == NSOrderedSame) {
-            [POPPopupBridge openURL:urlContext.URL];
+1. Inspect the return URL and then call `PopupBridge:openURL` from either your app delegate or your scene delegate.
+
+    If you're using `UISceneDelegate` (introduced in iOS 13), call `POPPopupBridge.open(url:)` from within the `scene:openURLContexts` scene delegate method.
+
+    ```swift
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        URLContexts.forEach { context in
+            if context.url.scheme?.localizedCaseInsensitiveCompare("com.my-app.popupbridge") == .orderedSame {
+                POPPopupBridge.open(url: context.url)
             }
         }
     }
     ```
-    
+
     If you aren't using `UISceneDelegate`, call `PopupBridge:openURL` from within the  `application:openURL:` delegate method of your app delegate.
-    
-    ```objectivec
-    - (BOOL)application:(UIApplication *)app
-                openURL:(NSURL *)url
-                options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-        if ([url.scheme localizedCaseInsensitiveCompare:@"com.my-app.popupbridge"] == NSOrderedSame) {
-            return [POPPopupBridge openURL:url];
+
+    ```swift
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.scheme?.localizedCaseInsensitiveCompare("com.my-app.popupbridge") == .orderedSame {
+            return POPPopupBridge.open(url: url)
         }
-        return NO;
+        return false
     }
     ```
 
-1. Integrate PopupBridge with the WKWebView:
+1. Integrate PopupBridge with your WKWebView:
 
-    ```objectivec
-    #import <PopupBridge/PopupBridge-Swift.h>
+    ```swift
+    class ViewController: UIViewController {
+        
+        var webView: WKWebView = WKWebView(frame: CGRect(x: 0, y: 0, width: 300, height: 700))
+        var popupBridge: POPPopupBridge?
 
-    @interface MyViewController () <POPPopupBridgeDelegate>
-    @property (nonatomic, strong) WKWebView *webView;
-    @property (nonatomic, strong) POPPopupBridge *popupBridge;
-    @end
+        override func viewDidLoad() {
+            super.viewDidLoad()
 
-    @implementation MyViewController
-
-    - (void)viewDidLoad
-    {
-        [super viewDidLoad];
-
-        self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        [self.view addSubview:self.webView];
-
-        self.popupBridge = [[POPPopupBridge alloc] initWithWebView:self.webView delegate:self];
-
-        // replace http://localhost:3099/ with the webpage you want to open in the webview
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3099/"]]];
+            self.view.addSubview(webView)
+            
+            self.popupBridge = POPPopupBridge(
+                webView: self.webView,
+                urlScheme: "com.braintreepayments.popupbridge-swift.payments",
+                delegate: self
+            )
+            
+            // Replace http://localhost:3099/ with the webpage you want to open in the webview
+            let url = URL(string: "http://localhost:3099/")!
+            self.webView.load(URLRequest(url: url))
+        }
     }
 
-    - (void)popupBridge:(POPPopupBridge *)bridge requestsPresentationOfViewController:(UIViewController *)viewController {
-        [self presentViewController:viewController animated:YES completion:nil];
-    }
-
-    - (void)popupBridge:(POPPopupBridge *)bridge requestsDismissalOfViewController:(UIViewController *)viewController {
-      [viewController dismissViewControllerAnimated:YES completion:nil];
+    extension ViewController: POPPopupBridgeDelegate{
+        
+        func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsDismissalOfViewController viewController: UIViewController) {
+            viewController.dismiss(animated: true)
+        }
+        
+        func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsPresentationOfViewController viewController: UIViewController) {
+            self.present(viewController, animated: true)
+        }
     }
     ```
 
