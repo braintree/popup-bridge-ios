@@ -14,7 +14,7 @@ public class POPPopupBridge: NSObject {
     private let urlScheme: String
     private let delegate: POPPopupBridgeDelegate
     private var safariViewController: SFSafariViewController?
-        
+
     private static var returnBlock: ((URL) -> Bool)?
     
     // MARK: - Initializer
@@ -139,7 +139,7 @@ public class POPPopupBridge: NSObject {
     /// - Parameter url: returnURL from the result of the SFSafariViewController being dismissed. Provided via the merchant's AppDelegate or SceneDelegate.
     /// - Returns: JavaScript formatted completion.
     private func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
-        guard let urlComponents = URLComponents.init(url: returnURL, resolvingAgainstBaseURL: false),
+        guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
               urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
@@ -147,9 +147,8 @@ public class POPPopupBridge: NSObject {
         }
         
         self.dismissSafariViewController()
-        
-        print(urlComponents)
-        
+                
+        // TODO: - Use URLComponents.queryItems and move parsing logic into Encodable struct
         var payloadDictionary: [String: Any] = [:]
         payloadDictionary["path"] = urlComponents.path
         payloadDictionary["queryItems"] = returnURL.queryDictionary
@@ -171,7 +170,6 @@ public class POPPopupBridge: NSObject {
             let errorResponse = "new Error(\"\(errorMessage)\")"
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
-        
     }
     
     private func dismissSafariViewController() {

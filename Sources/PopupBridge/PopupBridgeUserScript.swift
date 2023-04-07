@@ -1,12 +1,13 @@
 import Foundation
 
 struct PopupBridgeUserScript {
+
     let scheme: String
     let scriptMessageHandlerName: String
     let host: String
     
     var rawJavascript: String {
-        return """
+        """
         ;(function () {
             if (!window.popupBridge) { window.popupBridge = {}; };
 
