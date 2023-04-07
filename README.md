@@ -49,9 +49,9 @@ Quick Start
 
     This scheme must start with your app's Bundle ID and be dedicated to PopupBridge app switch returns. For example, if the app bundle ID is `com.your-company.your-app`, then your URL scheme could be `com.your-company.your-app.popupbridge`.
     
-1. Inspect the return URL and then call `PopupBridge:openURL` from either your app delegate or your scene delegate.
+1. Inspect the return URL and then call `PopupBridge.open(url:)` from either your app delegate or your scene delegate.
 
-    If you're using `UISceneDelegate` (introduced in iOS 13), call `POPPopupBridge.open(url:)` from within the `scene:openURLContexts` scene delegate method.
+    If you're using `UISceneDelegate` (introduced in iOS 13), call `POPPopupBridge.open(url:)` from within the `scene(_:openURLContexts:)` scene delegate method.
 
     ```swift
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -63,7 +63,7 @@ Quick Start
     }
     ```
 
-    If you aren't using `UISceneDelegate`, call `PopupBridge:openURL` from within the  `application:openURL:` delegate method of your app delegate.
+    If you aren't using `UISceneDelegate`, call `PopupBridge.open(url:)` from within the  `application(_:open:options:)` delegate method of your app delegate.
 
     ```swift
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
