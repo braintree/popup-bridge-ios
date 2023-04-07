@@ -140,8 +140,8 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
-				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
+				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
