@@ -1,7 +1,7 @@
 import Foundation
 
 struct PopupBridgeUserScript {
-
+    
     let scheme: String
     let scriptMessageHandlerName: String
     let host: String
