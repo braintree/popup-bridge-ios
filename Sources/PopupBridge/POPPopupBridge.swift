@@ -134,11 +134,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
             }
         }
     }
-    
-    // TODO: - Make below methods private by moving protocol conformances into helper classes.
-    
+        
     // MARK: - SFSafariViewControllerDelegate conformance
     
+    /// :nodoc: This method is not covered by Semantic Versioning. Do not use.
+    ///
     /// Called when the user exits the pop-up (SFSafariViewController) by clicking "Done"
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         let script = """
@@ -153,6 +153,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     
     // MARK: - WKScriptMessageHandler conformance
     
+    /// :nodoc: This method is not covered by Semantic Versioning. Do not use.
+    ///
+    /// Called when the webpage sends a JavaScript message back to the native app
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == messageHandlerName {
             guard let params = message.body as? [String: Any] else {
@@ -181,5 +184,4 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
             }
         }
     }
-    
 }
