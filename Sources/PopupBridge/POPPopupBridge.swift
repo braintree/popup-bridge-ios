@@ -37,7 +37,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         
         configureWebView(scheme: urlScheme)
         
-        // TODO: - Remove returnBlock definition from init
         POPPopupBridge.returnBlock = { (url : URL) -> Bool in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
                 return false
@@ -158,29 +157,26 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     /// Called when the webpage sends a JavaScript message back to the native app
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == messageHandlerName {
-            guard let params = message.body as? [String: Any] else {
-                // TODO: - create error case & add unit test
+            guard let jsonData = try? JSONSerialization.data(withJSONObject: message.body),
+                  let script = try? JSONDecoder().decode(ScriptMessage.self, from: jsonData) else {
                 return
             }
             
-            if let urlString = params["url"] as? String,
+            if let urlString = script.url,
                let url = URL(string: urlString) {
                 dismissSafariViewController()
                 
                 delegate.popupBridge?(self, willOpenURL: url)
                 
                 let viewController = SFSafariViewController(url: url)
-                self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
-                
                 safariViewController = viewController
                 safariViewController?.delegate = self
+                
+                self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
                 return
-            }
-            
-            // TODO: - Use struct for nested dictionary decoding instead
-            if let name = (params as? [String: [String: String]])?["message"]?["name"] {
-                let data = (params as? [String: [String: String]])?["message"]?["data"]
-                delegate.popupBridge?(self, receivedMessage: name, data: data)
+            } else if let name = script.message?.name {
+                delegate.popupBridge?(self, receivedMessage: name, data: script.message?.data)
+                return
             }
         }
     }
