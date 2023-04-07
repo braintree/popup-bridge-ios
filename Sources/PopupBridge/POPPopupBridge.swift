@@ -154,7 +154,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == messageHandlerName {
             guard let jsonData = try? JSONSerialization.data(withJSONObject: message.body),
-                  let script = try? JSONDecoder().decode(ScriptMessage.self, from: jsonData) else {
+                  let script = try? JSONDecoder().decode(WebViewMessage.self, from: jsonData) else {
                 return
             }
             
