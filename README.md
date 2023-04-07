@@ -14,7 +14,7 @@ Requirements
 
 - iOS 14.0+
 - Xcode 14.3+
-- Swift 5.8+, or Objective-C
+- Swift 5.7+, or Objective-C
 
 Installation
 ------------
