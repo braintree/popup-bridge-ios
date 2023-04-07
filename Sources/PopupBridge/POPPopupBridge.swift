@@ -87,7 +87,7 @@ public class POPPopupBridge: NSObject {
     /// Block to execute when the webpage sends a JavaScript message back to the native app
     private func handleJSFromWebView() -> ((WKScriptMessage) -> Void) {
         return { [weak self] message in
-            guard let self = self else { return }
+            guard let self else { return }
             
             if message.name == messageHandlerName {
                 guard let params = message.body as? [String: Any] else {
@@ -123,7 +123,7 @@ public class POPPopupBridge: NSObject {
     /// Block to execute when the user cancels the SFSafariVC pop-up by clicking "Done"
     private func handleSafariFinishedEvent() -> (() -> Void) {
         return { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             let script = """
             if (typeof window.popupBridge.onCancel === 'function') {\
