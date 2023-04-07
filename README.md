@@ -231,49 +231,6 @@ WebView-based checkout flows can accept PayPal with PopupBridge and the [Braintr
         1. Implement methods in your native app depending on whether you are doing one-time payments or vaulted payments. See the [iOS code snippets for PayPal + PopupBridge](popupbridge-paypaldatacollector-ios.md)
 1. Profit!
 
-Using PopupBridge to pass messages to a WebView
------------------------------------------------
-
-Although PopupBridge's primary purpose is to handle popups, it can be used in a more general use case to send URLs from the app to the JavaScript context in the WebView. These URLs can contain arbitrary data.
-
-1. Register a URL type for your app, as described in the Quick Start.
-1. In your application delegate, set up PopupBridge with the URL scheme:
-
-    ```objectivec
-    #import <PopupBridge/PopupBridge-Swift.h>
-
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-    {
-        [POPPopupBridge setReturnURLScheme:@"com.my-app.popupbridge"];
-        return YES;
-    }
-    ```
-
-1. Add a handler to the `onComplete` callback:
-
-   ```javascript
-    if (window.popupBridge) {
-      popupBridge.onComplete = function (err, payload) {
-        if (err) {
-          console.error('PopupBridge onComplete Error:', err);
-          return;
-        }
-
-        console.log("Payload path:", payload.path);
-        console.log("Payload query items:", payload.queryItems);
-        console.log("Payload fragment:", payload.hash);
-      };
-    }
-   ```
-
-1. Create a URL that begins with your app's URL scheme and has a path of `popupbridgev1`, e.g. `com.my-app.popupbridge://popupbridgev1`. Add any additional data in the form of URL paths, query items, and fragments.
-1. Call the PopupBridge `openUrl:options:` method with that URL. The `onComplete` handler will receive the URL as the payload. For example, if the URL is `com.my-app.popupbridge://popupbridgev1/hi/there?foo=bar#baz=qux`:
-   ```javascript
-   console.log("Payload path:", payload.path); // "/hi/there"
-   console.log("Payload query items:", payload.queryItems); // {foo: "bar"}
-   console.log("Payload fragment:", payload.hash); // "baz=qux"
-   ```
-
 ## Author
 
 Braintree, code@getbraintree.com
