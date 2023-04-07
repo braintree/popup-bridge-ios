@@ -291,8 +291,3 @@ Braintree, code@getbraintree.com
 ## License
 
     PopupBridge is available under the MIT license. See the LICENSE file for more info.
-
-
-[bundler]: https://bundler.io/
-[cocoapods]: https://cocoapods.org
-[xcpretty]: https://github.com/xcpretty/xcpretty
