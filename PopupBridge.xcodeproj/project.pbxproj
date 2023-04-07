@@ -132,6 +132,15 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		80E28B5629E083AE00C70958 /* EventHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				80FCC7CC29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift */,
+				80FCC7CE29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift */,
+			);
+			path = EventHandlers;
+			sourceTree = "<group>";
+		};
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,12 +153,11 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
-				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
-				80FCC7CC29BC24D9003C3EC9 /* JavaScriptMessageHandler.swift */,
-				80FCC7CE29BC2CE7003C3EC9 /* SafariViewControllerEventHandler.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
+				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				8079D71B299706F200A2E336 /* URL+QueryDictionary.swift */,
+				80E28B5629E083AE00C70958 /* EventHandlers */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 			);
 			path = PopupBridge;

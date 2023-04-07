@@ -84,6 +84,7 @@ public class POPPopupBridge: NSObject {
         webView.configuration.userContentController.addUserScript(script)
     }
     
+    /// Block to execute when the webpage sends a JavaScript message back to the native app
     private func handleJSFromWebView() -> ((WKScriptMessage) -> Void) {
         return { [weak self] message in
             guard let self = self else { return }
