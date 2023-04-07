@@ -86,10 +86,8 @@ public class POPPopupBridge: NSObject {
     
     /// Block to execute when the webpage sends a JavaScript message back to the native app
     private func handleJSFromWebView() -> ((WKScriptMessage) -> Void) {
-        return { [weak self] message in
-            guard let self else { return }
-            
-            if message.name == messageHandlerName {
+        return { message in
+            if message.name == self.messageHandlerName {
                 guard let params = message.body as? [String: Any] else {
                     // TODO: - create error case & add unit test
                     return
@@ -97,24 +95,24 @@ public class POPPopupBridge: NSObject {
                 
                 if let urlString = params["url"] as? String,
                    let url = URL(string: urlString) {
-                    dismissSafariViewController()
+                    self.dismissSafariViewController()
                     
-                    delegate.popupBridge?(self, willOpenURL: url)
+                    self.delegate.popupBridge?(self, willOpenURL: url)
                     
                     let viewController = SFSafariViewController(url: url)
                     self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
                     
-                    safariViewController = viewController
+                    self.safariViewController = viewController
                     
-                    let safariEventHandler = SafariViewControllerEventHandler(didFinish: handleSafariFinishedEvent())
-                    safariViewController?.delegate = safariEventHandler
+                    let safariEventHandler = SafariViewControllerEventHandler(didFinish: self.handleSafariFinishedEvent())
+                    self.safariViewController?.delegate = safariEventHandler
                     return
                 }
                 
                 // TODO: - Use struct for nested dictionary decoding instead
                 if let name = (params as? [String: [String: String]])?["message"]?["name"] {
                     let data = (params as? [String: [String: String]])?["message"]?["data"]
-                    delegate.popupBridge?(self, receivedMessage: name, data: data)
+                    self.delegate.popupBridge?(self, receivedMessage: name, data: data)
                 }
             }
         }
@@ -122,9 +120,7 @@ public class POPPopupBridge: NSObject {
     
     /// Block to execute when the user cancels the SFSafariVC pop-up by clicking "Done"
     private func handleSafariFinishedEvent() -> (() -> Void) {
-        return { [weak self] in
-            guard let self else { return }
-            
+        return {
             let script = """
             if (typeof window.popupBridge.onCancel === 'function') {\
               window.popupBridge.onCancel();\
@@ -132,7 +128,7 @@ public class POPPopupBridge: NSObject {
               window.popupBridge.onComplete(null, null);\
             }
             """
-            injectWebView(webView: webView, withJavaScript: script)
+            self.injectWebView(webView: self.webView, withJavaScript: script)
         }
     }
     
