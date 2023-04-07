@@ -45,7 +45,7 @@ Quick Start
 1. Register a URL type for your app:
     - In Xcode, click on your project in the Project Navigator and navigate to **App Target** > **Info** > **URL Types**
     - Click **[+]** to add a new URL type
-    - Under **URL Schemes**, enter a unique URL scheme, e.g. `com.my-app.popupbridge`
+    - Under **URL Schemes**, enter a unique URL scheme, e.g. `com.your-company.your-app`
 
     This scheme must start with your app's Bundle ID and be dedicated to PopupBridge app switch returns. For example, if the app bundle ID is `com.your-company.your-app`, then your URL scheme could be `com.your-company.your-app.popupbridge`.
     
@@ -56,7 +56,7 @@ Quick Start
     ```swift
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         URLContexts.forEach { context in
-            if context.url.scheme?.localizedCaseInsensitiveCompare("com.my-app.popupbridge") == .orderedSame {
+            if context.url.scheme?.localizedCaseInsensitiveCompare("com.your-company.your-app.popupbridge") == .orderedSame {
                 POPPopupBridge.open(url: context.url)
             }
         }
@@ -67,7 +67,7 @@ Quick Start
 
     ```swift
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if url.scheme?.localizedCaseInsensitiveCompare("com.my-app.popupbridge") == .orderedSame {
+        if url.scheme?.localizedCaseInsensitiveCompare("com.your-company.your-app.popupbridge") == .orderedSame {
             return POPPopupBridge.open(url: url)
         }
         return false
@@ -89,7 +89,7 @@ Quick Start
             
             self.popupBridge = POPPopupBridge(
                 webView: self.webView,
-                urlScheme: "com.braintreepayments.popupbridge-swift.payments",
+                urlScheme: "com.your-company.your-app.popupbridge",
                 delegate: self
             )
             
