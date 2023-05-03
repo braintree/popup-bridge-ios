@@ -85,17 +85,17 @@ Quick Start
         override func viewDidLoad() {
             super.viewDidLoad()
 
-            self.view.addSubview(webView)
+            view.addSubview(webView)
             
-            self.popupBridge = POPPopupBridge(
-                webView: self.webView,
+            popupBridge = POPPopupBridge(
+                webView: webView,
                 urlScheme: "com.your-company.your-app.popupbridge",
                 delegate: self
             )
             
             // Replace http://localhost:3099/ with the webpage you want to open in the webview
             let url = URL(string: "http://localhost:3099/")!
-            self.webView.load(URLRequest(url: url))
+            webView.load(URLRequest(url: url))
         }
     }
 
@@ -106,7 +106,7 @@ Quick Start
         }
         
         func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsPresentationOfViewController viewController: UIViewController) {
-            self.present(viewController, animated: true)
+            present(viewController, animated: true)
         }
     }
     ```
