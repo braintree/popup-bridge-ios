@@ -3,7 +3,7 @@ on: [pull_request, workflow_dispatch]
 jobs:
   unit_test_job:
     name: Unit (Xcode 14)
-    runs-on: macOS-latest
+    runs-on: macOS-13
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -15,7 +15,7 @@ jobs:
         run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 12,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
   ui_test_job:
     name: UI (Xcode 14)
-    runs-on: macOS-latest
+    runs-on: macOS-13
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
