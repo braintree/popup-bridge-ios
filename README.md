@@ -284,6 +284,14 @@ Although PopupBridge's primary purpose is to handle popups, it can be used in a 
    console.log("Payload fragment:", payload.hash); // "baz=qux"
    ```
 
+## Versions
+
+This SDK abides by our Client SDK Deprecation Policy. For more information on the potential statuses of an SDK check our [developer docs](https://developer.paypal.com/braintree/docs/guides/client-sdk/deprecation-policy/ios/v5).
+
+| Major version number | Status | Released | Deprecated | Unsupported |
+| -------------------- | ------ | -------- | ---------- | ----------- |
+| 1.x.x | Active | 2016 | TBA | TBA |
+
 ## Author
 
 Braintree, code@getbraintree.com
