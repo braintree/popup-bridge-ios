@@ -1,6 +1,6 @@
 #import "POPViewController.h"
 #import <WebKit/WebKit.h>
-#import <PopupBridge/POPPopupBridge.h>
+#import <PopupBridge/PopupBridge-Swift.h>
 
 @interface POPViewController () <POPPopupBridgeDelegate>
 @property (nonatomic, strong) WKWebView *webView;
@@ -17,7 +17,10 @@
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
     // 2. Create Popup Bridge.
-    self.popupBridge = [[POPPopupBridge alloc] initWithWebView:self.webView delegate:self];
+    self.popupBridge = [[POPPopupBridge alloc]
+                        initWithWebView:self.webView
+                        urlScheme:@"com.braintreepayments.popupbridgeexample"
+                        delegate:self];
 
     [self.view addSubview:self.webView];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://braintree.github.io/popup-bridge-example/"]]];

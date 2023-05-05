@@ -18,12 +18,8 @@ Use cases for PopupBridge:
   s.author           = { 'Braintree' => 'code@getbraintree.com' }
   s.source           = { :git => 'https://github.com/braintree/popup-bridge-ios.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '9.0'
-
-  s.source_files = 'Sources/PopupBridge/**/*.{h,m}'
-  s.public_header_files = 'Sources/PopupBridge/Public/**/*.h'
-
-  # https://github.com/CocoaPods/CocoaPods/issues/10065#issuecomment-694266259
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.ios.deployment_target = '14.0'
+  s.swift_version    = "5.8"
+  
+  s.source_files = 'Sources/PopupBridge/**/*.swift'
 end

@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		79DB9F7F53319F206CDE119E /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */; };
+		800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D72995F143003ED16E /* POPPopupBridge.swift */; };
+		800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E789C29E0958A00D1B0FC /* WebViewMessage.swift */; };
+		800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */; };
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
-		806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */; };
-		806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EE25B12B31001754AF /* POPPopupBridge.m */; };
-		806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */; };
-		806F553925B1380D001754AF /* PopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553725B1380D001754AF /* PopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		806F553A25B1380D001754AF /* POPPopupBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 806F553825B1380D001754AF /* POPPopupBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */; };
+		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
@@ -26,11 +26,11 @@
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
-		806F54EE25B12B31001754AF /* POPPopupBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPPopupBridge.m; sourceTree = "<group>"; };
-		806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
-		806F553725B1380D001754AF /* PopupBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupBridge.h; sourceTree = "<group>"; };
-		806F553825B1380D001754AF /* POPPopupBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPPopupBridge.h; sourceTree = "<group>"; };
+		800A09D72995F143003ED16E /* POPPopupBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridge.swift; sourceTree = "<group>"; };
+		800E789C29E0958A00D1B0FC /* WebViewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewMessage.swift; sourceTree = "<group>"; };
+		800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDetailsPayload.swift; sourceTree = "<group>"; };
+		8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeDelegate.swift; sourceTree = "<group>"; };
+		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A73D5A091DFA2E9A00387737 /* PopupBridge.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopupBridge.podspec; sourceTree = "<group>"; };
@@ -122,29 +122,12 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		806F54EA25B12864001754AF /* Public */ = {
-			isa = PBXGroup;
-			children = (
-				806F553225B13709001754AF /* PopupBridge */,
-			);
-			path = Public;
-			sourceTree = "<group>";
-		};
 		806F552D25B13211001754AF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		806F553225B13709001754AF /* PopupBridge */ = {
-			isa = PBXGroup;
-			children = (
-				806F553825B1380D001754AF /* POPPopupBridge.h */,
-				806F553725B1380D001754AF /* PopupBridge.h */,
-			);
-			path = PopupBridge;
 			sourceTree = "<group>";
 		};
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
@@ -159,11 +142,12 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
-				806F54EE25B12B31001754AF /* POPPopupBridge.m */,
-				806F54ED25B12B31001754AF /* POPWeakScriptMessageDelegate.h */,
-				806F54EF25B12B31001754AF /* POPWeakScriptMessageDelegate.m */,
+				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
+				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
+				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
+				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
+				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
-				806F54EA25B12864001754AF /* Public */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -175,9 +159,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806F553925B1380D001754AF /* PopupBridge.h in Headers */,
-				806F553A25B1380D001754AF /* POPPopupBridge.h in Headers */,
-				806F54F025B12B31001754AF /* POPWeakScriptMessageDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,10 +214,12 @@
 				TargetAttributes = {
 					A775A07B1DEE4E7E009E67C2 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 1420;
 						ProvisioningStyle = Automatic;
 					};
 					A775A08A1DEE4EF0009E67C2 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 1420;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -333,8 +316,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806F54F125B12B31001754AF /* POPPopupBridge.m in Sources */,
-				806F54F225B12B31001754AF /* POPWeakScriptMessageDelegate.m in Sources */,
+				800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */,
+				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */,
+				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
+				800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */,
+				8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +375,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -437,7 +423,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -449,6 +435,7 @@
 			baseConfigurationReference = 4EF7C7DDAB0B99FF28DD6541 /* Pods-UnitTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -457,11 +444,14 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UnitTests/UnitTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -470,6 +460,7 @@
 			baseConfigurationReference = E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -479,11 +470,13 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UnitTests/UnitTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -491,6 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -506,13 +500,15 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.PopupBridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -523,6 +519,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -539,13 +536,14 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.PopupBridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
