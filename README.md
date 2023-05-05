@@ -233,6 +233,14 @@ WebView-based checkout flows can accept PayPal with PopupBridge and the [Braintr
         1. Implement methods in your native app depending on whether you are doing one-time payments or vaulted payments. See the [iOS code snippets for PayPal + PopupBridge](popupbridge-paypaldatacollector-ios.md)
 1. Profit!
 
+## Versions
+
+This SDK abides by our Client SDK Deprecation Policy. For more information on the potential statuses of an SDK check our [developer docs](https://developer.paypal.com/braintree/docs/guides/client-sdk/deprecation-policy/ios/v5).
+
+| Major version number | Status | Released | Deprecated | Unsupported |
+| -------------------- | ------ | -------- | ---------- | ----------- |
+| 1.x.x | Active | 2016 | TBA | TBA |
+
 ## Author
 
 Braintree, code@getbraintree.com
