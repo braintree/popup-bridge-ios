@@ -96,9 +96,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         
         self.dismissSafariViewController()
 
-        let queryItems = urlComponents.queryItems?.reduce(into: [:], { partialResult, queryItem in
+        let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
-        })
+        }
         
         let payload = URLDetailsPayload(
             path: urlComponents.path,
