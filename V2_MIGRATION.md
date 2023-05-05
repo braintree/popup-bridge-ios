@@ -4,7 +4,7 @@ See the [CHANGELOG](/CHANGELOG.md) for a complete list of changes. This migratio
 
 ## Supported Versions
 
-v2 supports a minimum deployment target of iOS 14+. It requires Xcode 14.1+ and Swift 5.7+. If your application contains Objective-C code, the `Enable Modules` build setting must be set to `YES`.
+v2 supports a minimum deployment target of iOS 14+. It requires Xcode 14.3+ and Swift 5.8+. If your application contains Objective-C code, the `Enable Modules` build setting must be set to `YES`.
 
 ## Code Changes
 
