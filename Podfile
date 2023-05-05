@@ -1,6 +1,6 @@
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '8.0'
+platform :ios, '14.0'
 workspace 'PopupBridge.xcworkspace'
 
 use_frameworks!
