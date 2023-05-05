@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "PopupBridge",
-    platforms: [.iOS(.v9)],
+    platforms: [.iOS(.v14)],
     products: [
         .library(
             name: "PopupBridge",

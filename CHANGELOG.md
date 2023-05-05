@@ -4,6 +4,7 @@
 
 * Convert PopupBridge to Swift
 * Breaking Changes
+  * Require iOS 14+, Xcode 14.3+, and Swift 5.8+
   * Remove deprecated `POPPopupBridge.open(url:sourceApplication:)` & `POPPopupBridge.open(url:options:)` methods
   * Bump Package.swift and PopupBridge.podspec to Swift version 5.7
   * Remove `POPPopupBridge.set(returnURLScheme:)`

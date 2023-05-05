@@ -12,7 +12,9 @@ See the [Frequently Asked Questions](#frequently-asked-questions) to learn more 
 Requirements
 ------------
 
-- iOS 9.0+
+- iOS 14.0+
+- Xcode 14.3+
+- Swift 5.8+, or Objective-C
 
 Installation
 ------------
