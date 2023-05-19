@@ -1,63 +1,49 @@
 import Foundation
-import SafariServices
 import WebKit
+import AuthenticationServices
 
 @objcMembers
-public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewControllerDelegate {
+public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     // MARK: - Private Properties
     
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"
+
+    // TODO: extract into constants file
+    let callbackURLScheme: String = "sdk.ios.popup-bridge"
     
     private let webView: WKWebView
-    private let urlScheme: String
     private let delegate: POPPopupBridgeDelegate
-    private var safariViewController: SFSafariViewController?
+    private var webAuthenticationSession: WebAuthenticationSession
     
-    private static var returnBlock: ((URL) -> Bool)?
+    private var returnBlock: ((URL) -> Void)? = nil
     
     // MARK: - Initializer
         
     /// Initialize a Popup Bridge.
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
-    ///   - urlScheme: The URL Scheme that you have registered in your Info.plist.
     ///   - delegate: A delegate that presents and dismisses the pop-up (a SFSafariViewController).
     public init(
         webView: WKWebView,
-        urlScheme: String,
         delegate: POPPopupBridgeDelegate
     ) {
         self.webView = webView
-        self.urlScheme = urlScheme
         self.delegate = delegate
+        self.webAuthenticationSession = WebAuthenticationSession()
         
         super.init()
-        
-        configureWebView(scheme: urlScheme)
-        
-        POPPopupBridge.returnBlock = { (url : URL) -> Bool in
+
+        configureWebView(scheme: callbackURLScheme)
+                
+        returnBlock = { (url: URL) -> Void in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
-                return false
+                return
             }
             
             self.injectWebView(webView: webView, withJavaScript: script)
-            return true
-        }
-    }
-    
-    // MARK: - Public Methods
-    
-    /// Handle completion of the popup flow by calling this method from either
-    /// your scene:openURLContexts: scene delegate method or
-    /// your application:openURL:sourceApplication:annotation: app delegate method.
-    @objc(openURL:)
-    public static func open(url: URL) -> Bool {
-        if let returnBlock {
-            return returnBlock(url)
-        } else {
-            return false
+            return
         }
     }
     
@@ -88,13 +74,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     /// - Returns: JavaScript formatted completion.
     private func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
-              urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
+              urlComponents.scheme?.caseInsensitiveCompare(callbackURLScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
             return nil
         }
-        
-        self.dismissSafariViewController()
 
         let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
@@ -116,34 +100,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         }
     }
     
-    private func dismissSafariViewController() {
-        if let safariViewController {
-            delegate.popupBridge(self, requestsDismissalOfViewController: safariViewController)
-        }
-    }
-    
     private func injectWebView(webView: WKWebView, withJavaScript script: String) {
         webView.evaluateJavaScript(script) { _, error in
             if let error {
                 NSLog("Error: PopupBridge requires onComplete callback. Details: %@", error.localizedDescription)
             }
         }
-    }
-        
-    // MARK: - SFSafariViewControllerDelegate conformance
-    
-    /// :nodoc: This method is not covered by Semantic Versioning. Do not use.
-    ///
-    /// Called when the user exits the pop-up (SFSafariViewController) by clicking "Done"
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        let script = """
-            if (typeof window.popupBridge.onCancel === 'function') {\
-              window.popupBridge.onCancel();\
-            } else {\
-              window.popupBridge.onComplete(null, null);\
-            }
-            """
-        injectWebView(webView: webView, withJavaScript: script)
     }
     
     // MARK: - WKScriptMessageHandler conformance
@@ -158,22 +120,54 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
                 return
             }
             
-            if let urlString = script.url,
-               let url = URL(string: urlString) {
-                dismissSafariViewController()
-                
-                delegate.popupBridge?(self, willOpenURL: url)
-                
-                let viewController = SFSafariViewController(url: url)
-                safariViewController = viewController
-                safariViewController?.delegate = self
-                
-                self.delegate.popupBridge(self, requestsPresentationOfViewController: viewController)
+            if let urlString = script.url, let url = URL(string: urlString) {
+                webAuthenticationSession.start(url: url, context: self) { url, error in
+                    if let error = error {
+                        switch error {
+                        case ASWebAuthenticationSessionError.canceledLogin:
+                            // TODO: handle cancel
+//                            let script = """
+//                                if (typeof window.popupBridge.onCancel === 'function') {\
+//                                    window.popupBridge.onCancel();\
+//                                } else {\
+//                                    window.popupBridge.onComplete(null, null);\
+//                                }
+//                            """
+//
+//                            self.injectWebView(webView: self.webView, withJavaScript: script)
+                            return
+                        default:
+                            // TODO: handle error
+                            return
+                        }
+                    } else if let url, let returnBlock = self.returnBlock {
+                        returnBlock(url)
+                        return
+                    } else {
+                        // TODO: handle error
+                    }
+                }
                 return
             } else if let name = script.message?.name {
                 delegate.popupBridge?(self, receivedMessage: name, data: script.message?.data)
                 return
             }
+        }
+    }
+}
+
+// MARK: - ASWebAuthenticationPresentationContextProviding conformance
+
+extension POPPopupBridge: ASWebAuthenticationPresentationContextProviding {
+
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        if #available(iOS 15, *) {
+            let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            let window = firstScene?.windows.first { $0.isKeyWindow }
+            return window ?? ASPresentationAnchor()
+        } else {
+            let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+            return window ?? ASPresentationAnchor()
         }
     }
 }

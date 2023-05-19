@@ -17,6 +17,7 @@
 		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
+		BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PopupBridge-Framework-Info.plist"; sourceTree = "<group>"; };
 		A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
 		E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,10 +146,11 @@
 			children = (
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
 				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
+				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
+				BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */,
 				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
-				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */,
 				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
+				BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */,
 				800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */,
 				8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */,
 			);

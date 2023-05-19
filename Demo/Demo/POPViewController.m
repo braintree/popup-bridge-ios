@@ -19,7 +19,6 @@
     // 2. Create Popup Bridge.
     self.popupBridge = [[POPPopupBridge alloc]
                         initWithWebView:self.webView
-                        urlScheme:@"com.braintreepayments.popupbridgeexample"
                         delegate:self];
 
     [self.view addSubview:self.webView];
