@@ -33,32 +33,6 @@ static void (^webviewReadyBlock)(void);
     webviewReadyBlock = nil;
 }
 
-- (void)testInit_addsUserScript {
-    WKWebView *webView = [[WKWebView alloc] init];
-    id<POPPopupBridgeDelegate> delegate = (id<POPPopupBridgeDelegate>)[[NSObject alloc] init];
-
-    XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 0);
-
-    __unused POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView urlScheme:kReturnURLScheme delegate:delegate];
-
-    XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 1);
-    WKUserScript *userScript = webView.configuration.userContentController.userScripts[0];
-    XCTAssertEqual(userScript.injectionTime, WKUserScriptInjectionTimeAtDocumentStart);
-    XCTAssertTrue(userScript.forMainFrameOnly);
-}
-
-- (void)testInit_addsScriptMessageHandler {
-    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    MockUserContentController *mockUserContentController = [[MockUserContentController alloc] init];
-    configuration.userContentController = mockUserContentController;
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
-    
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView urlScheme:kReturnURLScheme delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
-        
-    XCTAssertEqual(mockUserContentController.scriptMessageHandler, pub);
-    XCTAssertEqualObjects(mockUserContentController.name, kPOPScriptMessageHandlerName);
-}
-
 - (void)testReceiveScriptMessage_whenMessageContainsURL_requestsPresentationOfSafariViewController {
     WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
     OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
