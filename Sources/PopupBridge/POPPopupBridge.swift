@@ -125,16 +125,15 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                     if let error = error {
                         switch error {
                         case ASWebAuthenticationSessionError.canceledLogin:
-                            // TODO: handle cancel
-//                            let script = """
-//                                if (typeof window.popupBridge.onCancel === 'function') {\
-//                                    window.popupBridge.onCancel();\
-//                                } else {\
-//                                    window.popupBridge.onComplete(null, null);\
-//                                }
-//                            """
-//
-//                            self.injectWebView(webView: self.webView, withJavaScript: script)
+                            let script = """
+                                if (typeof window.popupBridge.onCancel === 'function') {\
+                                    window.popupBridge.onCancel();\
+                                } else {\
+                                    window.popupBridge.onComplete(null, null);\
+                                }
+                            """
+
+                            self.injectWebView(webView: self.webView, withJavaScript: script)
                             return
                         default:
                             // TODO: handle error
@@ -147,7 +146,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         // TODO: handle error
                     }
                 }
-                return
             } else if let name = script.message?.name {
                 delegate.popupBridge?(self, receivedMessage: name, data: script.message?.data)
                 return
