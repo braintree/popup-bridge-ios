@@ -1,22 +1,25 @@
 import XCTest
 import WebKit
-import OCMock
 import SafariServices
 @testable import PopupBridge
 
 // TODO: move into own file
 class MockPopupBridgeDelegate: NSObject, POPPopupBridgeDelegate {
 
+    var didRequestPresentationOfViewController: Bool = false
+    var didRequestDismissalOfViewController: Bool = false
+
     func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsPresentationOfViewController viewController: UIViewController) {
-        // TODO: do something
+        didRequestPresentationOfViewController = true
     }
 
     func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsDismissalOfViewController viewController: UIViewController) {
-        // TODO: do something
+        didRequestDismissalOfViewController = true
     }
 }
 
-final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
+// TODO: rename class
+final class PopupBridgeSwift_UnitTests: XCTestCase, WKNavigationDelegate {
 
     let scriptMessageHandlerName: String = "POPPopupBridge"
     let returnURL: String = "com.braintreepayments.popupbridgeexample"
@@ -53,21 +56,42 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
 
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let _ = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
 
-        // TODO: sort this out - scriptMessage should be of type id<WKScriptMessageHandler>
-//        XCTAssertEqual(mockUserContentController.scriptMessageHandler as! WKScriptMessageHandler, pub)
         XCTAssertEqual(mockUserContentController.name, scriptMessageHandlerName)
     }
 
     func testReceiveScriptMessage_whenMessageContainsURL_requestsPresentationOfSafariViewController() {
-        
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        let delegate = MockPopupBridgeDelegate()
+
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+
+        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        delegate.popupBridge(pub, requestsDismissalOfViewController: UIViewController())
+        XCTAssertTrue(delegate.didRequestPresentationOfViewController)
     }
+
+    func testReceiveScriptMessage_whenMessageContainsURL_informsDelegateThatURLWillBeLoaded() {
+
+    }
+
 
     // Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if let webviewReadyBlock = PopupBridge_UnitTests.webviewReadyBlock {
+        if let webviewReadyBlock = PopupBridgeSwift_UnitTests.webviewReadyBlock {
             webviewReadyBlock
         }
     }

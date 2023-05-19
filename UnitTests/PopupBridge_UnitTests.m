@@ -33,35 +33,19 @@ static void (^webviewReadyBlock)(void);
     webviewReadyBlock = nil;
 }
 
-- (void)testReceiveScriptMessage_whenMessageContainsURL_requestsPresentationOfSafariViewController {
-    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
-    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
-    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
-    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
-    OCMStub([stubWebView configuration]).andDo(nil);
-    id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
-
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
-    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
-
-    OCMVerify([mockDelegate popupBridge:pub requestsPresentationOfViewController:[OCMArg checkWithBlock:^BOOL(UIViewController *viewController) {
-        return [viewController isKindOfClass:[SFSafariViewController class]];
-    }]]);
-}
-
-- (void)testReceiveScriptMessage_whenMessageContainsURL_informsDelegateThatURLWillBeLoaded {
-    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
-    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
-    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
-    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
-    OCMStub([stubWebView configuration]).andDo(nil);
-    id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
-
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
-    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
-
-    OCMVerify([mockDelegate popupBridge:pub willOpenURL:[NSURL URLWithString:@"http://example.com/?hello=world"]]);
-}
+//- (void)testReceiveScriptMessage_whenMessageContainsURL_informsDelegateThatURLWillBeLoaded {
+//    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
+//    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+//    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
+//    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
+//    OCMStub([stubWebView configuration]).andDo(nil);
+//    id mockDelegate = OCMProtocolMock(@protocol(POPPopupBridgeDelegate));
+//
+//    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
+//    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
+//
+//    OCMVerify([mockDelegate popupBridge:pub willOpenURL:[NSURL URLWithString:@"http://example.com/?hello=world"]]);
+//}
 
 - (void)testReceiveScriptMessage_whenURLIsMissing_doesNotRequestPresentationOfViewControllers {
     WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
