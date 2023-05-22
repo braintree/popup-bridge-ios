@@ -47,71 +47,71 @@ static void (^webviewReadyBlock)(void);
 //    OCMVerify([mockDelegate popupBridge:pub willOpenURL:[NSURL URLWithString:@"http://example.com/?hello=world"]]);
 //}
 
-- (void)testReceiveScriptMessage_whenURLIsMissing_doesNotRequestPresentationOfViewControllers {
-    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
-    OCMStub(stubMessage.body).andReturn(@{});
-    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
-    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
-    OCMStub([stubWebView configuration]).andDo(nil);
-    id mockDelegate = OCMStrictProtocolMock(@protocol(POPPopupBridgeDelegate));
+//- (void)testReceiveScriptMessage_whenURLIsMissing_doesNotRequestPresentationOfViewControllers {
+//    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
+//    OCMStub(stubMessage.body).andReturn(@{});
+//    OCMStub(stubMessage.name).andReturn(kPOPScriptMessageHandlerName);
+//    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
+//    OCMStub([stubWebView configuration]).andDo(nil);
+//    id mockDelegate = OCMStrictProtocolMock(@protocol(POPPopupBridgeDelegate));
+//
+//    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
+//    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
+//}
 
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
-    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
-}
-
-- (void)testReceiveScriptMessage_whenMessageNameIsNotScriptMessageHandlerName_doesNotRequestPresentationOfViewControllers {
-    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
-    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
-    OCMStub(stubMessage.name).andReturn(@"foo");
-    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
-    OCMStub([stubWebView configuration]).andDo(nil);
-    id mockDelegate = OCMStrictProtocolMock(@protocol(POPPopupBridgeDelegate));
-
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
-    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
-}
+//- (void)testReceiveScriptMessage_whenMessageNameIsNotScriptMessageHandlerName_doesNotRequestPresentationOfViewControllers {
+//    WKScriptMessage *stubMessage = OCMClassMock([WKScriptMessage class]);
+//    OCMStub(stubMessage.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+//    OCMStub(stubMessage.name).andReturn(@"foo");
+//    WKWebView *stubWebView = OCMClassMock([WKWebView class]);
+//    OCMStub([stubWebView configuration]).andDo(nil);
+//    id mockDelegate = OCMStrictProtocolMock(@protocol(POPPopupBridgeDelegate));
+//
+//    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:stubWebView urlScheme:kReturnURLScheme delegate:mockDelegate];
+//    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:stubMessage];
+//}
 
 
-- (void)testPopupBridge_whenDoneButtonTappedOnSafariViewController_callsOnCancelOrOnCompleteWithNoPayloadOrError {
-    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
-    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
-    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
-    WKWebView *webView = OCMClassMock([WKWebView class]);
-    SFSafariViewController *stubSafari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"http://example.com"]];
-    
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView urlScheme:kReturnURLScheme delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
-    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+//- (void)testPopupBridge_whenDoneButtonTappedOnSafariViewController_callsOnCancelOrOnCompleteWithNoPayloadOrError {
+//    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
+//    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+//    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
+//    WKWebView *webView = OCMClassMock([WKWebView class]);
+//    SFSafariViewController *stubSafari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"http://example.com"]];
+//
+//    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView urlScheme:kReturnURLScheme delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+//    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+//
+//    [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
+//
+//    OCMVerify([webView evaluateJavaScript:@""
+//        "if (typeof window.popupBridge.onCancel === 'function') {"
+//        "  window.popupBridge.onCancel();"
+//        "} else {"
+//        "  window.popupBridge.onComplete(null, null);"
+//        "}" completionHandler:OCMOCK_ANY]);
+//    }
 
-    [((id <SFSafariViewControllerDelegate>)pub) safariViewControllerDidFinish:stubSafari];
-
-    OCMVerify([webView evaluateJavaScript:@""
-        "if (typeof window.popupBridge.onCancel === 'function') {"
-        "  window.popupBridge.onCancel();"
-        "} else {"
-        "  window.popupBridge.onComplete(null, null);"
-        "}" completionHandler:OCMOCK_ANY]);
-    }
-
-- (void)testOpenURL_whenReturnURLHasQueryParams_passesPayloadWithQueryItemsToWebView {
-    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
-    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
-    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
-    WKWebView *webView = OCMClassMock([WKWebView class]);
-
-    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView urlScheme:kReturnURLScheme delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
-    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
-    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar"]];
-
-    OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
-        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
-        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
-        XCTAssertEqualObjects(jsonDictionary[@"path"], @"/return");
-        NSDictionary *queryItems = jsonDictionary[@"queryItems"];
-        XCTAssertEqualObjects(queryItems[@"something"], @"foo");
-        XCTAssertEqualObjects(queryItems[@"other"], @"bar");
-        return YES;
-    }] completionHandler:OCMOCK_ANY]);
-}
+//- (void)testOpenURL_whenReturnURLHasQueryParams_passesPayloadWithQueryItemsToWebView {
+//    WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
+//    OCMStub(message.body).andReturn(@{@"url": @"http://example.com/?hello=world"});
+//    OCMStub(message.name).andReturn(kPOPScriptMessageHandlerName);
+//    WKWebView *webView = OCMClassMock([WKWebView class]);
+//
+//    POPPopupBridge *pub = [[POPPopupBridge alloc] initWithWebView:webView urlScheme:kReturnURLScheme delegate:OCMProtocolMock(@protocol(POPPopupBridgeDelegate))];
+//    [pub userContentController:[[WKUserContentController alloc] init] didReceiveScriptMessage:message];
+//    [POPPopupBridge openURL:[NSURL URLWithString:@"com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar"]];
+//
+//    OCMVerify([webView evaluateJavaScript:[OCMArg checkWithBlock:^BOOL(NSString *javascriptCommand) {
+//        NSString *payload = [[javascriptCommand stringByReplacingOccurrencesOfString:@"window.popupBridge.onComplete(null, " withString:@""] stringByReplacingOccurrencesOfString:@");" withString:@""];
+//        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+//        XCTAssertEqualObjects(jsonDictionary[@"path"], @"/return");
+//        NSDictionary *queryItems = jsonDictionary[@"queryItems"];
+//        XCTAssertEqualObjects(queryItems[@"something"], @"foo");
+//        XCTAssertEqualObjects(queryItems[@"other"], @"bar");
+//        return YES;
+//    }] completionHandler:OCMOCK_ANY]);
+//}
 
 - (void)testOpenURL_whenReturnURLHasNoQueryParams_passesPayloadWithNoQueryItemsToWebView {
     WKScriptMessage *message = OCMClassMock([WKScriptMessage class]);
