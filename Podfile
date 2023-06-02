@@ -7,7 +7,6 @@ use_frameworks!
 
 target 'UnitTests' do
   project 'PopupBridge'
-  pod 'OCMock', :inhibit_warnings => true
   pod 'xcbeautify'
 end
 
