@@ -5,12 +5,6 @@ workspace 'PopupBridge.xcworkspace'
 
 use_frameworks!
 
-target 'UnitTests' do
-  project 'PopupBridge'
-  pod 'OCMock', :inhibit_warnings => true
-  pod 'xcbeautify'
-end
-
 # Workaround required for Xcode 14.3 
 # https://stackoverflow.com/questions/75574268/missing-file-libarclite-iphoneos-a-xcode-14-3
 post_install do |installer|
