@@ -17,9 +17,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let delegate: POPPopupBridgeDelegate
     private var webAuthenticationSession: WebAuthenticationSession
     
-    private var returnBlock: ((URL) -> Void)? = nil
+    private var returnBlock: ((URL) -> Bool)? = nil
     
-    // MARK: - Initializer
+    // MARK: - Initializers
         
     /// Initialize a Popup Bridge.
     /// - Parameters:
@@ -37,13 +37,38 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView(scheme: callbackURLScheme)
                 
-        returnBlock = { (url: URL) -> Void in
+        returnBlock = { (url: URL) -> Bool in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
-                return
+                return false
             }
-            
+
             self.injectWebView(webView: webView, withJavaScript: script)
-            return
+            return true
+        }
+    }
+
+    /// :nodoc: This method is not covered by Semantic Versioning. Do not use.
+    /// Exposed for testing in Objective-C
+    init(
+        webView: WKWebView,
+        delegate: POPPopupBridgeDelegate,
+        webAuthenticationSession: WebAuthenticationSession
+    ) {
+        self.webView = webView
+        self.delegate = delegate
+        self.webAuthenticationSession = webAuthenticationSession
+
+        super.init()
+
+        configureWebView(scheme: callbackURLScheme)
+
+        returnBlock = { (url: URL) -> Bool in
+            guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
+                return false
+            }
+
+            self.injectWebView(webView: webView, withJavaScript: script)
+            return true
         }
     }
     
@@ -56,13 +81,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Returns: JavaScript formatted completion.
     func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
-              urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
+              urlComponents.scheme?.caseInsensitiveCompare(callbackURLScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
             return nil
         }
-
-        self.dismissSafariViewController()
 
         let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
@@ -102,12 +125,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         )
         
         webView.configuration.userContentController.addUserScript(script)
-    }
-
-    private func dismissSafariViewController() {
-        if let safariViewController {
-            delegate.popupBridge(self, requestsDismissalOfViewController: safariViewController)
-        }
     }
     
     private func injectWebView(webView: WKWebView, withJavaScript script: String) {
@@ -150,6 +167,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                             return
                         }
                     } else if let url, let returnBlock = self.returnBlock {
+                        // TODO: handle this
                         returnBlock(url)
                         return
                     } else {
