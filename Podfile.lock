@@ -1,0 +1,20 @@
+PODS:
+  - OCMock (3.7.1)
+  - xcbeautify (0.9.1)
+
+DEPENDENCIES:
+  - OCMock
+  - xcbeautify
+
+SPEC REPOS:
+  trunk:
+    - OCMock
+    - xcbeautify
+
+SPEC CHECKSUMS:
+  OCMock: 75fbeaa46a9b11f8c182bbb1d1f7e9a35ccc9955
+  xcbeautify: a1ddeb6f57d626ad9395c5c96540edf726a48f6b
+
+PODFILE CHECKSUM: 3a4239876f20c3975a33e883478bf8a8fbb4cb0b
+
+COCOAPODS: 1.12.0
