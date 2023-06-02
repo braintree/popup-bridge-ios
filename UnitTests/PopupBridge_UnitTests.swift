@@ -1,12 +1,12 @@
 import XCTest
 import WebKit
-import SafariServices
 @testable import PopupBridge
 
 final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
     let scriptMessageHandlerName: String = "POPPopupBridge"
     let returnURL: String = "com.braintreepayments.popupbridgeexample"
+    let mockWebAuthenticationSession = MockWebAuthenticationSession()
 
     var webViewReadyBlock: (Void)?
 
@@ -16,7 +16,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
         XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 0)
 
-        let _ = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let _ = POPPopupBridge(webView: webView, delegate: delegate)
 
         XCTAssertEqual(webView.configuration.userContentController.userScripts.count, 1)
 
@@ -35,13 +35,13 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate)
 
         XCTAssertEqual(mockUserContentController.scriptMessageHandler as? POPPopupBridge, pub)
         XCTAssertEqual(mockUserContentController.name, scriptMessageHandlerName)
     }
 
-    func testReceiveScriptMessage_whenMessageContainsURL_requestsPresentationOfSafariViewController() {
+    func testReceiveScriptMessage_whenMessageContainsURL_startsWebAuthenticationSession() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -55,12 +55,12 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate, webAuthenticationSession: mockWebAuthenticationSession)
 
+        mockWebAuthenticationSession.cannedResponseURL = URL(string: "http://example.com/?hello=world")
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
-        delegate.popupBridge(pub, requestsDismissalOfViewController: UIViewController())
 
-        XCTAssertTrue(delegate.didRequestPresentationOfViewController)
+        XCTAssertTrue(pub.returnedWithURL)
     }
 
     func testReceiveScriptMessage_whenMessageContainsURL_informsDelegateThatURLWillBeLoaded() {
@@ -77,7 +77,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate)
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
     }
@@ -96,7 +96,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate)
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
     }
@@ -115,11 +115,9 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
-        let stubSafari = SFSafariViewController(url: URL(string: "http://example.com")!)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate)
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
-        pub.safariViewControllerDidFinish(stubSafari)
 
         webView.evaluateJavaScript("""
         "if (typeof window.popupBridge.onCancel === 'function') {"
@@ -130,7 +128,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         """)
     }
 
-    func testOpenURL_whenReturnURLHasQueryParams_passesPayloadWithQueryItemsToWebView() {
+    func testConstructJavaScriptCompletionResult_whenReturnURLHasQueryParams_passesPayloadWithQueryItemsToWebView() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -144,16 +142,17 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
-        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar")!
-        let _ = POPPopupBridge.open(url: mockURL)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate, webAuthenticationSession: mockWebAuthenticationSession)
+        let mockURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return?something=foo&other=bar")!
+        mockWebAuthenticationSession.cannedResponseURL = mockURL
+
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{\"other\":\"bar\",\"something\":\"foo\"}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
         XCTAssertEqual(result, expectedResult)
     }
 
-    func testOpenURL_whenReturnURLHasNoQueryParams_passesPayloadWithNoQueryItemsToWebView() {
+    func testConstructJavaScriptCompletionResult_whenReturnURLHasNoQueryParams_passesPayloadWithNoQueryItemsToWebView() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -167,16 +166,17 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
-        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return")!
-        let _ = POPPopupBridge.open(url: mockURL)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate, webAuthenticationSession: mockWebAuthenticationSession)
+        let mockURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return")!
+        mockWebAuthenticationSession.cannedResponseURL = mockURL
+
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
         XCTAssertEqual(result, expectedResult)
     }
 
-    func testOpenURL_whenReturnURLHasURLFragment_passesPayloadWithHashToWebView() {
+    func testConstructJavaScriptCompletionResult_whenReturnURLHasURLFragment_passesPayloadWithHashToWebView() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -184,19 +184,20 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         stubMessage.name = stubMessageName
 
         let delegate = MockPopupBridgeDelegate()
-        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: WKWebView(), delegate: delegate, webAuthenticationSession: mockWebAuthenticationSession)
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
-        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return#something=foo&other=bar")!
-        let _ = POPPopupBridge.open(url: mockURL)
+        let mockURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return#something=foo&other=bar")!
+        mockWebAuthenticationSession.cannedResponseURL = mockURL
+
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"hash\":\"something=foo&other=bar\",\"queryItems\":{}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
         XCTAssertEqual(result, expectedResult)
     }
 
-    func testOpenURL_whenReturnURLHasNoURLFragment_passesPayloadWithNilHashToWebView() {
+    func testConstructJavaScriptCompletionResult_whenReturnURLHasNoURLFragment_passesPayloadWithNilHashToWebView() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -204,19 +205,20 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         stubMessage.name = stubMessageName
 
         let delegate = MockPopupBridgeDelegate()
-        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: WKWebView(), delegate: delegate, webAuthenticationSession: mockWebAuthenticationSession)
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
-        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return")!
-        let _ = POPPopupBridge.open(url: mockURL)
+        let mockURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return")!
+        mockWebAuthenticationSession.cannedResponseURL = mockURL
+
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
         XCTAssertEqual(result, expectedResult)
     }
 
-    func testOpenURL_whenReturnURLDoesNotMatchScheme_returnsFalseAndDoesNotCallOnComplete() {
+    func testConstructJavaScriptCompletionResult_whenReturnURLDoesNotMatchScheme_returnsFalseAndDoesNotCallOnComplete() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -224,15 +226,14 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         stubMessage.name = stubMessageName
 
         let delegate = MockPopupBridgeDelegate()
-        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
-
+        let pub = POPPopupBridge(webView: WKWebView(), delegate: delegate)
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
-        let result = POPPopupBridge.open(url: URL(string: "not.the.right.scheme://popupbridgev1/return?something=foo")!)
-        XCTAssertFalse(result)
+        let result = pub.constructJavaScriptCompletionResult(returnURL: URL(string: "not.the.right.scheme://popupbridgev1/return?something=foo")!)
+        XCTAssertNil(result)
     }
 
-    func testOpenURL_whenReturnURLDoesNotMatchHost_returnsFalseAndDoesNotCallOnComplete() {
+    func testConstructJavaScriptCompletionResult_whenReturnURLDoesNotMatchHost_returnsFalseAndDoesNotCallOnComplete() {
         let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
         let stubMessageName = scriptMessageHandlerName
         let stubMessage = MockScriptMessage()
@@ -240,12 +241,11 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         stubMessage.name = stubMessageName
 
         let delegate = MockPopupBridgeDelegate()
-        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
-
+        let pub = POPPopupBridge(webView: WKWebView(), delegate: delegate)
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
-        let result = POPPopupBridge.open(url: URL(string: "com.braintreepayments.popupbridgeexample://notcorrect/return?something=foo")!)
-        XCTAssertFalse(result)
+        let result = pub.constructJavaScriptCompletionResult(returnURL: URL(string: "sdk.ios.popup-bridge://popupbridgev2/return?something=foo")!)
+        XCTAssertNil(result)
     }
 
     func testDelegate_whenWebViewCallsPopupBridgeSendMessage_receivesMessage() {
@@ -253,7 +253,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let webView = WKWebView()
         webView.navigationDelegate = self
 
-        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: webView, delegate: delegate, webAuthenticationSession: mockWebAuthenticationSession)
         let expectation = expectation(description: "Called JS")
 
         webViewReadyBlock = {

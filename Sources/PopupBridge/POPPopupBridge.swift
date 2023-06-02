@@ -4,6 +4,8 @@ import AuthenticationServices
 
 @objcMembers
 public class POPPopupBridge: NSObject, WKScriptMessageHandler {
+
+    var returnedWithURL: Bool = false
     
     // MARK: - Private Properties
     
@@ -17,7 +19,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let delegate: POPPopupBridgeDelegate
     private var webAuthenticationSession: WebAuthenticationSession
     
-    private var returnBlock: ((URL) -> Bool)? = nil
+    private var returnBlock: ((URL) -> Void)? = nil
     
     // MARK: - Initializers
         
@@ -37,13 +39,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView(scheme: callbackURLScheme)
                 
-        returnBlock = { (url: URL) -> Bool in
+        returnBlock = { (url: URL) -> Void in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
-                return false
+                return
             }
 
             self.injectWebView(webView: webView, withJavaScript: script)
-            return true
+            return
         }
     }
 
@@ -62,13 +64,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView(scheme: callbackURLScheme)
 
-        returnBlock = { (url: URL) -> Bool in
+        returnBlock = { (url: URL) -> Void in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
-                return false
+                return
             }
 
             self.injectWebView(webView: webView, withJavaScript: script)
-            return true
+            return
         }
     }
     
@@ -167,7 +169,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                             return
                         }
                     } else if let url, let returnBlock = self.returnBlock {
-                        // TODO: handle this
+                        self.returnedWithURL = true
                         returnBlock(url)
                         return
                     } else {
