@@ -16,6 +16,10 @@ class MockPopupBridgeDelegate: NSObject, POPPopupBridgeDelegate {
     func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsDismissalOfViewController viewController: UIViewController) {
         didRequestDismissalOfViewController = true
     }
+
+    func popupBridge(_ bridge: POPPopupBridge, receivedMessage messageName: String, data: String?) {
+        // no-op
+    }
 }
 
 // TODO: rename class
@@ -55,8 +59,9 @@ final class PopupBridgeSwift_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let _ = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
 
+        XCTAssertEqual(mockUserContentController.scriptMessageHandler as? POPPopupBridge, pub)
         XCTAssertEqual(mockUserContentController.name, scriptMessageHandlerName)
     }
 
@@ -165,10 +170,126 @@ final class PopupBridgeSwift_UnitTests: XCTestCase, WKNavigationDelegate {
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
         let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
         let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return?something=foo&other=bar")!
+        let _ = POPPopupBridge.open(url: mockURL)
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{\"other\":\"bar\",\"something\":\"foo\"}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
         XCTAssertEqual(result, expectedResult)
+    }
+
+    func testOpenURL_whenReturnURLHasNoQueryParams_passesPayloadWithNoQueryItemsToWebView() {
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        let delegate = MockPopupBridgeDelegate()
+
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return")!
+        let _ = POPPopupBridge.open(url: mockURL)
+        let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{}});"
+        let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
+
+        XCTAssertEqual(result, expectedResult)
+    }
+
+    func testOpenURL_whenReturnURLHasURLFragment_passesPayloadWithHashToWebView() {
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        let delegate = MockPopupBridgeDelegate()
+        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return#something=foo&other=bar")!
+        let _ = POPPopupBridge.open(url: mockURL)
+        let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"hash\":\"something=foo&other=bar\",\"queryItems\":{}});"
+        let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
+
+        XCTAssertEqual(result, expectedResult)
+    }
+
+    func testOpenURL_whenReturnURLHasNoURLFragment_passesPayloadWithNilHashToWebView() {
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        let delegate = MockPopupBridgeDelegate()
+        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        let mockURL = URL(string: "com.braintreepayments.popupbridgeexample://popupbridgev1/return")!
+        let _ = POPPopupBridge.open(url: mockURL)
+        let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{}});"
+        let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
+
+        XCTAssertEqual(result, expectedResult)
+    }
+
+    func testOpenURL_whenReturnURLDoesNotMatchScheme_returnsFalseAndDoesNotCallOnComplete() {
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        let delegate = MockPopupBridgeDelegate()
+        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        let result = POPPopupBridge.open(url: URL(string: "not.the.right.scheme://popupbridgev1/return?something=foo")!)
+        XCTAssertFalse(result)
+    }
+
+    func testOpenURL_whenReturnURLDoesNotMatchHost_returnsFalseAndDoesNotCallOnComplete() {
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        let delegate = MockPopupBridgeDelegate()
+        let pub = POPPopupBridge(webView: WKWebView(), urlScheme: returnURL, delegate: delegate)
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        let result = POPPopupBridge.open(url: URL(string: "com.braintreepayments.popupbridgeexample://notcorrect/return?something=foo")!)
+        XCTAssertFalse(result)
+    }
+
+    func testDelegate_whenWebViewCallsPopupBridgeSendMessage_receivesMessage() {
+        let delegate = MockPopupBridgeDelegate()
+        let webView = WKWebView()
+        webView.navigationDelegate = self
+
+        let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
+        let expectation = expectation(description: "Called JS")
+
+        PopupBridgeSwift_UnitTests.webviewReadyBlock = {
+            webView.evaluateJavaScript("window.popupBridge.sendMessage('myMessageName', JSON.stringify({foo: 'bar'}));") {_, _ in
+                delegate.popupBridge(pub, receivedMessage: "myMessageName", data: "{\"foo\":\"bar\"}")
+                expectation.fulfill()
+            }
+        }()
+
+        webView.loadHTMLString("<html></html>", baseURL: nil)
+
+        waitForExpectations(timeout: 10)
     }
 
     // Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.

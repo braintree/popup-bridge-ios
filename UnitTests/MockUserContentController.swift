@@ -10,7 +10,7 @@ class MockUserContentController: WKUserContentController {
 
     // MARK: - Methods
 
-    func addScriptMessageHandler(scriptMessageHandler: Any, name: String) {
+    override func add(_ scriptMessageHandler: WKScriptMessageHandler, name: String) {
         self.scriptMessageHandler = scriptMessageHandler
         self.name = name
     }
