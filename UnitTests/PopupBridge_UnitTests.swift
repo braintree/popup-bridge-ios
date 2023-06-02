@@ -3,25 +3,6 @@ import WebKit
 import SafariServices
 @testable import PopupBridge
 
-// TODO: move into own file
-class MockPopupBridgeDelegate: NSObject, POPPopupBridgeDelegate {
-
-    var didRequestPresentationOfViewController: Bool = false
-    var didRequestDismissalOfViewController: Bool = false
-
-    func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsPresentationOfViewController viewController: UIViewController) {
-        didRequestPresentationOfViewController = true
-    }
-
-    func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsDismissalOfViewController viewController: UIViewController) {
-        didRequestDismissalOfViewController = true
-    }
-
-    func popupBridge(_ bridge: POPPopupBridge, receivedMessage messageName: String, data: String?) {
-        // no-op
-    }
-}
-
 final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
     let scriptMessageHandlerName: String = "POPPopupBridge"
@@ -278,6 +259,8 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         webViewReadyBlock = {
             webView.evaluateJavaScript("window.popupBridge.sendMessage('myMessageName', JSON.stringify({foo: 'bar'}));") {_, _ in
                 delegate.popupBridge(pub, receivedMessage: "myMessageName", data: "{\"foo\":\"bar\"}")
+                XCTAssertEqual(delegate.receivedMessage, "myMessageName")
+                XCTAssertEqual(delegate.recievedData, "{\"foo\":\"bar\"}")
                 expectation.fulfill()
             }
         }()

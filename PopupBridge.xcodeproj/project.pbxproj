@@ -19,6 +19,7 @@
 		BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */; };
 		BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524532A17DFCC00168D77 /* MockUserContentController.swift */; };
 		BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */; };
+		BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_UnitTests.swift; sourceTree = "<group>"; };
 		BE2524532A17DFCC00168D77 /* MockUserContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserContentController.swift; sourceTree = "<group>"; };
 		BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockScriptMessage.swift; sourceTree = "<group>"; };
+		BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,9 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
-				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
-				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
+				BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
+				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
+				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			files = (
 				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
+				BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */,
 				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
