@@ -47,7 +47,7 @@ final class PopupBridge_DemoUITests: XCTestCase {
         waitForElement(launchPopupButton)
         launchPopupButton.tap()
 
-        let doneButton = app.buttons["Done"]
+        let doneButton = app.buttons["Cancel"]
         waitForElement(doneButton)
         doneButton.tap()
 
