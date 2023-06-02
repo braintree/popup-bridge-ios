@@ -22,17 +22,12 @@ class MockPopupBridgeDelegate: NSObject, POPPopupBridgeDelegate {
     }
 }
 
-// TODO: rename class
-final class PopupBridgeSwift_UnitTests: XCTestCase, WKNavigationDelegate {
+final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
     let scriptMessageHandlerName: String = "POPPopupBridge"
     let returnURL: String = "com.braintreepayments.popupbridgeexample"
 
-    static var webviewReadyBlock: (Void)?
-
-    override class func tearDown() {
-        webviewReadyBlock = nil
-    }
+    var webViewReadyBlock: (Void)?
 
     func testInit_addsUserScript() {
         let webView = WKWebView()
@@ -280,7 +275,7 @@ final class PopupBridgeSwift_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(webView: webView, urlScheme: returnURL, delegate: delegate)
         let expectation = expectation(description: "Called JS")
 
-        PopupBridgeSwift_UnitTests.webviewReadyBlock = {
+        webViewReadyBlock = {
             webView.evaluateJavaScript("window.popupBridge.sendMessage('myMessageName', JSON.stringify({foo: 'bar'}));") {_, _ in
                 delegate.popupBridge(pub, receivedMessage: "myMessageName", data: "{\"foo\":\"bar\"}")
                 expectation.fulfill()
@@ -295,8 +290,8 @@ final class PopupBridgeSwift_UnitTests: XCTestCase, WKNavigationDelegate {
     // Consider adding tests for query parameter parsing - multiple values, special characters, encoded, etc.
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if let webviewReadyBlock = PopupBridgeSwift_UnitTests.webviewReadyBlock {
-            webviewReadyBlock
+        if let webViewReadyBlock {
+            webViewReadyBlock
         }
     }
 }
