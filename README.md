@@ -3,7 +3,7 @@ PopupBridge iOS
 
 ![GitHub Actions Tests](https://github.com/braintree/popup-bridge-ios/workflows/Tests/badge.svg)
 
-PopupBridge is an iOS library that allows WKWebViews to open popup windows in an SFSafariViewController browser and send data back to the parent page in the WKWebView.
+PopupBridge is an iOS library that allows WKWebViews to open popup windows in an ASWebAuthenticationSession browser and send data back to the parent page in the WKWebView.
 
 PopupBridge is also available for [Android](https://github.com/braintree/popup-bridge-android).
 
@@ -26,9 +26,6 @@ To integrate using [CocoaPods](https://cocoapods.org), add the following line to
 ```ruby
 pod 'PopupBridge'
 ```
-### Carthage
-
-To integrate using Carthage, add `github "braintree/popup-bridge-ios"` to your `Cartfile`, and [add the frameworks to your project](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
 ### Swift Package Manager
 
@@ -43,38 +40,6 @@ To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run th
 
 Quick Start
 -----------
-
-1. Register a URL type for your app:
-    - In Xcode, click on your project in the Project Navigator and navigate to **App Target** > **Info** > **URL Types**
-    - Click **[+]** to add a new URL type
-    - Under **URL Schemes**, enter a unique URL scheme, e.g. `com.your-company.your-app`
-
-    This scheme must start with your app's Bundle ID and be dedicated to PopupBridge app switch returns. For example, if the app bundle ID is `com.your-company.your-app`, then your URL scheme could be `com.your-company.your-app.popupbridge`.
-    
-1. Inspect the return URL and then call `PopupBridge.open(url:)` from either your app delegate or your scene delegate.
-
-    If you're using `UISceneDelegate` (introduced in iOS 13), call `POPPopupBridge.open(url:)` from within the `scene(_:openURLContexts:)` scene delegate method.
-
-    ```swift
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        URLContexts.forEach { context in
-            if context.url.scheme?.localizedCaseInsensitiveCompare("com.your-company.your-app.popupbridge") == .orderedSame {
-                POPPopupBridge.open(url: context.url)
-            }
-        }
-    }
-    ```
-
-    If you aren't using `UISceneDelegate`, call `PopupBridge.open(url:)` from within the  `application(_:open:options:)` delegate method of your app delegate.
-
-    ```swift
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if url.scheme?.localizedCaseInsensitiveCompare("com.your-company.your-app.popupbridge") == .orderedSame {
-            return POPPopupBridge.open(url: url)
-        }
-        return false
-    }
-    ```
 
 1. Integrate PopupBridge with your WKWebView:
 
@@ -91,24 +56,12 @@ Quick Start
             
             popupBridge = POPPopupBridge(
                 webView: webView,
-                urlScheme: "com.your-company.your-app.popupbridge",
                 delegate: self
             )
             
             // Replace http://localhost:3099/ with the webpage you want to open in the webview
             let url = URL(string: "http://localhost:3099/")!
             webView.load(URLRequest(url: url))
-        }
-    }
-
-    extension ViewController: POPPopupBridgeDelegate{
-        
-        func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsDismissalOfViewController viewController: UIViewController) {
-            viewController.dismiss(animated: true)
-        }
-        
-        func popupBridge(_ bridge: PopupBridge.POPPopupBridge, requestsPresentationOfViewController viewController: UIViewController) {
-            present(viewController, animated: true)
         }
     }
     ```
@@ -178,7 +131,7 @@ Frequently Asked Questions
 
 WKWebView can open popups through its [`WKUIDelegate`](https://developer.apple.com/reference/webkit/wkuidelegate), which can be implemented to present the popup in a new WKWebView.
 
-However, WKWebViews do not display an address bar or an HTTPS lock icon. If the popup receives sensitive user information (e.g. login credentials), users must implicitly trust that the web page is not redirecting them to a malicious spoofed page that may steal their information. PopupBridge solves this by using an SFSafariViewController.
+However, WKWebViews do not display an address bar or an HTTPS lock icon. If the popup receives sensitive user information (e.g. login credentials), users must implicitly trust that the web page is not redirecting them to a malicious spoofed page that may steal their information. PopupBridge solves this by using an ASWebAuthenticationSession.
 
 ### What are some use cases for using PopupBridge?
 
@@ -191,20 +144,9 @@ However, WKWebViews do not display an address bar or an HTTPS lock icon. If the 
 
 - PopupBridge attaches to a WKWebView by [injecting a user script](https://developer.apple.com/reference/webkit/wkusercontentcontroller/1537448-adduserscript) to the page
   - This exposes a JavaScript interface (via `window.popupBridge`) for the web page to interact with the iOS code
-- The web page detects whether the page has access to `window.popupBridge`; if so, it uses `popupBridge.open` to open the popup URL
-  - `popupBridge.open` creates a SFSafariViewController to open the popup URL and has its delegate present the view controller
+- The web page detects whether the page has access to `window.popupBridge`; if so, it creates a ASWebAuthenticationSession to open the popup URL
   - The web page can also use `popupBridge.onComplete` as a callback
-- The popup web page uses a deep link URL to dismiss the popup
-  - The deep link URL should match a deep link URL type in Xcode
-  - The app delegate handles the deep link URL and forwards it to PopupBridge
-  - One way to avoid hard-coding the deep link is by adding it as a query parameter to the popup URL:
-
-    ```javascript
-      popupBridge.open(url + '?popupBridgeReturnUrlPrefix=' + popupBridge.getReturnUrlPrefix());
-    ```
-
-    - Optionally, you can add path components and query parameters to the deep link URL to return data to the parent page, which are provided in the payload of `popupBridge.onComplete` 
-- If the user taps the **Done** button on the SFSafariViewController, `popupBridge.onComplete` gets called with the error and payload as `null` and the delegate dismisses the view controller
+- If the user taps the **Done** button on the ASWebAuthenticationSession, `popupBridge.onComplete` gets called with the error and payload as `null` and the delegate dismisses the view controller
 
 ### Who built PopupBridge?
 
@@ -225,7 +167,7 @@ WebView-based checkout flows can accept PayPal with PopupBridge and the [Braintr
 
 ### Setup
 1. Create a web-based checkout that accepts PayPal using Checkout.js or the Braintree JS SDK
-1. Create a native mobile app that opens the checkout in a `WKWebView` (See steps 1-3 of the quick start instructions)
+1. Create a native mobile app that opens the checkout in a `WKWebView` (See the quick start instructions)
 1. Integrate the PopupBridge library
 1. Collect device data
     - To help detect fraudulent activity, collect device data before performing PayPal transactions. This is similar to collecting device data with our [native iOS SDK](https://developer.paypal.com/braintree/docs/guides/paypal/vault/ios/v5) with a few differences:
@@ -239,6 +181,7 @@ This SDK abides by our Client SDK Deprecation Policy. For more information on th
 
 | Major version number | Status | Released | Deprecated | Unsupported |
 | -------------------- | ------ | -------- | ---------- | ----------- |
+| 2.x.x | TBA | TBA | TBA | TBA |
 | 1.x.x | Active | 2016 | TBA | TBA |
 
 ## Author
