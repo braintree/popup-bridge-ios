@@ -36,7 +36,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView(scheme: PopupBridgeConstants.callbackURLScheme)
                 
-        returnBlock = { (url: URL) -> Void in
+        returnBlock = { url in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
@@ -60,7 +60,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView(scheme: PopupBridgeConstants.callbackURLScheme)
 
-        returnBlock = { (url: URL) -> Void in
+        returnBlock = { url in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
