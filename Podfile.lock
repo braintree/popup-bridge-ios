@@ -1,3 +1,16 @@
-PODFILE CHECKSUM: 06267604f9994e92b5a492c6e46e26bef518c95b
+PODS:
+  - xcbeautify (0.15.0)
 
-COCOAPODS: 1.12.0
+DEPENDENCIES:
+  - xcbeautify
+
+SPEC REPOS:
+  trunk:
+    - xcbeautify
+
+SPEC CHECKSUMS:
+  xcbeautify: df17aa32d769add7af523a8be9b0ef8fb9eb75a8
+
+PODFILE CHECKSUM: 024901ddc2333bc0d6dc62af1768885f98b22da1
+
+COCOAPODS: 1.12.1
