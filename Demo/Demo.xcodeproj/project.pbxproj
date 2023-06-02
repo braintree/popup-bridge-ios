@@ -15,7 +15,6 @@
 		806D558F25AFD733005ED326 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806D558D25AFD733005ED326 /* Main.storyboard */; };
 		806D559125AFD735005ED326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806D559025AFD735005ED326 /* Assets.xcassets */; };
 		806D559725AFD735005ED326 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D559625AFD735005ED326 /* main.m */; };
-		806D55B725AFD877005ED326 /* PopupBridge_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D55B625AFD877005ED326 /* PopupBridge_DemoUITests.m */; };
 		BEF9ED1D2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1C2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +56,6 @@
 		806D559525AFD735005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		806D559625AFD735005ED326 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		806D55B425AFD877005ED326 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		806D55B625AFD877005ED326 /* PopupBridge_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_DemoUITests.m; sourceTree = "<group>"; };
 		806D55B825AFD877005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEF9ED1C2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_DemoUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,7 +118,6 @@
 		806D55B525AFD877005ED326 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
-				806D55B625AFD877005ED326 /* PopupBridge_DemoUITests.m */,
 				806D55B825AFD877005ED326 /* Info.plist */,
 				BEF9ED1C2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift */,
 			);
@@ -247,7 +244,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEF9ED1D2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift in Sources */,
-				806D55B725AFD877005ED326 /* PopupBridge_DemoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
