@@ -3,8 +3,6 @@ import AuthenticationServices
 
 class WebAuthenticationSession: NSObject {
 
-    let callbackURLScheme: String = "sdk.ios.popup-bridge"
-
     var authenticationSession: ASWebAuthenticationSession?
 
     func start(
@@ -14,7 +12,7 @@ class WebAuthenticationSession: NSObject {
     ) {
         self.authenticationSession = ASWebAuthenticationSession(
             url: url,
-            callbackURLScheme: callbackURLScheme,
+            callbackURLScheme: PopupBridgeConstants.callbackURLScheme,
             completionHandler: completion
         )
 

@@ -5,16 +5,13 @@ import AuthenticationServices
 @objcMembers
 public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
+    /// Exposed for testing
     var returnedWithURL: Bool = false
     
     // MARK: - Private Properties
     
     private let messageHandlerName = "POPPopupBridge"
-    private let hostName = "popupbridgev1"
-
-    // TODO: extract into constants file
-    let callbackURLScheme: String = "sdk.ios.popup-bridge"
-    
+    private let hostName = "popupbridgev1"    
     private let webView: WKWebView
     private let delegate: POPPopupBridgeDelegate
     private var webAuthenticationSession: WebAuthenticationSession
@@ -37,7 +34,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         
         super.init()
 
-        configureWebView(scheme: callbackURLScheme)
+        configureWebView(scheme: PopupBridgeConstants.callbackURLScheme)
                 
         returnBlock = { (url: URL) -> Void in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -49,8 +46,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
     }
 
-    /// :nodoc: This method is not covered by Semantic Versioning. Do not use.
-    /// Exposed for testing in Objective-C
+    /// Exposed for testing
     init(
         webView: WKWebView,
         delegate: POPPopupBridgeDelegate,
@@ -62,7 +58,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         super.init()
 
-        configureWebView(scheme: callbackURLScheme)
+        configureWebView(scheme: PopupBridgeConstants.callbackURLScheme)
 
         returnBlock = { (url: URL) -> Void in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -83,7 +79,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Returns: JavaScript formatted completion.
     func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
-              urlComponents.scheme?.caseInsensitiveCompare(callbackURLScheme) == .orderedSame,
+              urlComponents.scheme?.caseInsensitiveCompare(PopupBridgeConstants.callbackURLScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
             return nil
@@ -151,9 +147,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             
             if let urlString = script.url, let url = URL(string: urlString) {
                 webAuthenticationSession.start(url: url, context: self) { url, error in
-                    if let error = error {
-                        switch error {
-                        case ASWebAuthenticationSessionError.canceledLogin:
+                    if let error = error as? NSError {
+                        if error.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
                             let script = """
                                 if (typeof window.popupBridge.onCancel === 'function') {\
                                     window.popupBridge.onCancel();\
@@ -164,16 +159,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
                             self.injectWebView(webView: self.webView, withJavaScript: script)
                             return
-                        default:
-                            // TODO: handle error
-                            return
                         }
                     } else if let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
                         returnBlock(url)
                         return
-                    } else {
-                        // TODO: handle error
                     }
                 }
             } else if let name = script.message?.name {

@@ -22,6 +22,7 @@
 		BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */; };
 		BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */; };
 		BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */; };
+		BEF9ED232A2A6A2C005D54AB /* PopupBridgeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
 		BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWebAuthenticationSession.swift; sourceTree = "<group>"; };
+		BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeConstants.swift; sourceTree = "<group>"; };
 		E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,6 +165,7 @@
 				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
 				BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */,
 				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
+				BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */,
+				BEF9ED232A2A6A2C005D54AB /* PopupBridgeConstants.swift in Sources */,
 				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
 				BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */,
