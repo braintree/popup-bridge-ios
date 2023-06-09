@@ -9,8 +9,9 @@ class MockWebAuthenticationSession: WebAuthenticationSession {
     override func start(
         url: URL,
         context: ASWebAuthenticationPresentationContextProviding,
-        completion: @escaping (URL?, Error?) -> Void
+        sessionDidComplete: @escaping (URL?, Error?) -> Void,
+        sessionDidCancel: @escaping () -> Void
     ) {
-        completion(cannedResponseURL, cannedErrorResponse)
+        sessionDidComplete(cannedResponseURL, cannedErrorResponse)
     }
 }

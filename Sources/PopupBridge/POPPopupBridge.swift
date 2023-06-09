@@ -136,25 +136,23 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
             
             if let urlString = script.url, let url = URL(string: urlString) {
-                webAuthenticationSession.start(url: url, context: self) { url, error in
-                    if let error = error as? NSError {
-                        if error.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
-                            let script = """
-                                if (typeof window.popupBridge.onCancel === 'function') {\
-                                    window.popupBridge.onCancel();\
-                                } else {\
-                                    window.popupBridge.onComplete(null, null);\
-                                }
-                            """
-
-                            self.injectWebView(webView: self.webView, withJavaScript: script)
-                            return
-                        }
-                    } else if let url, let returnBlock = self.returnBlock {
+                webAuthenticationSession.start(url: url, context: self) { url, _ in
+                    if let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
                         returnBlock(url)
                         return
                     }
+                } sessionDidCancel: { [self] in
+                    let script = """
+                        if (typeof window.popupBridge.onCancel === 'function') {\
+                            window.popupBridge.onCancel();\
+                        } else {\
+                            window.popupBridge.onComplete(null, null);\
+                        }
+                    """
+
+                    injectWebView(webView: webView, withJavaScript: script)
+                    return
                 }
             }
         }
