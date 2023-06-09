@@ -13,7 +13,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"    
     private let webView: WKWebView
-    private let delegate: POPPopupBridgeDelegate
     private var webAuthenticationSession: WebAuthenticationSession
     
     private var returnBlock: ((URL) -> Void)? = nil
@@ -24,12 +23,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - delegate: A delegate that presents and dismisses the pop-up (a SFSafariViewController).
-    public init(
-        webView: WKWebView,
-        delegate: POPPopupBridgeDelegate
-    ) {
+    public init(webView: WKWebView) {
         self.webView = webView
-        self.delegate = delegate
         self.webAuthenticationSession = WebAuthenticationSession()
         
         super.init()
@@ -47,13 +42,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Exposed for testing
-    init(
-        webView: WKWebView,
-        delegate: POPPopupBridgeDelegate,
-        webAuthenticationSession: WebAuthenticationSession
-    ) {
+    init(webView: WKWebView, webAuthenticationSession: WebAuthenticationSession) {
         self.webView = webView
-        self.delegate = delegate
         self.webAuthenticationSession = webAuthenticationSession
 
         super.init()
@@ -166,9 +156,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         return
                     }
                 }
-            } else if let name = script.message?.name {
-                delegate.popupBridge?(self, receivedMessage: name, data: script.message?.data)
-                return
             }
         }
     }

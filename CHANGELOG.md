@@ -9,10 +9,8 @@
   * Remove `POPPopupBridge.set(returnURLScheme:)`
   * Replace `SFSafariViewController` with `ASWebAuthenticationSession`
   * No longer need to register a URL type to use Popup Bridge
-  * Removed the following `POPPopupBridgeDelegate` methods
-    * `popupBridge(_:requestsPresentationOfViewController:)`
-    * `popupBridge(_:requestsDismissalOfViewController:)`
-    * `popupBridge(_:willOpenURL:)`
+  * Removed `POPPopupBridgeDelegate`
+  * The initializer for `POPPopupBridge` now only requires a `WKWebView` `POPPopupBridge(webView:)`
 
 ## 1.2.0 (2021-01-22)
 
