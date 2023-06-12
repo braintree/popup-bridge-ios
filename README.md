@@ -27,6 +27,10 @@ To integrate using [CocoaPods](https://cocoapods.org), add the following line to
 pod 'PopupBridge'
 ```
 
+### Carthage
+
+To integrate using Carthage, add `github "braintree/popup-bridge-ios"` to your `Cartfile`, and [add the frameworks to your project](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
+
 ### Swift Package Manager
 
 To integrate using Swift Package Manager, select File > Swift Packages > Add Package Dependency and enter `https://github.com/braintree/popup-bridge-ios` as the repository URL. Tick the checkbox for `PopupBridge`.
