@@ -7,6 +7,7 @@
   * Require iOS 14+, Xcode 14.3+, and Swift 5.8+
   * Remove deprecated `POPPopupBridge.open(url:sourceApplication:)` & `POPPopupBridge.open(url:options:)` methods
   * Remove `POPPopupBridge.set(returnURLScheme:)`
+  * Remove `open(url:)`
   * Replace `SFSafariViewController` with `ASWebAuthenticationSession`
   * No longer need to register a URL type to use Popup Bridge
   * Removed `POPPopupBridgeDelegate`
