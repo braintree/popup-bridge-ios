@@ -22,7 +22,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Initialize a Popup Bridge.
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
-    ///   - delegate: A delegate that presents and dismisses the pop-up (a SFSafariViewController).
     public init(webView: WKWebView) {
         self.webView = webView
         self.webAuthenticationSession = WebAuthenticationSession()
@@ -65,7 +64,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Exposed for testing
     /// 
     /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
-    /// - Parameter url: returnURL from the result of the SFSafariViewController being dismissed. Provided via the merchant's AppDelegate or SceneDelegate.
+    /// - Parameter url: returnURL from the result of the ASWebAuthenticationSession.
     /// - Returns: JavaScript formatted completion.
     func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
