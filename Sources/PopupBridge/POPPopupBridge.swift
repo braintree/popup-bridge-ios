@@ -28,7 +28,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         
         super.init()
 
-        configureWebView(scheme: PopupBridgeConstants.callbackURLScheme)
+        configureWebView()
                 
         returnBlock = { url in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -47,7 +47,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         super.init()
 
-        configureWebView(scheme: PopupBridgeConstants.callbackURLScheme)
+        configureWebView()
 
         returnBlock = { url in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -96,11 +96,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
-    private func configureWebView(scheme: String) {
+    private func configureWebView() {
         webView.configuration.userContentController.add(self, name: messageHandlerName)
         
         let javascript = PopupBridgeUserScript(
-            scheme: scheme,
+            scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
             host: hostName
         ).rawJavascript
