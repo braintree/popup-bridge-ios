@@ -13,7 +13,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"    
     private let webView: WKWebView
-    private var webAuthenticationSession: WebAuthenticationSession
+    private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     
     private var returnBlock: ((URL) -> Void)? = nil
     
@@ -24,7 +24,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     public init(webView: WKWebView) {
         self.webView = webView
-        self.webAuthenticationSession = WebAuthenticationSession()
         
         super.init()
 
@@ -41,22 +40,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Exposed for testing
-    init(webView: WKWebView, webAuthenticationSession: WebAuthenticationSession) {
-        self.webView = webView
+    convenience init(webView: WKWebView, webAuthenticationSession: WebAuthenticationSession) {
+        self.init(webView: webView)
         self.webAuthenticationSession = webAuthenticationSession
-
-        super.init()
-
-        configureWebView()
-
-        returnBlock = { url in
-            guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
-                return
-            }
-
-            self.injectWebView(webView: webView, withJavaScript: script)
-            return
-        }
     }
     
     // MARK: - Internal Methods
