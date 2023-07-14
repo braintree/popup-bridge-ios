@@ -147,7 +147,7 @@ However, WKWebViews do not display an address bar or an HTTPS lock icon. If the 
   - This exposes a JavaScript interface (via `window.popupBridge`) for the web page to interact with the iOS code
 - The web page detects whether the page has access to `window.popupBridge`; if so, it creates a ASWebAuthenticationSession to open the popup URL
   - The web page can also use `popupBridge.onComplete` as a callback
-- If the user taps the **Done** button on the ASWebAuthenticationSession, `popupBridge.onComplete` gets called with the error and payload as `null`
+- If the user taps the **Cancel** button on the ASWebAuthenticationSession, `popupBridge.onComplete` gets called with the error and payload as `null`
 
 ### Who built PopupBridge?
 
