@@ -39,7 +39,7 @@ final class PopupBridge_DemoUITests: XCTestCase {
         waitForElement(app.staticTexts["You did not like any of our colors"], timeout: 10)
     }
 
-    func testClickingSafariDone_returnsCancel() {
+    func testClickingSafariCancel_returnsCancel() {
         let query = app.descendants(matching: XCUIElement.ElementType.webView)
         let webView = query.element(boundBy: 0)
         let launchPopupButton = webView.buttons["Launch Popup"]
@@ -47,9 +47,9 @@ final class PopupBridge_DemoUITests: XCTestCase {
         waitForElement(launchPopupButton)
         launchPopupButton.tap()
 
-        let doneButton = app.buttons["Done"]
-        waitForElement(doneButton)
-        doneButton.tap()
+        let cancelButton = app.buttons["Cancel"]
+        waitForElement(cancelButton)
+        cancelButton.tap()
 
         waitForElement(app.staticTexts["You did not choose a color"], timeout: 10)
     }

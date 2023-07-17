@@ -12,14 +12,15 @@
 		800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E789C29E0958A00D1B0FC /* WebViewMessage.swift */; };
 		800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */; };
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
-		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */; };
 		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
 		BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */; };
 		BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524532A17DFCC00168D77 /* MockUserContentController.swift */; };
 		BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */; };
-		BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */; };
+		BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */; };
+		BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */; };
+		BEF9ED232A2A6A2C005D54AB /* PopupBridgeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +33,6 @@
 		800A09D72995F143003ED16E /* POPPopupBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridge.swift; sourceTree = "<group>"; };
 		800E789C29E0958A00D1B0FC /* WebViewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewMessage.swift; sourceTree = "<group>"; };
 		800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDetailsPayload.swift; sourceTree = "<group>"; };
-		8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
 		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -47,7 +47,9 @@
 		BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_UnitTests.swift; sourceTree = "<group>"; };
 		BE2524532A17DFCC00168D77 /* MockUserContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserContentController.swift; sourceTree = "<group>"; };
 		BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockScriptMessage.swift; sourceTree = "<group>"; };
-		BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPopupBridgeDelegate.swift; sourceTree = "<group>"; };
+		BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthenticationSession.swift; sourceTree = "<group>"; };
+		BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWebAuthenticationSession.swift; sourceTree = "<group>"; };
+		BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeConstants.swift; sourceTree = "<group>"; };
 		E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,9 +142,9 @@
 			isa = PBXGroup;
 			children = (
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
-				BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
 				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
+				BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */,
 				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
 			);
 			path = UnitTests;
@@ -152,11 +154,12 @@
 			isa = PBXGroup;
 			children = (
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
-				8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */,
+				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
+				BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */,
 				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
-				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
+				BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -300,7 +303,7 @@
 			files = (
 				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
-				BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */,
+				BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */,
 				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,8 +313,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */,
-				8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */,
+				BEF9ED232A2A6A2C005D54AB /* PopupBridgeConstants.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
+				BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */,
 				800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */,
 				8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */,
 			);
