@@ -14,9 +14,12 @@
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
 		8079D7182996B45A00A2E336 /* POPPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7172996B45A00A2E336 /* POPPopupBridgeDelegate.swift */; };
 		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
-		A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */; };
 		A775A0931DEE4F14009E67C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		A775A0941DEE4F18009E67C2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */; };
+		BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */; };
+		BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524532A17DFCC00168D77 /* MockUserContentController.swift */; };
+		BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */; };
+		BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,12 +39,15 @@
 		A73D5A091DFA2E9A00387737 /* PopupBridge.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PopupBridge.podspec; sourceTree = "<group>"; };
 		A73D5A0A1DFA2E9A00387737 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A775A07C1DEE4E7E009E67C2 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopupBridge_UnitTests.m; sourceTree = "<group>"; };
 		A775A0801DEE4E7E009E67C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PopupBridge-Framework-Info.plist"; sourceTree = "<group>"; };
 		A7E9D6D01DCA6B4F0035FA41 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		A7E9D6D21DCA6B540035FA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_UnitTests.swift; sourceTree = "<group>"; };
+		BE2524532A17DFCC00168D77 /* MockUserContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserContentController.swift; sourceTree = "<group>"; };
+		BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockScriptMessage.swift; sourceTree = "<group>"; };
+		BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPopupBridgeDelegate.swift; sourceTree = "<group>"; };
 		E5E5F02D55D023487C75A22D /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,8 +139,11 @@
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				A775A07E1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
+				BEF9ED1E2A2A348F005D54AB /* MockPopupBridgeDelegate.swift */,
+				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
+				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
+				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -173,7 +182,6 @@
 				A775A0781DEE4E7E009E67C2 /* Sources */,
 				A775A0791DEE4E7E009E67C2 /* Frameworks */,
 				A775A07A1DEE4E7E009E67C2 /* Resources */,
-				DEF7E6A43E1BC49F9FF7A41A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -283,24 +291,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DEF7E6A43E1BC49F9FF7A41A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnitTests/Pods-UnitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/OCMock/OCMock.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OCMock.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UnitTests/Pods-UnitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -308,7 +298,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A775A07F1DEE4E7E009E67C2 /* PopupBridge_UnitTests.m in Sources */,
+				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
+				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
+				BEF9ED1F2A2A348F005D54AB /* MockPopupBridgeDelegate.swift in Sources */,
+				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +442,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "UnitTests/UnitTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -475,7 +468,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "UnitTests/UnitTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

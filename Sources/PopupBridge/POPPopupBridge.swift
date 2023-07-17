@@ -62,6 +62,41 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
     }
     
     // MARK: - Internal Methods
+
+    /// Exposed for testing
+    /// 
+    /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
+    /// - Parameter url: returnURL from the result of the SFSafariViewController being dismissed. Provided via the merchant's AppDelegate or SceneDelegate.
+    /// - Returns: JavaScript formatted completion.
+    func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
+        guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
+              urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
+              urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
+        else {
+            return nil
+        }
+
+        self.dismissSafariViewController()
+
+        let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
+            partialResult[queryItem.name] = queryItem.value
+        }
+
+        let payload = URLDetailsPayload(
+            path: urlComponents.path,
+            queryItems: queryItems ?? [:],
+            hash: urlComponents.fragment
+        )
+
+        if let payloadData = try? JSONEncoder().encode(payload),
+           let payload = String(data: payloadData, encoding: .utf8) {
+            return "window.popupBridge.onComplete(null, \(payload));"
+        } else {
+            let errorMessage = "Failed to parse query items from return URL."
+            let errorResponse = "new Error(\"\(errorMessage)\")"
+            return "window.popupBridge.onComplete(\(errorResponse), null);"
+        }
+    }
     
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
@@ -81,39 +116,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler, SFSafariViewContr
         )
         
         webView.configuration.userContentController.addUserScript(script)
-    }
-    
-    /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
-    /// - Parameter url: returnURL from the result of the SFSafariViewController being dismissed. Provided via the merchant's AppDelegate or SceneDelegate.
-    /// - Returns: JavaScript formatted completion.
-    private func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
-        guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
-              urlComponents.scheme?.caseInsensitiveCompare(urlScheme) == .orderedSame,
-              urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
-        else {
-            return nil
-        }
-        
-        self.dismissSafariViewController()
-
-        let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
-            partialResult[queryItem.name] = queryItem.value
-        }
-        
-        let payload = URLDetailsPayload(
-            path: urlComponents.path,
-            queryItems: queryItems ?? [:],
-            hash: urlComponents.fragment
-        )
-                
-        if let payloadData = try? JSONEncoder().encode(payload),
-           let payload = String(data: payloadData, encoding: .utf8) {
-            return "window.popupBridge.onComplete(null, \(payload));"
-        } else {
-            let errorMessage = "Failed to parse query items from return URL."
-            let errorResponse = "new Error(\"\(errorMessage)\")"
-            return "window.popupBridge.onComplete(\(errorResponse), null);"
-        }
     }
     
     private func dismissSafariViewController() {
