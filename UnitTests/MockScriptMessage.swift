@@ -3,8 +3,8 @@ import WebKit
 
 class MockScriptMessage: WKScriptMessage {
 
-    var _body: Any?
-    var _name: String?
+    private var _body: Any?
+    private var _name: String?
 
     override var body: Any {
         get {

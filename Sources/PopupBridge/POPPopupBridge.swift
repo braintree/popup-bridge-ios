@@ -99,7 +99,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         
         webView.configuration.userContentController.addUserScript(script)
     }
-    
+
     private func injectWebView(webView: WKWebView, withJavaScript script: String) {
         webView.evaluateJavaScript(script) { _, error in
             if let error {
