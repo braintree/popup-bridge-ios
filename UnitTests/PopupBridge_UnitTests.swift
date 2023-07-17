@@ -26,7 +26,6 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         XCTAssertTrue(userScript.isForMainFrameOnly)
     }
 
-
     func testInit_addsScriptMessageHandler() {
         let configuration = WKWebViewConfiguration()
         let mockUserContentController = MockUserContentController()
