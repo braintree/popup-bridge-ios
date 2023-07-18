@@ -8,15 +8,13 @@ v2 supports a minimum deployment target of iOS 14+. It requires Xcode 14.3+ and 
 
 ## Code Changes
 
-The `POPPopupBridge.set(returnURLScheme:)` static method was removed. You no longer need to call this in your app delegate. 
+The `POPPopupBridge.set(returnURLScheme:)` and `open(url:)` static methods were removed. You no longer need to call the `POPPopupBridge.set(returnURLScheme:)` method in your app delegate.
 
-Instead, `urlScheme` is now a required parameter to initialize a `POPPopupBridge` instance.
+You no longer need to register a URL type in your `Info.plist` to use Popup Bridge. Additionally, `POPPopupBridgeDelegate` has been removed.
+
+The initializer for `POPPopupBridge` now only requires a `WKWebView`.
 
 For example:
 ```swift
-let popupBridge = POPPopupBridge(
-    webView: webView,
-    urlScheme: "com.your-company.your-app.popupbridge",
-    delegate: self
-)
+let popupBridge = POPPopupBridge(webView: webView)
 ```
