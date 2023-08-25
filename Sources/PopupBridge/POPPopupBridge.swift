@@ -29,12 +29,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView()
                 
-        returnBlock = { url in
-            guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
+        returnBlock = { [weak self] url in
+            guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
 
-            self.injectWebView(webView: webView, withJavaScript: script)
+            self?.injectWebView(webView: webView, withJavaScript: script)
             return
         }
     }
