@@ -3,6 +3,7 @@
 ## 2.0.0-beta1 (2023-08-28)
 
 * Convert PopupBridge to Swift
+* Fix memory leaks in POPPopupBridge
 * Breaking Changes
   * Require iOS 14+, Xcode 14.3+, and Swift 5.8+
   * Remove deprecated `POPPopupBridge.open(url:sourceApplication:)` & `POPPopupBridge.open(url:options:)` methods

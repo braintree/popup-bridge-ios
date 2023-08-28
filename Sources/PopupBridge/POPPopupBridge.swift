@@ -29,12 +29,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView()
                 
-        returnBlock = { url in
-            guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
+        returnBlock = { [weak self] url in
+            guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
 
-            self.injectWebView(webView: webView, withJavaScript: script)
+            self?.injectWebView(webView: webView, withJavaScript: script)
             return
         }
     }
@@ -83,7 +83,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
-        webView.configuration.userContentController.add(self, name: messageHandlerName)
+        webView.configuration.userContentController.add(
+            WebViewScriptHandler(proxy: self),
+            name: messageHandlerName
+        )
         
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
@@ -121,13 +124,15 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
             
             if let urlString = script.url, let url = URL(string: urlString) {
-                webAuthenticationSession.start(url: url, context: self) { url, _ in
-                    if let url, let returnBlock = self.returnBlock {
-                        self.returnedWithURL = true
+                webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
+                    guard let strongSelf = self else { return }
+                    if let url, let returnBlock = strongSelf.returnBlock {
+                        strongSelf.returnedWithURL = true
                         returnBlock(url)
                         return
                     }
-                } sessionDidCancel: { [self] in
+                } sessionDidCancel: { [weak self] in
+                    guard let strongSelf = self else { return }
                     let script = """
                         if (typeof window.popupBridge.onCancel === 'function') {\
                             window.popupBridge.onCancel();\
@@ -136,7 +141,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         }
                     """
 
-                    injectWebView(webView: webView, withJavaScript: script)
+                    strongSelf.injectWebView(webView: strongSelf.webView, withJavaScript: script)
                     return
                 }
             }
