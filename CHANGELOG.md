@@ -1,6 +1,6 @@
 # PopupBridge iOS Release Notes
 
-## unreleased
+## 2.0.0-beta1 (2023-08-28)
 
 * Convert PopupBridge to Swift
 * Breaking Changes
