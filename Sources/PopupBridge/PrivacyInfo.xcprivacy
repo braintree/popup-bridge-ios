@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   PrivacyInfo.xcprivacy
-   PopupBridge
-
-   Created by Alekhya Geddam on 3/11/24.
-   Copyright (c) 2024 Braintree. All rights reserved.
--->
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string></string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string></string>
+			</array>
+		</dict>
+	</array>
+</dict>
 </plist>
