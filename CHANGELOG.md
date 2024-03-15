@@ -1,5 +1,8 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+* Bump Xcode version to 15.0.1+
+
 ## 2.0.0 (2023-10-18)
 
 * **Note:** Includes all changes in [2.0.0-beta1](#200-beta1-2023-08-28)
