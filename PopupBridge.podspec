@@ -22,4 +22,5 @@ Use cases for PopupBridge:
   s.swift_version    = "5.8"
   
   s.source_files = 'Sources/PopupBridge/**/*.swift'
+  s.resource_bundle = { "PopupBridge_PrivacyInfo" => "Sources/PopupBridge/PrivacyInfo.xcprivacy" }
 end
