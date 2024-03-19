@@ -22,7 +22,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let userScript = webView.configuration.userContentController.userScripts[0]
 
         XCTAssertEqual(userScript.injectionTime, WKUserScriptInjectionTime.atDocumentStart)
-        XCTAssertTrue(userScript.isForMainFrameOnly)
+        XCTAssertFalse(userScript.isForMainFrameOnly)
     }
 
 
