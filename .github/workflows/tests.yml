@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Use Xcode 14.3
+      - name: Use Xcode 15.1
         run: sudo xcode-select -switch /Applications/Xcode_14.3.app
       - name: Install CocoaPod dependencies
         run: pod install
@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Use Xcode 14.3
+      - name: Use Xcode 15.1
         run: sudo xcode-select -switch /Applications/Xcode_14.3.app
       - name: Install CocoaPod dependencies
         run: pod install
