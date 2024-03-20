@@ -14,7 +14,9 @@ let package = Package(
     targets: [
         .target(
             name: "PopupBridge",
-            exclude: ["PopupBridge-Framework-Info.plist"]
+            path: "Sources/PopupBridge", 
+            exclude: ["PopupBridge-Framework-Info.plist"],
+            resources: [.copy("PrivacyInfo.xcprivacy")]
         ),
     ]
 )
