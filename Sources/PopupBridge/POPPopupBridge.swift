@@ -94,7 +94,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         let script = WKUserScript(
             source: javascript,
             injectionTime: .atDocumentStart,
-            forMainFrameOnly: true
+            forMainFrameOnly: false
         )
         
         webView.configuration.userContentController.addUserScript(script)
