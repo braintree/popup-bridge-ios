@@ -2,6 +2,7 @@
 
 ## unreleased
 * Inject popup bridge JS script code into all frames, versus just mainframe. Fixes bug where popup bridge couldn't launch from within an iFrame.
+* Add blank privacy manifest file. [Meets Apple's new Privacy Update requirements](https://developer.apple.com/news/?id=3d8a9yyh)
 
 ## 2.0.0 (2023-10-18)
 
