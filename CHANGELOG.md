@@ -1,5 +1,8 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+* Inject popup bridge JS script code into all frames, versus just mainframe. Fixes bug where popup bridge couldn't launch from within an iFrame.
+
 ## 2.0.0 (2023-10-18)
 
 * **Note:** Includes all changes in [2.0.0-beta1](#200-beta1-2023-08-28)
