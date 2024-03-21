@@ -1,7 +1,7 @@
 # PopupBridge iOS Release Notes
 
 ## unreleased
-* Bump Xcode version to 15.1+
+* Bump Xcode version to 15.0+
 
 ## 2.1.0 (2024-03-21)
 * Inject popup bridge JS script code into all frames, versus just mainframe. Fixes bug where popup bridge couldn't launch from within an iFrame.
