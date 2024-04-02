@@ -1,5 +1,8 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+* Require Xcode 15.0+ and Swift 5.9+ (per [App Store requirements](https://developer.apple.com/news/?id=khzvxn8a))
+
 ## 2.1.0 (2024-03-21)
 * Inject popup bridge JS script code into all frames, versus just mainframe. Fixes bug where popup bridge couldn't launch from within an iFrame.
 * Add blank privacy manifest file. [Meets Apple's new Privacy Update requirements](https://developer.apple.com/news/?id=3d8a9yyh)
@@ -12,7 +15,7 @@
 
 * Convert PopupBridge to Swift
 * Breaking Changes
-  * Require iOS 14+, Xcode 14.3+, and Swift 5.8+
+  * Require iOS 14+, Xcode 15.0+, and Swift 5.9+
   * Remove deprecated `POPPopupBridge.open(url:sourceApplication:)` & `POPPopupBridge.open(url:options:)` methods
   * Remove `POPPopupBridge.set(returnURLScheme:)`
   * Remove `open(url:)`
