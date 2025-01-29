@@ -1,5 +1,6 @@
 @import UIKit;
+#import <WebKit/WebKit.h>
 
-@interface POPViewController : UIViewController
+@interface POPViewController : UIViewController <WKNavigationDelegate>
 
 @end
