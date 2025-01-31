@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45150AC32D4D48670071E385 /* POPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150AC22D4D48670071E385 /* POPViewController.swift */; };
+		45150AC32D4D48670071E385 /* PopupBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */; };
 		8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; };
 		8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		806D558625AFD733005ED326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558525AFD733005ED326 /* AppDelegate.m */; };
@@ -44,7 +44,7 @@
 
 /* Begin PBXFileReference section */
 		45150AC12D4D48670071E385 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
-		45150AC22D4D48670071E385 /* POPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPViewController.swift; sourceTree = "<group>"; };
+		45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeViewController.swift; sourceTree = "<group>"; };
 		8018D88425B7891E00D877F3 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558125AFD733005ED326 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558425AFD733005ED326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				806D558525AFD733005ED326 /* AppDelegate.m */,
 				806D558725AFD733005ED326 /* SceneDelegate.h */,
 				806D558825AFD733005ED326 /* SceneDelegate.m */,
-				45150AC22D4D48670071E385 /* POPViewController.swift */,
+				45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */,
 				806D558D25AFD733005ED326 /* Main.storyboard */,
 				806D559025AFD735005ED326 /* Assets.xcassets */,
 				806D559525AFD735005ED326 /* Info.plist */,
@@ -234,7 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				806D558625AFD733005ED326 /* AppDelegate.m in Sources */,
-				45150AC32D4D48670071E385 /* POPViewController.swift in Sources */,
+				45150AC32D4D48670071E385 /* PopupBridgeViewController.swift in Sources */,
 				806D559725AFD735005ED326 /* main.m in Sources */,
 				806D558925AFD733005ED326 /* SceneDelegate.m in Sources */,
 			);

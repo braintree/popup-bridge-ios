@@ -2,7 +2,7 @@ import PopupBridge
 import UIKit
 import WebKit
 
-final class POPViewController: UIViewController {
+final class PopupBridgeViewController: UIViewController {
     
     // MARK: - Private Properties
     
