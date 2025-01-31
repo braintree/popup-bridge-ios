@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45150AC32D4D48670071E385 /* POPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150AC22D4D48670071E385 /* POPViewController.swift */; };
 		8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; };
 		8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		806D558625AFD733005ED326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558525AFD733005ED326 /* AppDelegate.m */; };
 		806D558925AFD733005ED326 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558825AFD733005ED326 /* SceneDelegate.m */; };
-		806D558C25AFD733005ED326 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558B25AFD733005ED326 /* POPViewController.m */; };
 		806D558F25AFD733005ED326 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806D558D25AFD733005ED326 /* Main.storyboard */; };
 		806D559125AFD735005ED326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806D559025AFD735005ED326 /* Assets.xcassets */; };
 		806D559725AFD735005ED326 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D559625AFD735005ED326 /* main.m */; };
@@ -43,14 +43,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45150AC12D4D48670071E385 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
+		45150AC22D4D48670071E385 /* POPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPViewController.swift; sourceTree = "<group>"; };
 		8018D88425B7891E00D877F3 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558125AFD733005ED326 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558425AFD733005ED326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		806D558525AFD733005ED326 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		806D558725AFD733005ED326 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		806D558825AFD733005ED326 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		806D558A25AFD733005ED326 /* POPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
-		806D558B25AFD733005ED326 /* POPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		806D558E25AFD733005ED326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		806D559025AFD735005ED326 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806D559525AFD735005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,12 +105,12 @@
 				806D558525AFD733005ED326 /* AppDelegate.m */,
 				806D558725AFD733005ED326 /* SceneDelegate.h */,
 				806D558825AFD733005ED326 /* SceneDelegate.m */,
-				806D558A25AFD733005ED326 /* POPViewController.h */,
-				806D558B25AFD733005ED326 /* POPViewController.m */,
+				45150AC22D4D48670071E385 /* POPViewController.swift */,
 				806D558D25AFD733005ED326 /* Main.storyboard */,
 				806D559025AFD735005ED326 /* Assets.xcassets */,
 				806D559525AFD735005ED326 /* Info.plist */,
 				806D559625AFD735005ED326 /* main.m */,
+				45150AC12D4D48670071E385 /* Demo-Bridging-Header.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -181,6 +181,7 @@
 				TargetAttributes = {
 					806D558025AFD733005ED326 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1620;
 					};
 					806D55B325AFD877005ED326 = {
 						CreatedOnToolsVersion = 12.3;
@@ -232,8 +233,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806D558C25AFD733005ED326 /* POPViewController.m in Sources */,
 				806D558625AFD733005ED326 /* AppDelegate.m in Sources */,
+				45150AC32D4D48670071E385 /* POPViewController.swift in Sources */,
 				806D559725AFD735005ED326 /* main.m in Sources */,
 				806D558925AFD733005ED326 /* SceneDelegate.m in Sources */,
 			);
@@ -386,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 43253H4X22;
 				INFOPLIST_FILE = Demo/Info.plist;
@@ -395,6 +397,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -404,6 +409,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 43253H4X22;
 				INFOPLIST_FILE = Demo/Info.plist;
@@ -413,6 +419,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
