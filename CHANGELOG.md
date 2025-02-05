@@ -1,6 +1,6 @@
 # PopupBridge iOS Release Notes
 
-## unreleased
+## 2.2.0  (2025-02-05)
 * Require Xcode 15.0+ and Swift 5.9+ (per [App Store requirements](https://developer.apple.com/news/?id=khzvxn8a))
 
 ## 2.1.0 (2024-03-21)
