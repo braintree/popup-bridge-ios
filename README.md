@@ -12,7 +12,7 @@ See the [Frequently Asked Questions](#frequently-asked-questions) to learn more 
 Requirements
 ------------
 
-- iOS 14.0+
+- iOS 16.0+
 - Xcode 16.2.0+
 - Swift 5.10+, or Objective-C
 

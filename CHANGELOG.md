@@ -1,6 +1,7 @@
 # PopupBridge iOS Release Notes
 
 ## unreleased (v3)
+* Bump minimum supported deployment target to iOS 16+
 * Require Xcode 16.2.0+ and Swift 5.10+
 
 ## 2.2.0  (2025-02-05)
