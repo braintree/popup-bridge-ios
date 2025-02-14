@@ -22,12 +22,16 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Initialize a Popup Bridge.
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
-    public init(webView: WKWebView) {
+    ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
+    ///   or other browsing data between the authenthication session and the user’s normal browser session.
+    ///   Defaults to `true`.
+    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true) {
         self.webView = webView
         
         super.init()
 
         configureWebView()
+        webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
         returnBlock = { url in
             guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
