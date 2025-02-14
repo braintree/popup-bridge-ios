@@ -4,6 +4,7 @@ import AuthenticationServices
 class WebAuthenticationSession: NSObject {
 
     var authenticationSession: ASWebAuthenticationSession?
+    var prefersEphemeralWebBrowserSession: Bool = true
 
     func start(
         url: URL,
@@ -21,8 +22,7 @@ class WebAuthenticationSession: NSObject {
                 sessionDidComplete(url, error)
             }
         }
-
-        authenticationSession?.prefersEphemeralWebBrowserSession = true
+        authenticationSession?.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
         authenticationSession?.presentationContextProvider = context
 
         authenticationSession?.start()
