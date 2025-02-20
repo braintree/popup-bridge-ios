@@ -6,7 +6,7 @@ struct FPTIBatchData: Codable {
     
     let appName: String = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "N/A"
     
-    let clientSDKVersion: String
+    let clientSDKVersion: String = Bundle.clientSDKVersion
     
     let clientOS: String = UIDevice.current.systemName + " " + UIDevice.current.systemVersion
     
