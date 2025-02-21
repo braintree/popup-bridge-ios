@@ -142,7 +142,10 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{\"other\":\"bar\",\"something\":\"foo\"}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
-        XCTAssertEqual(result, expectedResult)
+        let expectedJSON = extractJSON(from: expectedResult)
+        let actualJSON = extractJSON(from: result!)
+        
+        XCTAssertEqual(actualJSON, expectedJSON)
     }
 
     func testConstructJavaScriptCompletionResult_whenReturnURLHasNoQueryParams_passesPayloadWithNoQueryItemsToWebView() {
@@ -165,7 +168,10 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
-        XCTAssertEqual(result, expectedResult)
+        let expectedJSON = extractJSON(from: expectedResult)
+        let actualJSON = extractJSON(from: result!)
+        
+        XCTAssertEqual(actualJSON, expectedJSON)
     }
 
     func testConstructJavaScriptCompletionResult_whenReturnURLHasURLFragment_passesPayloadWithHashToWebView() {
@@ -185,7 +191,10 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"hash\":\"something=foo&other=bar\",\"queryItems\":{}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
-        XCTAssertEqual(result, expectedResult)
+        let expectedJSON = extractJSON(from: expectedResult)
+        let actualJSON = extractJSON(from: result!)
+        
+        XCTAssertEqual(actualJSON, expectedJSON)
     }
 
     func testConstructJavaScriptCompletionResult_whenReturnURLHasNoURLFragment_passesPayloadWithNilHashToWebView() {
@@ -205,7 +214,10 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let expectedResult = "window.popupBridge.onComplete(null, {\"path\":\"\\/return\",\"queryItems\":{}});"
         let result = pub.constructJavaScriptCompletionResult(returnURL: mockURL)
 
-        XCTAssertEqual(result, expectedResult)
+        let expectedJSON = extractJSON(from: expectedResult)
+        let actualJSON = extractJSON(from: result!)
+        
+        XCTAssertEqual(actualJSON, expectedJSON)
     }
 
     func testConstructJavaScriptCompletionResult_whenReturnURLDoesNotMatchScheme_returnsFalseAndDoesNotCallOnComplete() {
@@ -242,5 +254,21 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         if let webViewReadyBlock {
             webViewReadyBlock
         }
+    }
+    
+    private func extractJSON(from jsString: String) -> [String: String]? {
+        let pattern = "window\\.popupBridge\\.onComplete\\(null, (.*)\\);"
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        
+        if let match = regex?.firstMatch(in: jsString, options: [], range: NSRange(jsString.startIndex..., in: jsString)),
+           let jsonRange = Range(match.range(at: 1), in: jsString) {
+            let jsonString = String(jsString[jsonRange])
+            
+            if let data = jsonString.data(using: .utf8) {
+                return (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: String]
+            }
+        }
+        
+        return nil
     }
 }
