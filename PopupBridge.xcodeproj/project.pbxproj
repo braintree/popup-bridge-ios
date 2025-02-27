@@ -170,6 +170,7 @@
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
 				45FBAF322D70CE94000D550B /* MockNetworkClient.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
@@ -178,7 +179,6 @@
 				BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */,
 				45FBAF2C2D701DD2000D550B /* NetworkClient_Tests.swift */,
 				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
-				45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
