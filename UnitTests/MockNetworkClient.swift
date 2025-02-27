@@ -2,6 +2,7 @@ import Foundation
 @testable import PopupBridge
 
 class MockNetworkClient: Networkable {
+    
     var lastURL: URL?
     var lastBody: Encodable?
     var throwError: Error?
