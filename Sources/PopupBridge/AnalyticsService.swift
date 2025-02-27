@@ -27,6 +27,8 @@ final class AnalyticsService: AnalyticsServiceable {
         }
     }
     
+    // MARK: - Private Methods
+    
     /// Constructs POST params to be sent to FPTI
     private func createAnalyticsEvent(eventName: String, sessionID: String) -> Codable {
         let batchMetadata = FPTIBatchData.Metadata(sessionID: sessionID)
