@@ -22,9 +22,13 @@ final class AnalyticsService: AnalyticsServiceable {
     
     func sendAnalyticsEvent(_ eventName: String, sessionID: String) {
         Task(priority: .background) {
-            let body = createAnalyticsEvent(eventName: eventName, sessionID: sessionID)
-            try? await networkClient.post(url: url, body: body)
+            await performEventRequest(eventName, sessionID: sessionID)
         }
+    }
+    
+    func performEventRequest(_ eventName: String, sessionID: String) async {
+        let body = createAnalyticsEvent(eventName: eventName, sessionID: sessionID)
+        try? await networkClient.post(url: url, body: body)
     }
     
     // MARK: - Private Methods
