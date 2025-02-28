@@ -14,6 +14,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let hostName = "popupbridgev1"    
     private let webView: WKWebView
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
+    private let analyticsService: AnalyticsServiceable = AnalyticsService()
     
     private var returnBlock: ((URL) -> Void)? = nil
     
@@ -30,6 +31,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         
         super.init()
 
+        analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: "some-session-id")
+        
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
@@ -44,7 +47,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Exposed for testing
-    convenience init(webView: WKWebView, webAuthenticationSession: WebAuthenticationSession) {
+    convenience init(
+        webView: WKWebView,
+        webAuthenticationSession: WebAuthenticationSession
+    ) {
         self.init(webView: webView)
         self.webAuthenticationSession = webAuthenticationSession
     }
@@ -76,10 +82,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         if let payloadData = try? JSONEncoder().encode(payload),
            let payload = String(data: payloadData, encoding: .utf8) {
+            analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: "some-session-id")
             return "window.popupBridge.onComplete(null, \(payload));"
         } else {
             let errorMessage = "Failed to parse query items from return URL."
             let errorResponse = "new Error(\"\(errorMessage)\")"
+            analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: "some-session-id")
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
     }
@@ -139,7 +147,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                             window.popupBridge.onComplete(null, null);\
                         }
                     """
-
+                    
+                    analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: "some-session-id")
+                    
                     injectWebView(webView: webView, withJavaScript: script)
                     return
                 }
