@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		454C7EC32D6E351F00CA3191 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C7EC22D6E351900CA3191 /* NetworkClient.swift */; };
+		45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */; };
 		45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */; };
 		45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */; };
 		45CD0C302D6788A10072C5A4 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		454C7EC22D6E351900CA3191 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
 		45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTIBatchData.swift; sourceTree = "<group>"; };
 		45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+MilisecondTimestamp.swift"; sourceTree = "<group>"; };
 		45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			children = (
 				45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
+				45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */,
 				45FBAF322D70CE94000D550B /* MockNetworkClient.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
 				45FBAF2E2D701E1D000D550B /* MockSessionable.swift */,
@@ -347,6 +350,7 @@
 			files = (
 				45FBAF2F2D701E24000D550B /* MockSessionable.swift in Sources */,
 				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
+				45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */,
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
 				BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */,
 				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
