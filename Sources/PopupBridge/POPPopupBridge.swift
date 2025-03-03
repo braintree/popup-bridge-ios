@@ -14,8 +14,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let hostName = "popupbridgev1"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private let analyticsService: AnalyticsServiceable = AnalyticsService()
     
+    private var analyticsService: AnalyticsServiceable = AnalyticsService()
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     
@@ -50,9 +50,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Exposed for testing
     convenience init(
         webView: WKWebView,
-        webAuthenticationSession: WebAuthenticationSession
+        webAuthenticationSession: WebAuthenticationSession,
+        analyticsService: AnalyticsServiceable
     ) {
         self.init(webView: webView)
+        self.analyticsService = AnalyticsService()
         self.webAuthenticationSession = webAuthenticationSession
     }
     
