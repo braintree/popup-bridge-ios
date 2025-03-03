@@ -7,6 +7,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
     let scriptMessageHandlerName: String = "POPPopupBridge"
     let returnURL: String = "com.braintreepayments.popupbridgeexample"
     let mockWebAuthenticationSession = MockWebAuthenticationSession()
+    let mockAnalyticsService = MockAnalyticsService()
 
     var webViewReadyBlock: (Void)?
 
@@ -52,7 +53,11 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, webAuthenticationSession: mockWebAuthenticationSession)
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            analyticsService: mockAnalyticsService
+        )
 
         mockWebAuthenticationSession.cannedResponseURL = URL(string: "http://example.com/?hello=world")
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
@@ -135,7 +140,11 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, webAuthenticationSession: mockWebAuthenticationSession)
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            analyticsService: mockAnalyticsService
+        )
         let mockURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return?something=foo&other=bar")!
         mockWebAuthenticationSession.cannedResponseURL = mockURL
 
@@ -161,7 +170,11 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView, webAuthenticationSession: mockWebAuthenticationSession)
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            analyticsService: mockAnalyticsService
+        )
         let mockURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return")!
         mockWebAuthenticationSession.cannedResponseURL = mockURL
 
@@ -181,7 +194,11 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         stubMessage.body = stubMessageBody
         stubMessage.name = stubMessageName
 
-        let pub = POPPopupBridge(webView: WKWebView(), webAuthenticationSession: mockWebAuthenticationSession)
+        let pub = POPPopupBridge(
+            webView: WKWebView(),
+            webAuthenticationSession: mockWebAuthenticationSession,
+            analyticsService: mockAnalyticsService
+        )
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
@@ -204,7 +221,11 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         stubMessage.body = stubMessageBody
         stubMessage.name = stubMessageName
 
-        let pub = POPPopupBridge(webView: WKWebView(), webAuthenticationSession: mockWebAuthenticationSession)
+        let pub = POPPopupBridge(
+            webView: WKWebView(),
+            webAuthenticationSession: mockWebAuthenticationSession,
+            analyticsService: mockAnalyticsService
+        )
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
