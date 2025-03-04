@@ -3,7 +3,13 @@ import Foundation
 
 class MockAnalyticsService: AnalyticsServiceable {
     
+    var lastEventName: String?
+    var lastSessionID: String?
+    var eventCount = 0
+
     func sendAnalyticsEvent(_ eventName: String, sessionID: String) {
-        // TODO: Add mock validations
+        lastEventName = eventName
+        lastSessionID = sessionID
+        eventCount += 1
     }
 }

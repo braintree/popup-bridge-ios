@@ -54,7 +54,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         analyticsService: AnalyticsServiceable
     ) {
         self.init(webView: webView)
-        self.analyticsService = AnalyticsService()
+        self.analyticsService = analyticsService
         self.webAuthenticationSession = webAuthenticationSession
     }
     
