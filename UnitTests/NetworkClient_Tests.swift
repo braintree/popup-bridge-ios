@@ -6,6 +6,11 @@ class NetworkClient_Tests: XCTestCase {
     var sut: NetworkClient!
     var mockSession: MockSession!
     
+    let body = FPTIBatchData(
+        metadata: .init(sessionID: "some-session-id"),
+        events: [.init(eventName: "some-event-name")]
+    )
+    
     override func setUp() {
         super.setUp()
         mockSession = MockSession()
@@ -20,7 +25,6 @@ class NetworkClient_Tests: XCTestCase {
     
     func testPost_success() async throws {
         let url = URL(string: "https://example.com/api/post")!
-        let body = ["key": "value"]
         let expectedData = Data("success response".utf8)
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
         
@@ -34,23 +38,8 @@ class NetworkClient_Tests: XCTestCase {
         }
     }
     
-    func testPost_failureDueToEncodingError() async {
-        let url = URL(string: "https://example.com/api/post")!
-        let body = NonEncodable()
-        
-        do {
-            try await sut.post(url: url, body: body)
-            XCTFail("Post should have failed due to encoding error")
-        } catch NetworkError.encodingError {
-            XCTAssert(true)
-        } catch {
-            XCTFail("Unexpected error type: \(error)")
-        }
-    }
-    
     func testPost_failureWithInvalidResponse() async throws {
         let url = URL(string: "https://example.com/api/post")!
-        let body = ["key": "value"]
         let response = HTTPURLResponse(url: url, statusCode: 404, httpVersion: nil, headerFields: nil)!
         
         mockSession.mockData = Data()

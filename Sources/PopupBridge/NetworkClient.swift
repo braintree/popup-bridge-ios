@@ -1,7 +1,7 @@
 import Foundation
 
 protocol Networkable {
-    func post<T: Encodable>(url: URL, body: T) async throws
+    func post(url: URL, body: FPTIBatchData) async throws
 }
 
 final class NetworkClient: Networkable {
@@ -18,18 +18,14 @@ final class NetworkClient: Networkable {
     
     // MARK: - Internal Methods
     
-    func post<T: Encodable>(url: URL, body: T) async throws {
+    func post(url: URL, body: FPTIBatchData) async throws {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = ["Content-Type": "application/json"]
         
-        do {
-            let encodedBody = try JSONEncoder().encode(body)
-            request.httpBody = encodedBody
-        } catch let encodingError {
-            throw NetworkError.encodingError(encodingError)
-        }
-        
+        let encodedBody = try JSONEncoder().encode(body)
+        request.httpBody = encodedBody
+            
         let (_, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse,
