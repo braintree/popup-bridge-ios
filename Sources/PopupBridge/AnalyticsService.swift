@@ -28,7 +28,11 @@ final class AnalyticsService: AnalyticsServiceable {
     
     func performEventRequest(_ eventName: String, sessionID: String) async {
         let body = createAnalyticsEvent(eventName: eventName, sessionID: sessionID)
-        try? await networkClient.post(url: url, body: body)
+        do {
+            try await networkClient.post(url: url, body: body)
+        } catch {
+            NSLog("[PopupBridge SDK] Failed to send analytics: %@", error.localizedDescription)
+        }
     }
     
     // MARK: - Private Methods
