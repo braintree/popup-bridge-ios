@@ -40,7 +40,7 @@ struct FPTIBatchData: Codable {
         }
     }
     
-    /// The FPTI tags/ metadata applicable to all events in the batch upload.
+    /// The FPTI tags/metadata applicable to all events in the batch upload.
     struct Metadata: Codable {
     
         let appID: String = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String ?? "N/A"
