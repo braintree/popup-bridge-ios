@@ -42,6 +42,13 @@ Sample App
 
 To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
 
+Supported Payment Methods
+-------
+
+- [PayPal SDK](https://developer.paypal.com/studio/checkout/standard/integrate)
+- [PayPal (via Braintree)](https://developer.paypal.com/braintree/docs/guides/paypal/overview)
+- [Venmo via Braintree](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
+
 Quick Start
 -----------
 
@@ -66,65 +73,7 @@ Quick Start
         }
     }
     ```
-
-1. Use PopupBridge from the web page by writing some JavaScript:
-
-    ```javascript
-    var url = 'http://localhost:3099/popup'; // or whatever the page is that you want to open in a popup
-
-    if (window.popupBridge) {
-      // Open the popup in a browser, and give it the deep link back to the app
-      popupBridge.open(url + '?popupBridgeReturnUrlPrefix=' + popupBridge.getReturnUrlPrefix());
-
-      // Optional: define a callback to process results of interaction with the popup
-      popupBridge.onComplete = function (err, payload) {
-        if (err) {
-          console.error('PopupBridge onComplete Error:', err);
-        } else if (!err && !payload) {
-          console.log('User closed popup.');
-        } else {
-          alert('Your favorite color is ' + payload.queryItems.color);
-        }
-      };
-    } else {
-      var popup = window.open(url);
-
-      window.addEventListener('message', function (event) {
-        var color = JSON.parse(event.data).color;
-
-        if (color) {
-          popup.close();
-          alert('Your favorite color is ' + color);
-        }
-      });
-    }
-    ```
-
-1. Redirect back to the app inside of the popup:
-
-    ```html
-    <h1>What is your favorite color?</h1>
-
-    <a href="#red" data-color="red">Red</a>
-    <a href="#green" data-color="green">Green</a>
-    <a href="#blue" data-color="blue">Blue</a>
-
-    <script src="jquery.js"></script>
-    <script>
-    $('a').on('click', function (event) {
-      var color = $(this).data('color');
-
-      if (location.search.indexOf('popupBridgeReturnUrlPrefix') !== -1) {
-        var prefix = location.search.split('popupBridgeReturnUrlPrefix=')[1];
-        // Open the deep link back to the app, and send some data
-        location.href = prefix + '?color=' + color;
-      } else {
-        window.opener.postMessage(JSON.stringify({ color: color }), '*');
-      }
-    });
-    </script>
-    ```
-
+    
 Frequently Asked Questions
 --------------------------
 
@@ -182,7 +131,8 @@ This SDK abides by our Client SDK Deprecation Policy. For more information on th
 
 | Major version number | Status | Released | Deprecated | Unsupported |
 | -------------------- | ------ | -------- | ---------- | ----------- |
-| 2.x.x | Active | October 2023 | TBA | TBA |
+| 3.x.x | Active | April 2023 | TBA | TBA |
+| 2.x.x | Active | October 2023 | April 2025 | TBA |
 | 1.x.x | Inactive | 2016 | October 2024 | October 2025 |
 
 ## Author
