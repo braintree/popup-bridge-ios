@@ -131,7 +131,7 @@ This SDK abides by our Client SDK Deprecation Policy. For more information on th
 
 | Major version number | Status | Released | Deprecated | Unsupported |
 | -------------------- | ------ | -------- | ---------- | ----------- |
-| 3.x.x | Active | April 2023 | TBA | TBA |
+| 3.x.x | Active | April 2025 | TBA | TBA |
 | 2.x.x | Active | October 2023 | April 2025 | TBA |
 | 1.x.x | Inactive | 2016 | October 2024 | October 2025 |
 
