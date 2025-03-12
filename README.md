@@ -47,7 +47,7 @@ Supported Payment Methods
 
 - [PayPal SDK](https://developer.paypal.com/studio/checkout/standard/integrate)
 - [PayPal (via Braintree)](https://developer.paypal.com/braintree/docs/guides/paypal/overview)
-- [Venmo via Braintree](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
+- [Venmo (via Braintree)](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
 
 Quick Start
 -----------
