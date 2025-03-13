@@ -10,6 +10,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     // MARK: - Private Properties
     
+    static var application: URLOpener = UIApplication.shared
+    
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"    
     private let webView: WKWebView
@@ -92,7 +94,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
-            host: hostName
+            host: hostName,
+            isVenmoInstalled: Self.application.isVenmoAppInstalled()
         ).rawJavascript
         
         let script = WKUserScript(

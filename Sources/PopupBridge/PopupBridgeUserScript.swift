@@ -5,6 +5,7 @@ struct PopupBridgeUserScript {
     let scheme: String
     let scriptMessageHandlerName: String
     let host: String
+    let isVenmoInstalled: Bool
     
     var rawJavascript: String {
         """
@@ -14,6 +15,8 @@ struct PopupBridgeUserScript {
             window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
                 return '\(scheme)://\(host)/';
             };
+            
+            window.popupBridge.isVenmoInstalled = \(isVenmoInstalled.description);
             
             window.popupBridge.open = function open(url) {
                 window.webkit.messageHandlers.\(scriptMessageHandlerName)
