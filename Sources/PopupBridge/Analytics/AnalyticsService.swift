@@ -1,7 +1,7 @@
 import Foundation
 
 protocol AnalyticsServiceable {
-    func sendAnalyticsEvent(_ eventName: String, sessionID: String)
+    func sendAnalyticsEvent(_ eventName: String)
 }
 
 final class AnalyticsService: AnalyticsServiceable {
@@ -11,6 +11,7 @@ final class AnalyticsService: AnalyticsServiceable {
     /// The FPTI URL to post all analytic events.
     private let url = URL(string: "https://api.paypal.com/v1/tracking/batch/events")!
     private let networkClient: Networkable
+    private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     
     // MARK: - Initializer
     
@@ -20,7 +21,7 @@ final class AnalyticsService: AnalyticsServiceable {
     
     // MARK: - Internal Methods
     
-    func sendAnalyticsEvent(_ eventName: String, sessionID: String) {
+    func sendAnalyticsEvent(_ eventName: String) {
         print("12345 " + sessionID)
         Task(priority: .background) {
             await performEventRequest(eventName, sessionID: sessionID)

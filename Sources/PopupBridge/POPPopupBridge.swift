@@ -14,7 +14,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"
-    private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
     
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
@@ -33,7 +32,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         
         super.init()
         
-        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
+        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started)
         
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
@@ -84,12 +83,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         if let payloadData = try? JSONEncoder().encode(payload),
            let payload = String(data: payloadData, encoding: .utf8) {
-            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded)
             return "window.popupBridge.onComplete(null, \(payload));"
         } else {
             let errorMessage = "Failed to parse query items from return URL."
             let errorResponse = "new Error(\"\(errorMessage)\")"
-            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed)
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
     }
@@ -150,7 +149,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         }
                     """
                     
-                    Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: sessionID)
+                    Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled)
                     
                     injectWebView(webView: webView, withJavaScript: script)
                     return
