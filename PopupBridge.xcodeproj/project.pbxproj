@@ -114,6 +114,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		45FC74C32D84922F00E50035 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */,
+				45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */,
+				45CD0C312D6793F90072C5A4 /* PopupBridgeAnalytics.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
@@ -189,15 +199,13 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
-				45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */,
+				45FC74C32D84922F00E50035 /* Analytics */,
 				45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */,
 				45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */,
-				45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */,
 				454C7EC22D6E351900CA3191 /* NetworkClient.swift */,
 				45FBAF2A2D701B0D000D550B /* NetworkError.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
-				45CD0C312D6793F90072C5A4 /* PopupBridgeAnalytics.swift */,
 				BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */,
