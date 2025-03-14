@@ -21,6 +21,7 @@ final class AnalyticsService: AnalyticsServiceable {
     // MARK: - Internal Methods
     
     func sendAnalyticsEvent(_ eventName: String, sessionID: String) {
+        print("12345 " + sessionID)
         Task(priority: .background) {
             await performEventRequest(eventName, sessionID: sessionID)
         }
