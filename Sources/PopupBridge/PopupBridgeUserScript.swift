@@ -16,7 +16,7 @@ struct PopupBridgeUserScript {
                 return '\(scheme)://\(host)/';
             };
             
-            window.popupBridge.isVenmoInstalled = \(isVenmoInstalled.description);
+            window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
             
             window.popupBridge.open = function open(url) {
                 window.webkit.messageHandlers.\(scriptMessageHandlerName)
