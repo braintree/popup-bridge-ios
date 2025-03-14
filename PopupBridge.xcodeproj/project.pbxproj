@@ -18,7 +18,6 @@
 		45FBAF2B2D701B12000D550B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2A2D701B0D000D550B /* NetworkError.swift */; };
 		45FBAF2D2D701DD2000D550B /* NetworkClient_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2C2D701DD2000D550B /* NetworkClient_Tests.swift */; };
 		45FBAF2F2D701E24000D550B /* MockSessionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2E2D701E1D000D550B /* MockSessionable.swift */; };
-		45FBAF312D70C27A000D550B /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 45FBAF302D70C27A000D550B /* TestPlan.xctestplan */; };
 		45FBAF332D70CE9E000D550B /* MockNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF322D70CE94000D550B /* MockNetworkClient.swift */; };
 		45FBAF352D70CFB6000D550B /* AnalyticsService_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */; };
 		62D5EC522B9F753100D09C5D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */; };
@@ -51,7 +50,6 @@
 		45FBAF2A2D701B0D000D550B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		45FBAF2C2D701DD2000D550B /* NetworkClient_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient_Tests.swift; sourceTree = "<group>"; };
 		45FBAF2E2D701E1D000D550B /* MockSessionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionable.swift; sourceTree = "<group>"; };
-		45FBAF302D70C27A000D550B /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		45FBAF322D70CE94000D550B /* MockNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkClient.swift; sourceTree = "<group>"; };
 		45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService_Test.swift; sourceTree = "<group>"; };
 		4EF7C7DDAB0B99FF28DD6541 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				A775A08C1DEE4EF0009E67C2 /* PopupBridge */,
-				45FBAF302D70C27A000D550B /* TestPlan.xctestplan */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -319,7 +316,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45FBAF312D70C27A000D550B /* TestPlan.xctestplan in Resources */,
 				62D5EC522B9F753100D09C5D /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
