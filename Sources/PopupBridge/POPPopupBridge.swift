@@ -51,6 +51,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.webAuthenticationSession = webAuthenticationSession
     }
     
+    deinit {
+        webView.configuration.userContentController.removeAllScriptMessageHandlers()
+    }
+    
     // MARK: - Internal Methods
 
     /// Exposed for testing
