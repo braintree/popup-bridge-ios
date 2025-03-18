@@ -125,13 +125,14 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
             
             if let urlString = script.url, let url = URL(string: urlString) {
-                webAuthenticationSession.start(url: url, context: self) { url, _ in
-                    if let url, let returnBlock = self.returnBlock {
-                        self.returnedWithURL = true
+                webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
+                    if let url, let returnBlock = self?.returnBlock {
+                        self?.returnedWithURL = true
                         returnBlock(url)
                         return
                     }
-                } sessionDidCancel: { [self] in
+                } sessionDidCancel: { [weak self] in
+                    guard let self else { return }
                     let script = """
                         if (typeof window.popupBridge.onCancel === 'function') {\
                             window.popupBridge.onCancel();\
@@ -140,7 +141,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         }
                     """
 
-                    injectWebView(webView: webView, withJavaScript: script)
+                    self.injectWebView(webView: self.webView, withJavaScript: script)
                     return
                 }
             }
