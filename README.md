@@ -37,6 +37,16 @@ To integrate using Swift Package Manager, select File > Swift Packages > Add Pac
 
 If you look at your app target, you will see that `PopupBridge` is automatically linked as a framework to your app (see General > Frameworks, Libraries, and Embedded Content).
 
+### Allowlist Venmo URL scheme
+You must add the following to the queries schemes allowlist in your app's info.plist:
+
+``` xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>com.venmo.touch.v2</string>
+</array>
+```
+
 Sample App
 -------
 

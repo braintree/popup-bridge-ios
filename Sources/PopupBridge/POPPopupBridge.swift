@@ -16,6 +16,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let hostName = "popupbridgev1"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
+    private let application: URLOpener = UIApplication.shared
     
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
@@ -102,7 +103,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
-            host: hostName
+            host: hostName,
+            isVenmoInstalled: application.isVenmoAppInstalled()
         ).rawJavascript
         
         let script = WKUserScript(
