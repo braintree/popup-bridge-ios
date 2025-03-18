@@ -126,13 +126,14 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             
             if let urlString = script.url, let url = URL(string: urlString) {
                 webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
-                    if let url, let returnBlock = self?.returnBlock {
-                        self?.returnedWithURL = true
+                    if let self, let url, let returnBlock = self.returnBlock {
+                        self.returnedWithURL = true
                         returnBlock(url)
                         return
                     }
                 } sessionDidCancel: { [weak self] in
                     guard let self else { return }
+                    
                     let script = """
                         if (typeof window.popupBridge.onCancel === 'function') {\
                             window.popupBridge.onCancel();\
