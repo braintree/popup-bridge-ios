@@ -17,6 +17,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     private var returnBlock: ((URL) -> Void)? = nil
     
+    private lazy var webViewScripHandler = WebViewScriptHandler(proxy: self)
+    
     // MARK: - Initializers
         
     /// Initialize a Popup Bridge.
@@ -88,7 +90,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
         webView.configuration.userContentController.add(
-            WebViewScriptHandler(proxy: self),
+            webViewScripHandler,
             name: messageHandlerName
         )
         
