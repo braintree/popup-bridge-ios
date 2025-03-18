@@ -13,7 +13,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"    
     private weak var webView: WKWebView?
-    private var webAuthenticationSession: WebAuthenticationSession? = WebAuthenticationSession()
     
     private var returnBlock: ((URL) -> Void)? = nil
     
@@ -46,15 +45,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Exposed for testing
-    convenience init(webView: WKWebView, webAuthenticationSession: WebAuthenticationSession) {
+    convenience init(webView: WKWebView) {
         self.init(webView: webView)
-        self.webAuthenticationSession = webAuthenticationSession
     }
     
     deinit {
         webView?.configuration.userContentController.removeAllScriptMessageHandlers()
         webView = nil
-        webAuthenticationSession = nil
     }
     
     // MARK: - Internal Methods
@@ -141,13 +138,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         self.returnedWithURL = true
                         returnBlock(url)
                         
-                        webAuthenticationSession?.authenticationSession?.presentationContextProvider = nil
+                        authenticationSession?.presentationContextProvider = nil
                         return
                     }
                 } sessionDidCancel: { [weak self] in
                     guard let self, let webView = self.webView else { return }
                     
-                    webAuthenticationSession?.authenticationSession?.presentationContextProvider = nil
+                    authenticationSession?.presentationContextProvider = nil
                     
                     let script = """
                         if (typeof window.popupBridge.onCancel === 'function') {\
