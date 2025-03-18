@@ -191,7 +191,6 @@
 			isa = PBXGroup;
 			children = (
 				45FC74C32D84922F00E50035 /* Analytics */,
-				45FC74C12D8347AA00E50035 /* UIApplication+URLOpener.swift */,
 				45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */,
 				45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */,
 				45FBAF2A2D701B0D000D550B /* NetworkError.swift */,
@@ -201,6 +200,7 @@
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
 				62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */,
 				45FBAF282D701AF7000D550B /* Sessionable.swift */,
+				45FC74C12D8347AA00E50035 /* UIApplication+URLOpener.swift */,
 				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
 				BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */,
 				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
