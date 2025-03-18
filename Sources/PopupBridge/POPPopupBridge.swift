@@ -93,7 +93,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
         webView?.configuration.userContentController.add(
-            self,
+            WebViewScriptHandler(proxy: self),
             name: messageHandlerName
         )
         
