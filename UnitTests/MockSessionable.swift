@@ -3,17 +3,26 @@ import Foundation
 
 class MockSession: Sessionable {
     
-    var mockData: Data?
-    var mockResponse: URLResponse?
+    var requestedURL: URL?
+    var requestedBody: Data?
+    var requestHttpMethod: String?
+    var requestAllHTTPHeaderFields: [String: String] = [:]
+    var response: (data: Data, response: URLResponse)?
+    var error: Error?
     
     func data(for request: URLRequest, delegate: (any URLSessionTaskDelegate)?) async throws -> (Data, URLResponse) {
-        (mockData ?? Data(), mockResponse ?? URLResponse())
-    }
-}
-
-struct NonEncodable: Encodable {
-    
-    func encode(to encoder: Encoder) throws {
-        throw EncodingError.invalidValue(self, EncodingError.Context(codingPath: [], debugDescription: "Non-Encodable type"))
+        
+        requestedURL = request.url
+        requestedBody = request.httpBody
+        requestHttpMethod = request.httpMethod
+        requestAllHTTPHeaderFields = request.allHTTPHeaderFields ?? [:]
+        
+        if let error {
+            throw error
+        } else if let response {
+            return response
+        } else {
+            throw NetworkError.invalidResponse
+        }
     }
 }

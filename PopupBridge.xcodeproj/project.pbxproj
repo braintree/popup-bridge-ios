@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		454C7EC32D6E351F00CA3191 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C7EC22D6E351900CA3191 /* NetworkClient.swift */; };
 		45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */; };
 		45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */; };
 		45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */; };
@@ -16,9 +15,7 @@
 		45FBAF272D6F9CCF000D550B /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */; };
 		45FBAF292D701AFE000D550B /* Sessionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF282D701AF7000D550B /* Sessionable.swift */; };
 		45FBAF2B2D701B12000D550B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2A2D701B0D000D550B /* NetworkError.swift */; };
-		45FBAF2D2D701DD2000D550B /* NetworkClient_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2C2D701DD2000D550B /* NetworkClient_Tests.swift */; };
 		45FBAF2F2D701E24000D550B /* MockSessionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2E2D701E1D000D550B /* MockSessionable.swift */; };
-		45FBAF332D70CE9E000D550B /* MockNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF322D70CE94000D550B /* MockNetworkClient.swift */; };
 		45FBAF352D70CFB6000D550B /* AnalyticsService_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */; };
 		62D5EC522B9F753100D09C5D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */; };
 		79DB9F7F53319F206CDE119E /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */; };
@@ -39,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		454C7EC22D6E351900CA3191 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
 		45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTIBatchData.swift; sourceTree = "<group>"; };
 		45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+MilisecondTimestamp.swift"; sourceTree = "<group>"; };
@@ -48,9 +44,7 @@
 		45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		45FBAF282D701AF7000D550B /* Sessionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sessionable.swift; sourceTree = "<group>"; };
 		45FBAF2A2D701B0D000D550B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		45FBAF2C2D701DD2000D550B /* NetworkClient_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient_Tests.swift; sourceTree = "<group>"; };
 		45FBAF2E2D701E1D000D550B /* MockSessionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionable.swift; sourceTree = "<group>"; };
-		45FBAF322D70CE94000D550B /* MockNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkClient.swift; sourceTree = "<group>"; };
 		45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService_Test.swift; sourceTree = "<group>"; };
 		4EF7C7DDAB0B99FF28DD6541 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,12 +176,10 @@
 				45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
 				45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */,
-				45FBAF322D70CE94000D550B /* MockNetworkClient.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
 				45FBAF2E2D701E1D000D550B /* MockSessionable.swift */,
 				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
 				BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */,
-				45FBAF2C2D701DD2000D550B /* NetworkClient_Tests.swift */,
 				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
 			);
 			path = UnitTests;
@@ -199,7 +191,6 @@
 				45FC74C32D84922F00E50035 /* Analytics */,
 				45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */,
 				45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */,
-				454C7EC22D6E351900CA3191 /* NetworkClient.swift */,
 				45FBAF2A2D701B0D000D550B /* NetworkError.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
@@ -358,9 +349,7 @@
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
 				BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */,
 				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
-				45FBAF332D70CE9E000D550B /* MockNetworkClient.swift in Sources */,
 				45FBAF352D70CFB6000D550B /* AnalyticsService_Test.swift in Sources */,
-				45FBAF2D2D701DD2000D550B /* NetworkClient_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +363,6 @@
 				45CD0C302D6788A10072C5A4 /* Bundle+Extension.swift in Sources */,
 				45FBAF272D6F9CCF000D550B /* AnalyticsService.swift in Sources */,
 				BEF9ED232A2A6A2C005D54AB /* PopupBridgeConstants.swift in Sources */,
-				454C7EC32D6E351F00CA3191 /* NetworkClient.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
 				BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */,
 				45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */,

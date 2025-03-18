@@ -10,12 +10,12 @@ final class AnalyticsService: AnalyticsServiceable {
     
     /// The FPTI URL to post all analytic events.
     private let url = URL(string: "https://api.paypal.com/v1/tracking/batch/events")!
-    private let networkClient: Networkable
+    private let session: Sessionable
     
     // MARK: - Initializer
     
-    init(networkClient: Networkable = NetworkClient()) {
-        self.networkClient = networkClient
+    init(session: Sessionable = URLSession.shared) {
+        self.session = session
     }
     
     // MARK: - Internal Methods
@@ -29,7 +29,7 @@ final class AnalyticsService: AnalyticsServiceable {
     func performEventRequest(_ eventName: String, sessionID: String) async {
         let body = createAnalyticsEvent(eventName: eventName, sessionID: sessionID)
         do {
-            try await networkClient.post(url: url, body: body)
+            try await post(url: url, body: body)
         } catch {
             NSLog("[PopupBridge SDK] Failed to send analytics: %@", error.localizedDescription)
         }
@@ -42,5 +42,21 @@ final class AnalyticsService: AnalyticsServiceable {
         let batchMetadata = FPTIBatchData.Metadata(sessionID: sessionID)
         let event = FPTIBatchData.Event(eventName: eventName)
         return FPTIBatchData(metadata: batchMetadata, events: [event])
+    }
+    
+    private func post(url: URL, body: FPTIBatchData) async throws {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+        
+        let encodedBody = try JSONEncoder().encode(body)
+        request.httpBody = encodedBody
+            
+        let (_, response) = try await session.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidResponse
+        }
     }
 }
