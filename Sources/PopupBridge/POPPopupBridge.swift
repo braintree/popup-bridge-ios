@@ -13,7 +13,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let messageHandlerName = "POPPopupBridge"
     private let hostName = "popupbridgev1"    
     private let webView: WKWebView
-    private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
+    private var webAuthenticationSession: WebAuthenticationSession? = WebAuthenticationSession()
     
     private var returnBlock: ((URL) -> Void)? = nil
     
@@ -33,7 +33,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         super.init()
 
         configureWebView()
-        webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
+        webAuthenticationSession?.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
         returnBlock = { [weak self] url in
             guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -53,6 +53,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     deinit {
         webView.configuration.userContentController.removeAllScriptMessageHandlers()
+        webAuthenticationSession = nil
     }
     
     // MARK: - Internal Methods
@@ -134,7 +135,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
             
             if let urlString = script.url, let url = URL(string: urlString) {
-                webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
+                webAuthenticationSession?.start(url: url, context: self) { [weak self] url, _ in
                     if let self, let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
                         returnBlock(url)
