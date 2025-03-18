@@ -35,8 +35,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         configureWebView()
         webAuthenticationSession?.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
-        returnBlock = { [weak self] url in
-            guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
+        returnBlock = { [weak self, weak webView] url in
+            guard let webView, let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
 
