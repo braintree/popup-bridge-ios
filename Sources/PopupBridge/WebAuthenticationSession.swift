@@ -5,10 +5,6 @@ class WebAuthenticationSession: NSObject {
 
     var authenticationSession: ASWebAuthenticationSession?
     var prefersEphemeralWebBrowserSession: Bool = true
-    
-    deinit {
-        authenticationSession = nil
-    }
 
     func start(
         url: URL,
