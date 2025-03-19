@@ -33,8 +33,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
-        returnBlock = { [weak self, weak webView] url in
-            guard let webView, let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
+        returnBlock = { [weak self] url in
+            guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
 
@@ -168,21 +168,5 @@ extension POPPopupBridge: ASWebAuthenticationPresentationContextProviding {
             let window = UIApplication.shared.windows.first { $0.isKeyWindow }
             return window ?? ASPresentationAnchor()
         }
-    }
-}
-
-final class WebViewScriptHandler: NSObject {
-
-    weak var proxy: WKScriptMessageHandler?
-
-    init(proxy: WKScriptMessageHandler) {
-        self.proxy = proxy
-    }
-}
-
-extension WebViewScriptHandler: WKScriptMessageHandler {
-
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        proxy?.userContentController(userContentController, didReceive: message)
     }
 }
