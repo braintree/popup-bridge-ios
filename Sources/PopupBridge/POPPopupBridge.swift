@@ -135,8 +135,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             
             if let urlString = script.url, let url = URL(string: urlString) {
                 webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
-//                    self?.webAuthenticationSession.authenticationSession?.presentationContextProvider = nil
-                    
                     if let self, let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
                         returnBlock(url)
@@ -144,8 +142,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         return
                     }
                 } sessionDidCancel: { [weak self] in
-//                    self?.webAuthenticationSession.authenticationSession?.presentationContextProvider = nil
-                    
+                
                     guard let self, let webView = self.webView else { return }
                     
                     let script = """
@@ -162,30 +159,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
         }
     }
-    
-//    var authenticationSession: ASWebAuthenticationSession?
-//    var prefersEphemeralWebBrowserSession: Bool = true
-//    
-//    func start(
-//        url: URL,
-//        sessionDidComplete: @escaping (URL?, Error?) -> Void,
-//        sessionDidCancel: @escaping () -> Void
-//    ) {
-//        self.authenticationSession = ASWebAuthenticationSession(
-//            url: url,
-//            callbackURLScheme: PopupBridgeConstants.callbackURLScheme
-//        ) { url, error in
-//            if let error = error as? NSError, error.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
-//                sessionDidCancel()
-//            } else {
-//                sessionDidComplete(url, error)
-//            }
-//        }
-//        authenticationSession?.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
-//        authenticationSession?.presentationContextProvider = self
-//
-//        authenticationSession?.start()
-//    }
 }
 
 // MARK: - ASWebAuthenticationPresentationContextProviding conformance
