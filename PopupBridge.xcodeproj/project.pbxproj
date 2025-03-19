@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451348252D8B5102009265C9 /* WebViewScriptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451348242D8B50EB009265C9 /* WebViewScriptHandler.swift */; };
 		45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */; };
 		45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */; };
 		45CD0C302D6788A10072C5A4 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		451348242D8B50EB009265C9 /* WebViewScriptHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptHandler.swift; sourceTree = "<group>"; };
 		45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTIBatchData.swift; sourceTree = "<group>"; };
 		45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+MilisecondTimestamp.swift"; sourceTree = "<group>"; };
 		45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
 				BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */,
 				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
+				451348242D8B50EB009265C9 /* WebViewScriptHandler.swift */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */,
 				800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */,
 				8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */,
+				451348252D8B5102009265C9 /* WebViewScriptHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
