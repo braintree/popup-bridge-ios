@@ -16,6 +16,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     private var returnBlock: ((URL) -> Void)? = nil
     
+    private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private lazy var webViewScripHandler = WebViewScriptHandler(proxy: self)
     
     // MARK: - Initializers
@@ -32,7 +33,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         super.init()
 
         configureWebView()
-        self.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
+        webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
         returnBlock = { [weak self, weak webView] url in
             guard let webView, let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -133,18 +134,19 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
             
             if let urlString = script.url, let url = URL(string: urlString) {
-                start(url: url) { [weak self] url, _ in
+                webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
+//                    self?.webAuthenticationSession.authenticationSession?.presentationContextProvider = nil
+                    
                     if let self, let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
                         returnBlock(url)
                         
-                        authenticationSession?.presentationContextProvider = nil
                         return
                     }
                 } sessionDidCancel: { [weak self] in
-                    guard let self, let webView = self.webView else { return }
+//                    self?.webAuthenticationSession.authenticationSession?.presentationContextProvider = nil
                     
-                    authenticationSession?.presentationContextProvider = nil
+                    guard let self, let webView = self.webView else { return }
                     
                     let script = """
                         if (typeof window.popupBridge.onCancel === 'function') {\
@@ -161,29 +163,29 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
     }
     
-    var authenticationSession: ASWebAuthenticationSession?
-    var prefersEphemeralWebBrowserSession: Bool = true
-    
-    func start(
-        url: URL,
-        sessionDidComplete: @escaping (URL?, Error?) -> Void,
-        sessionDidCancel: @escaping () -> Void
-    ) {
-        self.authenticationSession = ASWebAuthenticationSession(
-            url: url,
-            callbackURLScheme: PopupBridgeConstants.callbackURLScheme
-        ) { url, error in
-            if let error = error as? NSError, error.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
-                sessionDidCancel()
-            } else {
-                sessionDidComplete(url, error)
-            }
-        }
-        authenticationSession?.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
-        authenticationSession?.presentationContextProvider = self
-
-        authenticationSession?.start()
-    }
+//    var authenticationSession: ASWebAuthenticationSession?
+//    var prefersEphemeralWebBrowserSession: Bool = true
+//    
+//    func start(
+//        url: URL,
+//        sessionDidComplete: @escaping (URL?, Error?) -> Void,
+//        sessionDidCancel: @escaping () -> Void
+//    ) {
+//        self.authenticationSession = ASWebAuthenticationSession(
+//            url: url,
+//            callbackURLScheme: PopupBridgeConstants.callbackURLScheme
+//        ) { url, error in
+//            if let error = error as? NSError, error.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
+//                sessionDidCancel()
+//            } else {
+//                sessionDidComplete(url, error)
+//            }
+//        }
+//        authenticationSession?.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
+//        authenticationSession?.presentationContextProvider = self
+//
+//        authenticationSession?.start()
+//    }
 }
 
 // MARK: - ASWebAuthenticationPresentationContextProviding conformance
