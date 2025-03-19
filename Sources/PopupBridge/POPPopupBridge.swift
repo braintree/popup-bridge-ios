@@ -136,11 +136,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                     if let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
                         returnBlock(url)
-                        
                         return
                     }
                 } sessionDidCancel: { [self] in
-                    
                     let script = """
                         if (typeof window.popupBridge.onCancel === 'function') {\
                             window.popupBridge.onCancel();\
