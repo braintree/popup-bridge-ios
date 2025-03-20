@@ -8,13 +8,17 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Exposed for testing
     var returnedWithURL: Bool = false
     
+    static var analyticsService: AnalyticsServiceable = AnalyticsService()
+    
     // MARK: - Private Properties
     
     private let messageHandlerName = "POPPopupBridge"
-    private let hostName = "popupbridgev1"    
+    private let hostName = "popupbridgev1"
+    private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
+    private let application: URLOpener = UIApplication.shared
     
+    private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     
     // MARK: - Initializers
@@ -29,7 +33,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.webView = webView
         
         super.init()
-
+        
+        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
+        
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
@@ -44,7 +50,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Exposed for testing
-    convenience init(webView: WKWebView, webAuthenticationSession: WebAuthenticationSession) {
+    convenience init(
+        webView: WKWebView,
+        webAuthenticationSession: WebAuthenticationSession
+    ) {
         self.init(webView: webView)
         self.webAuthenticationSession = webAuthenticationSession
     }
@@ -80,10 +89,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         if let payloadData = try? JSONEncoder().encode(payload),
            let payload = String(data: payloadData, encoding: .utf8) {
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
             return "window.popupBridge.onComplete(null, \(payload));"
         } else {
             let errorMessage = "Failed to parse query items from return URL."
             let errorResponse = "new Error(\"\(errorMessage)\")"
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
     }
@@ -99,7 +110,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
-            host: hostName
+            host: hostName,
+            isVenmoInstalled: application.isVenmoAppInstalled()
         ).rawJavascript
         
         let script = WKUserScript(
@@ -146,7 +158,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                             window.popupBridge.onComplete(null, null);\
                         }
                     """
-
+                    
+                    Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: sessionID)
+                    
                     injectWebView(webView: webView, withJavaScript: script)
                     return
                 }
@@ -160,13 +174,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 extension POPPopupBridge: ASWebAuthenticationPresentationContextProviding {
 
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        if #available(iOS 15, *) {
-            let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let window = firstScene?.windows.first { $0.isKeyWindow }
-            return window ?? ASPresentationAnchor()
-        } else {
-            let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-            return window ?? ASPresentationAnchor()
-        }
+        let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let window = firstScene?.windows.first { $0.isKeyWindow }
+        return window ?? ASPresentationAnchor()
     }
 }

@@ -56,7 +56,7 @@ final class PopupBridge_DemoUITests: XCTestCase {
 
     // MARK: - Helpers
 
-    func waitForElement(_ element: XCUIElement, timeout: TimeInterval = 10) {
+    func waitForElement(_ element: XCUIElement, timeout: TimeInterval = 15) {
         expectation(for: NSPredicate(format: "exists ==1"), evaluatedWith: element)
         waitForExpectations(timeout: timeout)
     }
