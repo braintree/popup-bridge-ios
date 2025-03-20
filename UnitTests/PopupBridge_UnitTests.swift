@@ -34,9 +34,9 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView)
+        let _ = POPPopupBridge(webView: webView)
 
-        XCTAssertEqual(mockUserContentController.scriptMessageHandler as? POPPopupBridge, pub)
+        XCTAssertNotNil(mockUserContentController.scriptMessageHandler as? WebViewScriptHandler)
         XCTAssertEqual(mockUserContentController.name, scriptMessageHandlerName)
     }
 
