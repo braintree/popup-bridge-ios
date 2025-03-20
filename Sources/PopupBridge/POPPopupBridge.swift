@@ -102,7 +102,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
-        webView.configuration.userContentController.add(self, name: messageHandlerName)
+        webView.configuration.userContentController.add(
+            WebViewScriptHandler(proxy: self),
+            name: messageHandlerName
+        )
         
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
