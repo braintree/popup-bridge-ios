@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		451348272D8CAD7C009265C9 /* WebViewScriptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */; };
-		4513482B2D8DDA25009265C9 /* XCTestCase+AssertMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513482A2D8DDA17009265C9 /* XCTestCase+AssertMemoryLeaks.swift */; };
+		4513482B2D8DDA25009265C9 /* XCTestCase+trackForMemoryLeaks in Sources */ = {isa = PBXBuildFile; fileRef = 4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks */; };
 		45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */; };
 		45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */; };
 		45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */; };
@@ -40,7 +40,7 @@
 /* Begin PBXFileReference section */
 		28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptHandler.swift; sourceTree = "<group>"; };
-		4513482A2D8DDA17009265C9 /* XCTestCase+AssertMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AssertMemoryLeaks.swift"; sourceTree = "<group>"; };
+		4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks */ = {isa = PBXFileReference; lastKnownFileType = text; path = "XCTestCase+trackForMemoryLeaks"; sourceTree = "<group>"; };
 		45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
 		45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTIBatchData.swift; sourceTree = "<group>"; };
 		45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+MilisecondTimestamp.swift"; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
 				BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */,
 				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
-				4513482A2D8DDA17009265C9 /* XCTestCase+AssertMemoryLeaks.swift */,
+				4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -354,7 +354,7 @@
 			files = (
 				45FBAF2F2D701E24000D550B /* MockSessionable.swift in Sources */,
 				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
-				4513482B2D8DDA25009265C9 /* XCTestCase+AssertMemoryLeaks.swift in Sources */,
+				4513482B2D8DDA25009265C9 /* XCTestCase+trackForMemoryLeaks in Sources */,
 				45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */,
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
 				BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */,
