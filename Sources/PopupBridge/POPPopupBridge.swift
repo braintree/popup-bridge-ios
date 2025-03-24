@@ -39,12 +39,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
-        returnBlock = { url in
-            guard let script = self.constructJavaScriptCompletionResult(returnURL: url) else {
+        returnBlock = { [weak self] url in
+            guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
             }
 
-            self.injectWebView(webView: webView, withJavaScript: script)
+            self?.injectWebView(webView: webView, withJavaScript: script)
             return
         }
     }
@@ -56,6 +56,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ) {
         self.init(webView: webView)
         self.webAuthenticationSession = webAuthenticationSession
+    }
+    
+    deinit {
+        webView.configuration.userContentController.removeAllScriptMessageHandlers()
     }
     
     // MARK: - Internal Methods
@@ -98,7 +102,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
-        webView.configuration.userContentController.add(self, name: messageHandlerName)
+        webView.configuration.userContentController.add(
+            WebViewScriptHandler(proxy: self),
+            name: messageHandlerName
+        )
         
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,

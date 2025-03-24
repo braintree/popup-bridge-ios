@@ -34,9 +34,9 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         configuration.userContentController = mockUserContentController
 
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
-        let pub = POPPopupBridge(webView: webView)
+        let _ = POPPopupBridge(webView: webView)
 
-        XCTAssertEqual(mockUserContentController.scriptMessageHandler as? POPPopupBridge, pub)
+        XCTAssertNotNil(mockUserContentController.scriptMessageHandler as? WebViewScriptHandler)
         XCTAssertEqual(mockUserContentController.name, scriptMessageHandlerName)
     }
 
@@ -363,5 +363,14 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         XCTAssertEqual(mockAnalyticsService.eventCount, 2)
         XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.canceled)
         XCTAssertNotNil(mockAnalyticsService.lastSessionID)
+    }
+    
+    func testPOPPopupBridge_shouldNotLeak() {
+        let webView = WKWebView()
+        trackForMemoryLeak(instance: POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession
+        ))
+        webView.load(URLRequest(url: URL(string: "some-popup-bridge-example")!))
     }
 }
