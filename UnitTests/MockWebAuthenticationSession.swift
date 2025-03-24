@@ -5,6 +5,7 @@ import AuthenticationServices
 class MockWebAuthenticationSession: WebAuthenticationSession {
     var cannedResponseURL: URL?
     var cannedErrorResponse: Error?
+    var shouldCancel: Bool = false
 
     override func start(
         url: URL,
@@ -12,6 +13,10 @@ class MockWebAuthenticationSession: WebAuthenticationSession {
         sessionDidComplete: @escaping (URL?, Error?) -> Void,
         sessionDidCancel: @escaping () -> Void
     ) {
-        sessionDidComplete(cannedResponseURL, cannedErrorResponse)
+        if shouldCancel {
+            sessionDidCancel()
+        } else {
+            sessionDidComplete(cannedResponseURL, cannedErrorResponse)
+        }
     }
 }
