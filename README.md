@@ -125,6 +125,131 @@ Quick Start
     </script>
     ```
 
+PayPal Example
+--------------
+
+```html
+<!-- From https://developer.paypal.com/braintree/docs/guides/paypal/client-side/javascript/v3/ -->
+
+<head>
+  <!-- Load the client component. -->
+  <script src="https://js.braintreegateway.com/web/3.117.1/js/client.min.js"></script>
+  <!-- Load the PayPal Checkout component. -->
+  <script src="https://js.braintreegateway.com/web/3.117.1/js/paypal-checkout.min.js"></script>
+</head>
+
+<body>
+  <div id="paypal-button"></div>
+</body>
+```
+
+```js
+// From https://developer.paypal.com/braintree/docs/guides/paypal/client-side/javascript/v3/
+
+if (!window.popupBridge) {
+  throw new Error("Popup Bridge is is not installed!");
+}
+
+// Create a client.
+braintree.client.create({
+  authorization: CLIENT_AUTHORIZATION
+}).then(function (clientInstance) {
+  // Create a PayPal Checkout component.
+  return braintree.paypalCheckout.create({
+    client: clientInstance
+  });
+}).then(function (paypalCheckoutInstance) {
+  // Load the PayPal JS SDK (see Load the PayPal JS SDK section)
+  paypalCheckoutInstance.loadPayPalSDK().then(function () {
+    // The PayPal script is now loaded on the page and
+    // window.paypal.Buttons is now available to use
+
+    // render the PayPal button (see Render the PayPal Button section)
+  });
+}).catch(function (err) {
+  // Handle component creation error
+});
+```
+
+Venmo Example
+-------------
+
+```html
+<!-- From https://developer.paypal.com/braintree/docs/guides/venmo/client-side/javascript/v3/ -->
+
+<head>
+ <script src="https://js.braintreegateway.com/web/3.117.1/js/client.min.js"></script>
+ <script src="https://js.braintreegateway.com/web/3.117.1/js/venmo.min.js"></script>
+ <script src="https://js.braintreegateway.com/web/3.117.1/js/data-collector.min.js"></script>
+</head>
+
+<body>
+  <div id="venmo-button"></div>
+</body>
+```
+
+```js
+// From https://developer.paypal.com/braintree/docs/guides/venmo/client-side/javascript/v3/
+
+if (!window.popupBridge) {
+  throw new Error("Popup Bridge is is not installed!");
+}
+
+var venmoButton = document.getElementById('venmo-button');
+
+braintree.venmo.create({
+  client: clientInstance,
+  allowDesktop: true,
+  mobileWebFallBack: true,
+  allowDesktopWebLogin: true,
+  paymentMethodUsage: 'multi_use'
+  // Add allowNewBrowserTab: false if your checkout page does not support
+  // relaunching in a new tab when returning from the Venmo app. This can
+  // be omitted otherwise.
+  // allowNewBrowserTab: false
+}).then(function (venmoInstance) {
+  // Verify browser support before proceeding.
+  if (!venmoInstance.isBrowserSupported()) {
+    console.log('Browser does not support Venmo');
+    return;
+  }
+
+  displayVenmoButton(venmoInstance);
+
+  // Check if tokenization results already exist. This occurs when your
+  // checkout page is relaunched in a new tab. This step can be omitted
+  // if allowNewBrowserTab is false.
+  if (venmoInstance.hasTokenizationResult()) {
+    venmoInstance.tokenize().then(handleVenmoSuccess).catch(handleVenmoError);
+  }
+}).catch(function (venmoErr) {
+  console.error('Error creating Venmo:', venmoErr);
+});
+
+function displayVenmoButton(venmoInstance) {
+  // Assumes that venmoButton is initially display: none.
+  venmoButton.style.display = 'block';
+
+  venmoButton.addEventListener('click', function () {
+    venmoButton.disabled = true;
+
+    venmoInstance.tokenize().then(function (payload) {
+      venmoButton.removeAttribute('disabled');
+
+      // ...
+    });
+  });
+}
+
+function handleVenmoError(err) {
+  // ...
+}
+
+function handleVenmoSuccess(payload) {
+  // ...
+}
+```
+
 Frequently Asked Questions
 --------------------------
 
