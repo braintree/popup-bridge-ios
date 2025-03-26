@@ -55,7 +55,7 @@ To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run th
 Supported Payment Methods
 -------
 
-- [PayPal SDK](https://developer.paypal.com/studio/checkout/standard/integrate)
+- [PayPal SDK (v5 only, v6+ not currently supported)](https://developer.paypal.com/sdk/js/configuration/)
 - [PayPal (via Braintree)](https://developer.paypal.com/braintree/docs/guides/paypal/overview)
 - [Venmo (via Braintree)](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
 
