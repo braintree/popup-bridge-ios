@@ -52,6 +52,13 @@ Sample App
 
 To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
 
+Supported Payment Methods
+-------
+
+- [PayPal SDK (v5 only, v6+ not currently supported)](https://developer.paypal.com/sdk/js/configuration/)
+- [PayPal (via Braintree)](https://developer.paypal.com/braintree/docs/guides/paypal/overview)
+- [Venmo (via Braintree)](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
+
 Quick Start
 -----------
 
@@ -76,65 +83,156 @@ Quick Start
         }
     }
     ```
+    
+PayPal Example
+--------------
 
-1. Use PopupBridge from the web page by writing some JavaScript:
+```html
+<!-- From https://developer.paypal.com/braintree/docs/guides/paypal/client-side/javascript/v3/ -->
 
-    ```javascript
-    var url = 'http://localhost:3099/popup'; // or whatever the page is that you want to open in a popup
+<head>
+  <!-- Load the client component. -->
+  <script src="https://js.braintreegateway.com/web/3.117.1/js/client.min.js"></script>
+  <!-- Load the PayPal Checkout component. -->
+  <script src="https://js.braintreegateway.com/web/3.117.1/js/paypal-checkout.min.js"></script>
+</head>
 
-    if (window.popupBridge) {
-      // Open the popup in a browser, and give it the deep link back to the app
-      popupBridge.open(url + '?popupBridgeReturnUrlPrefix=' + popupBridge.getReturnUrlPrefix());
+<body>
+  <div id="paypal-button"></div>
+</body>
+```
 
-      // Optional: define a callback to process results of interaction with the popup
-      popupBridge.onComplete = function (err, payload) {
-        if (err) {
-          console.error('PopupBridge onComplete Error:', err);
-        } else if (!err && !payload) {
-          console.log('User closed popup.');
-        } else {
-          alert('Your favorite color is ' + payload.queryItems.color);
-        }
-      };
-    } else {
-      var popup = window.open(url);
+```js
+// From https://developer.paypal.com/braintree/docs/guides/paypal/client-side/javascript/v3/
 
-      window.addEventListener('message', function (event) {
-        var color = JSON.parse(event.data).color;
+if (!window.popupBridge) {
+  throw new Error("Popup Bridge is is not installed!");
+}
 
-        if (color) {
-          popup.close();
-          alert('Your favorite color is ' + color);
-        }
-      });
+// Create a client.
+braintree.client.create({
+  authorization: CLIENT_AUTHORIZATION
+}).then(function (clientInstance) {
+  // Create a PayPal Checkout component.
+  return braintree.paypalCheckout.create({
+    client: clientInstance
+  });
+}).then(function (paypalCheckoutInstance) {
+  // Load the PayPal JS SDK (see Load the PayPal JS SDK section)
+  paypalCheckoutInstance.loadPayPalSDK().then(function () {
+    // The PayPal script is now loaded on the page and
+    // window.paypal.Buttons is now available to use
+
+    // render the PayPal button (see Render the PayPal Button section)
+  });
+}).catch(function (err) {
+  // Handle component creation error
+});
+```
+
+Venmo Example
+-------------
+
+```html
+<!-- From https://developer.paypal.com/braintree/docs/guides/venmo/client-side/javascript/v3/ -->
+
+<head>
+ <script src="https://js.braintreegateway.com/web/3.117.1/js/client.min.js"></script>
+ <script src="https://js.braintreegateway.com/web/3.117.1/js/venmo.min.js"></script>
+ <script src="https://js.braintreegateway.com/web/3.117.1/js/data-collector.min.js"></script>
+</head>
+
+<body>
+  <div id="venmo-button"></div>
+</body>
+```
+
+```js
+// From https://developer.paypal.com/braintree/docs/guides/venmo/client-side/javascript/v3/
+
+if (!window.popupBridge) {
+  throw new Error("Popup Bridge is is not installed!");
+} else {
+  // if popup bridge is detected, we set the deepLinkReturnUrl param
+  // so that the Venmo app knows to app switch back to the app hosting
+  // the webview, instead of the url inside of the webview
+  createOptions.deepLinkReturnUrl = window.popupBridge.getReturnUrlPrefix();
+
+  // the Braintree SDK is waiting for the hash in the url to change,
+  // normally the Venmo app switches back to the window and updates
+  // the hash along with it, but since we're instructing Venmo to
+  // return to the app that _hosts_ the webview via the specified
+  // deep link return url, we have to manually update the hash of
+  // the webview's url with the hash popup bridge receives from
+  // the Venmo app upon completion
+  window.popupBridge.onComplete = (err, payload) => {
+    console.log('Popup Bridge completed');
+
+    if (err) {
+        console.log(err);
     }
-    ```
 
-1. Redirect back to the app inside of the popup:
+    console.log(payload);
 
-    ```html
-    <h1>What is your favorite color?</h1>
+    window.location.hash = payload.hash;
+  };
+}
 
-    <a href="#red" data-color="red">Red</a>
-    <a href="#green" data-color="green">Green</a>
-    <a href="#blue" data-color="blue">Blue</a>
+var venmoButton = document.getElementById('venmo-button');
 
-    <script src="jquery.js"></script>
-    <script>
-    $('a').on('click', function (event) {
-      var color = $(this).data('color');
+braintree.venmo.create({
+  client: clientInstance,
+  allowDesktop: true,
+  mobileWebFallBack: true,
+  allowDesktopWebLogin: true,
+  paymentMethodUsage: 'multi_use'
+  // Add allowNewBrowserTab: false if your checkout page does not support
+  // relaunching in a new tab when returning from the Venmo app. This can
+  // be omitted otherwise.
+  // allowNewBrowserTab: false
+}).then(function (venmoInstance) {
+  // Verify browser support before proceeding.
+  if (!venmoInstance.isBrowserSupported()) {
+    console.log('Browser does not support Venmo');
+    return;
+  }
 
-      if (location.search.indexOf('popupBridgeReturnUrlPrefix') !== -1) {
-        var prefix = location.search.split('popupBridgeReturnUrlPrefix=')[1];
-        // Open the deep link back to the app, and send some data
-        location.href = prefix + '?color=' + color;
-      } else {
-        window.opener.postMessage(JSON.stringify({ color: color }), '*');
-      }
+  displayVenmoButton(venmoInstance);
+
+  // Check if tokenization results already exist. This occurs when your
+  // checkout page is relaunched in a new tab. This step can be omitted
+  // if allowNewBrowserTab is false.
+  if (venmoInstance.hasTokenizationResult()) {
+    venmoInstance.tokenize().then(handleVenmoSuccess).catch(handleVenmoError);
+  }
+}).catch(function (venmoErr) {
+  console.error('Error creating Venmo:', venmoErr);
+});
+
+function displayVenmoButton(venmoInstance) {
+  // Assumes that venmoButton is initially display: none.
+  venmoButton.style.display = 'block';
+
+  venmoButton.addEventListener('click', function () {
+    venmoButton.disabled = true;
+
+    venmoInstance.tokenize().then(function (payload) {
+      venmoButton.removeAttribute('disabled');
+
+      // ...
     });
-    </script>
-    ```
+  });
+}
 
+function handleVenmoError(err) {
+  // ...
+}
+
+function handleVenmoSuccess(payload) {
+  // ...
+}
+```
+    
 Frequently Asked Questions
 --------------------------
 
@@ -192,7 +290,8 @@ This SDK abides by our Client SDK Deprecation Policy. For more information on th
 
 | Major version number | Status | Released | Deprecated | Unsupported |
 | -------------------- | ------ | -------- | ---------- | ----------- |
-| 2.x.x | Active | October 2023 | TBA | TBA |
+| 3.x.x | Active | April 2025 | TBA | TBA |
+| 2.x.x | Active | October 2023 | April 2025 | April 2026 |
 | 1.x.x | Inactive | 2016 | October 2024 | October 2025 |
 
 ## Author
