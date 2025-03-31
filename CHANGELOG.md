@@ -1,8 +1,9 @@
 # PopupBridge iOS Release Notes
 
 ## unreleased
-* Bump minimum supported deployment target to iOS 16+
-* Require Xcode 16.2.0+ and Swift 5.10+
+* Breaking Changes
+  * Bump minimum supported deployment target to iOS 16+
+  * Require Xcode 16.2.0+ and Swift 5.10+
 * Add the `prefersEphemeralWebBrowserSession` property to the `POPPopupBridge` initializer, which specifies whether to request a private authentication session from the browser.
 * Add validation to check if the Venmo app is installed on the device.
 
