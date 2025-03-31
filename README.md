@@ -153,18 +153,13 @@ Venmo Example
 if (!window.popupBridge) {
   throw new Error("Popup Bridge is is not installed!");
 } else {
-  // if popup bridge is detected, we set the deepLinkReturnUrl param
-  // so that the Venmo app knows to app switch back to the app hosting
-  // the webview, instead of the url inside of the webview
+  // If using PopupBridge, set the deepLinkReturnUrl so that the Venmo app 
+  // knows where to return after authorization. This ensures the app resumes 
+  // correctly from the WebView.
+  // Note: When integrating with Venmo via WebView and PopupBridge, it's important to set the deepLinkReturnUrl 
+  // so the user is redirected back to the correct context in your app after completing the flow in the Venmo app.
   createOptions.deepLinkReturnUrl = window.popupBridge.getReturnUrlPrefix();
 
-  // the Braintree SDK is waiting for the hash in the url to change,
-  // normally the Venmo app switches back to the window and updates
-  // the hash along with it, but since we're instructing Venmo to
-  // return to the app that _hosts_ the webview via the specified
-  // deep link return url, we have to manually update the hash of
-  // the webview's url with the hash popup bridge receives from
-  // the Venmo app upon completion
   window.popupBridge.onComplete = (err, payload) => {
     console.log('Popup Bridge completed');
 
