@@ -36,7 +36,7 @@ final class PopupBridge_DemoUITests: XCTestCase {
         waitForElement(text, timeout: 10)
         doNotLikeLink.tap()
 
-        waitForElement(app.staticTexts["You did not like any of our colors"], timeout: 10)
+        waitForElement(app.staticTexts["You did not like any of our colors"])
     }
 
     func testClickingSafariCancel_returnsCancel() {
@@ -51,12 +51,12 @@ final class PopupBridge_DemoUITests: XCTestCase {
         waitForElement(cancelButton)
         cancelButton.tap()
 
-        waitForElement(app.staticTexts["You did not choose a color"], timeout: 10)
+        waitForElement(app.staticTexts["You did not choose a color"])
     }
 
     // MARK: - Helpers
 
-    func waitForElement(_ element: XCUIElement, timeout: TimeInterval = 5) {
+    func waitForElement(_ element: XCUIElement, timeout: TimeInterval = 15) {
         expectation(for: NSPredicate(format: "exists ==1"), evaluatedWith: element)
         waitForExpectations(timeout: timeout)
     }

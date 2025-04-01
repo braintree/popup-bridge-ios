@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45150AC32D4D48670071E385 /* PopupBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */; };
+		45150B0C2D4D56F00071E385 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150B0B2D4D56F00071E385 /* AppDelegate.swift */; };
+		45150B0E2D4D572D0071E385 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150B0D2D4D572D0071E385 /* SceneDelegate.swift */; };
 		8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; };
 		8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		806D558625AFD733005ED326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558525AFD733005ED326 /* AppDelegate.m */; };
-		806D558925AFD733005ED326 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558825AFD733005ED326 /* SceneDelegate.m */; };
-		806D558C25AFD733005ED326 /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D558B25AFD733005ED326 /* POPViewController.m */; };
-		806D558F25AFD733005ED326 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806D558D25AFD733005ED326 /* Main.storyboard */; };
 		806D559125AFD735005ED326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806D559025AFD735005ED326 /* Assets.xcassets */; };
-		806D559725AFD735005ED326 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D559625AFD735005ED326 /* main.m */; };
 		BEF9ED1D2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1C2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,18 +41,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeViewController.swift; sourceTree = "<group>"; };
+		45150B0B2D4D56F00071E385 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		45150B0D2D4D572D0071E385 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8018D88425B7891E00D877F3 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558125AFD733005ED326 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		806D558425AFD733005ED326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		806D558525AFD733005ED326 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		806D558725AFD733005ED326 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		806D558825AFD733005ED326 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		806D558A25AFD733005ED326 /* POPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
-		806D558B25AFD733005ED326 /* POPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
-		806D558E25AFD733005ED326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		806D559025AFD735005ED326 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806D559525AFD735005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		806D559625AFD735005ED326 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		806D55B425AFD877005ED326 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D55B825AFD877005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEF9ED1C2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_DemoUITests.swift; sourceTree = "<group>"; };
@@ -101,16 +94,11 @@
 		806D558325AFD733005ED326 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				806D558425AFD733005ED326 /* AppDelegate.h */,
-				806D558525AFD733005ED326 /* AppDelegate.m */,
-				806D558725AFD733005ED326 /* SceneDelegate.h */,
-				806D558825AFD733005ED326 /* SceneDelegate.m */,
-				806D558A25AFD733005ED326 /* POPViewController.h */,
-				806D558B25AFD733005ED326 /* POPViewController.m */,
-				806D558D25AFD733005ED326 /* Main.storyboard */,
+				45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */,
+				45150B0B2D4D56F00071E385 /* AppDelegate.swift */,
 				806D559025AFD735005ED326 /* Assets.xcassets */,
 				806D559525AFD735005ED326 /* Info.plist */,
-				806D559625AFD735005ED326 /* main.m */,
+				45150B0D2D4D572D0071E385 /* SceneDelegate.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -181,6 +169,7 @@
 				TargetAttributes = {
 					806D558025AFD733005ED326 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1620;
 					};
 					806D55B325AFD877005ED326 = {
 						CreatedOnToolsVersion = 12.3;
@@ -214,7 +203,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				806D559125AFD735005ED326 /* Assets.xcassets in Resources */,
-				806D558F25AFD733005ED326 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,10 +220,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				806D558C25AFD733005ED326 /* POPViewController.m in Sources */,
-				806D558625AFD733005ED326 /* AppDelegate.m in Sources */,
-				806D559725AFD735005ED326 /* main.m in Sources */,
-				806D558925AFD733005ED326 /* SceneDelegate.m in Sources */,
+				45150AC32D4D48670071E385 /* PopupBridgeViewController.swift in Sources */,
+				45150B0C2D4D56F00071E385 /* AppDelegate.swift in Sources */,
+				45150B0E2D4D572D0071E385 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,17 +243,6 @@
 			targetProxy = 806D55B925AFD877005ED326 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		806D558D25AFD733005ED326 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				806D558E25AFD733005ED326 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		806D559825AFD735005ED326 /* Debug */ = {
@@ -320,7 +296,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -373,7 +349,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -386,15 +362,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 43253H4X22;
 				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -404,15 +384,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 43253H4X22;
 				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

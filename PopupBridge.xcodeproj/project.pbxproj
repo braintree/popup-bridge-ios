@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451348272D8CAD7C009265C9 /* WebViewScriptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */; };
+		4513482B2D8DDA25009265C9 /* XCTestCase+trackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks.swift */; };
+		45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */; };
+		45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */; };
+		45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */; };
+		45CD0C302D6788A10072C5A4 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */; };
+		45CD0C322D6793FB0072C5A4 /* PopupBridgeAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C312D6793F90072C5A4 /* PopupBridgeAnalytics.swift */; };
+		45FBAF272D6F9CCF000D550B /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */; };
+		45FBAF292D701AFE000D550B /* Sessionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF282D701AF7000D550B /* Sessionable.swift */; };
+		45FBAF2B2D701B12000D550B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2A2D701B0D000D550B /* NetworkError.swift */; };
+		45FBAF2F2D701E24000D550B /* MockSessionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF2E2D701E1D000D550B /* MockSessionable.swift */; };
+		45FBAF352D70CFB6000D550B /* AnalyticsService_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */; };
+		45FC74C22D8347B500E50035 /* UIApplication+URLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC74C12D8347AA00E50035 /* UIApplication+URLOpener.swift */; };
 		62D5EC522B9F753100D09C5D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */; };
 		79DB9F7F53319F206CDE119E /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */; };
 		800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D72995F143003ED16E /* POPPopupBridge.swift */; };
@@ -26,6 +39,19 @@
 
 /* Begin PBXFileReference section */
 		28245E4F1AC5126D54985D88 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptHandler.swift; sourceTree = "<group>"; };
+		4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+trackForMemoryLeaks.swift"; sourceTree = "<group>"; };
+		45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
+		45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTIBatchData.swift; sourceTree = "<group>"; };
+		45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+MilisecondTimestamp.swift"; sourceTree = "<group>"; };
+		45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		45CD0C312D6793F90072C5A4 /* PopupBridgeAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeAnalytics.swift; sourceTree = "<group>"; };
+		45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		45FBAF282D701AF7000D550B /* Sessionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sessionable.swift; sourceTree = "<group>"; };
+		45FBAF2A2D701B0D000D550B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		45FBAF2E2D701E1D000D550B /* MockSessionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionable.swift; sourceTree = "<group>"; };
+		45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService_Test.swift; sourceTree = "<group>"; };
+		45FC74C12D8347AA00E50035 /* UIApplication+URLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+URLOpener.swift"; sourceTree = "<group>"; };
 		4EF7C7DDAB0B99FF28DD6541 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -86,6 +112,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		45FC74C32D84922F00E50035 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				45FBAF262D6F9CC6000D550B /* AnalyticsService.swift */,
+				45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */,
+				45CD0C312D6793F90072C5A4 /* PopupBridgeAnalytics.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
@@ -143,11 +179,15 @@
 		A775A07D1DEE4E7E009E67C2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				45FBAF342D70CFB6000D550B /* AnalyticsService_Test.swift */,
 				A775A0801DEE4E7E009E67C2 /* Info.plist */,
+				45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
+				45FBAF2E2D701E1D000D550B /* MockSessionable.swift */,
 				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
 				BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */,
 				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
+				4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -155,14 +195,21 @@
 		A775A08C1DEE4EF0009E67C2 /* PopupBridge */ = {
 			isa = PBXGroup;
 			children = (
+				45FC74C32D84922F00E50035 /* Analytics */,
+				45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */,
+				45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */,
+				45FBAF2A2D701B0D000D550B /* NetworkError.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
+				BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
+				62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */,
+				45FBAF282D701AF7000D550B /* Sessionable.swift */,
+				45FC74C12D8347AA00E50035 /* UIApplication+URLOpener.swift */,
 				800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */,
 				BE8E37B52A17B79E00181FDA /* WebAuthenticationSession.swift */,
 				800E789C29E0958A00D1B0FC /* WebViewMessage.swift */,
-				BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */,
-				62D5EC512B9F753100D09C5D /* PrivacyInfo.xcprivacy */,
+				451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */,
 			);
 			path = PopupBridge;
 			sourceTree = "<group>";
@@ -305,10 +352,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FBAF2F2D701E24000D550B /* MockSessionable.swift in Sources */,
 				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
+				4513482B2D8DDA25009265C9 /* XCTestCase+trackForMemoryLeaks.swift in Sources */,
+				45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */,
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
 				BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */,
 				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
+				45FBAF352D70CFB6000D550B /* AnalyticsService_Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,10 +367,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FBAF292D701AFE000D550B /* Sessionable.swift in Sources */,
+				45FBAF2B2D701B12000D550B /* NetworkError.swift in Sources */,
 				800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */,
+				45CD0C302D6788A10072C5A4 /* Bundle+Extension.swift in Sources */,
+				45FBAF272D6F9CCF000D550B /* AnalyticsService.swift in Sources */,
 				BEF9ED232A2A6A2C005D54AB /* PopupBridgeConstants.swift in Sources */,
+				451348272D8CAD7C009265C9 /* WebViewScriptHandler.swift in Sources */,
+				45FC74C22D8347B500E50035 /* UIApplication+URLOpener.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
 				BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */,
+				45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */,
+				45CD0C322D6793FB0072C5A4 /* PopupBridgeAnalytics.swift in Sources */,
+				45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */,
 				800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */,
 				8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */,
 			);
@@ -376,7 +436,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -424,7 +484,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -445,7 +505,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
@@ -471,7 +531,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.braintreepayments.PopupBridge-Tests";
@@ -501,7 +561,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.PopupBridge;
@@ -537,7 +597,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/PopupBridge/PopupBridge-Framework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.PopupBridge;
