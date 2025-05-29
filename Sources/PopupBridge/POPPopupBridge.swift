@@ -33,9 +33,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.webView = webView
         
         super.init()
-        
-        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
-        
+
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 
@@ -144,6 +142,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
             
             if let urlString = script.url, let url = URL(string: urlString) {
+                Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
                 webAuthenticationSession.start(url: url, context: self) { url, _ in
                     if let url, let returnBlock = self.returnBlock {
                         self.returnedWithURL = true
