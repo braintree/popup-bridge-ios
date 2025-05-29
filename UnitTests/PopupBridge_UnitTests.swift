@@ -288,15 +288,38 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         return nil
     }
     
-    func testInit_sendsAnalytics() {
+    func testUserContentController_sendsAnalytics() {
         XCTAssertEqual(mockAnalyticsService.eventCount, 0)
         POPPopupBridge.analyticsService = mockAnalyticsService
         
-        let _ = POPPopupBridge(
-            webView: WKWebView(),
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+
+        configuration.userContentController = mockUserContentController
+        
+        let stubMessageBody: [String: String] = ["url": "http://example.com/?hello=world"]
+        let stubMessageName = scriptMessageHandlerName
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = stubMessageBody
+        stubMessage.name = stubMessageName
+
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        let pub = POPPopupBridge(
+            webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession
         )
 
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        webView.evaluateJavaScript("""
+        "if (typeof window.popupBridge.onCancel === 'function') {"
+        "  window.popupBridge.onCancel();"
+        "} else {"
+        "  window.popupBridge.onComplete(null, null);"
+        "}"
+        """)
+        
         XCTAssertEqual(mockAnalyticsService.eventCount, 1)
         XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.started)
         XCTAssertNotNil(mockAnalyticsService.lastSessionID)
@@ -325,7 +348,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let actualJSON = extractJSON(from: result!)
         
         XCTAssertEqual(actualJSON, expectedJSON)
-        XCTAssertEqual(mockAnalyticsService.eventCount, 2)
+        XCTAssertEqual(mockAnalyticsService.eventCount, 1)
         XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.succeeded)
         XCTAssertNotNil(mockAnalyticsService.lastSessionID)
     }
