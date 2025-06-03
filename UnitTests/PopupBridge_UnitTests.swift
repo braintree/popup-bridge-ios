@@ -296,7 +296,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
             webView: WKWebView(),
             webAuthenticationSession: mockWebAuthenticationSession
         )
-
+        
         XCTAssertEqual(mockAnalyticsService.eventCount, 1)
         XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.started)
         XCTAssertNotNil(mockAnalyticsService.lastSessionID)
