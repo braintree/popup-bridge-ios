@@ -17,7 +17,7 @@ on:
 
 jobs:
   code-scanning:
-    uses: braintree/security-workflows/.github/workflows/codeql-ios.yml@main
+    uses: braintree/security-workflows/.github/workflows/codeql-ios.yml@addIOS7Support
     with:
       project: PopupBridge.xcodeproj
       workspace: PopupBridge.xcworkspace
