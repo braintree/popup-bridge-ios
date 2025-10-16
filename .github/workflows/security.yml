@@ -22,7 +22,6 @@ jobs:
       project: PopupBridge.xcodeproj
       workspace: PopupBridge.xcworkspace
       scheme: Demo
-      mac-runner-version: 'macos-15-xlarge'
 
   dependency-review:
     uses: braintree/security-workflows/.github/workflows/dependency-review.yml@main
