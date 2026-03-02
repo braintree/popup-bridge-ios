@@ -18,33 +18,61 @@ jobs:
       - name: Use Xcode 16.4.0
         run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
 
+      - name: Validate version input
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          set -euo pipefail
+
+          # Validate version format: x.x.x or x.x.x-betax (e.g., 3.0.0, 3.0.0-beta1)
+          # Uses bash regex to avoid a grep subprocess and (0|[1-9][0-9]*) to prevent leading zeros.
+          PATTERN='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-beta[0-9]+)?$'
+          if ! [[ "${INPUT_VERSION}" =~ $PATTERN ]]; then
+            echo "::error::Invalid version format: ${INPUT_VERSION}"
+            echo "::error::Version must be x.x.x or x.x.x-betax (e.g., 3.0.0 or 3.0.0-beta1)"
+            exit 1
+          fi
+
+          # Check length to prevent excessively long inputs
+          if [ ${#INPUT_VERSION} -gt 50 ]; then
+            echo "::error::Version string exceeds maximum length of 50 characters"
+            exit 1
+          fi
+
+          # Store validated version for use in subsequent steps
+          echo "RELEASE_VERSION=${INPUT_VERSION}" >> "$GITHUB_ENV"
+          echo "Version validated: ${INPUT_VERSION}"
+
       - name: Check for unreleased section in changelog
         run: grep "## unreleased" CHANGELOG.md || (echo "::error::No unreleased section found in CHANGELOG"; exit 1)
 
       - name: Set git username and email
         run: |
+          set -euo pipefail
           git config user.name braintreeps
           git config user.email code@getbraintree.com
 
       - name: Update version
         run: |
+          set -euo pipefail
           today=$(date +'%Y-%m-%d')
-          sed -i '' 's/## unreleased.*/## '"${{ github.event.inputs.version }}"' ('"$today"')/' CHANGELOG.md
-          sed -i '' 's/\(s\.version *= *\).*/\1"'"${{ github.event.inputs.version }}"'\"/' PopupBridge.podspec
-          plutil -replace CFBundleVersion -string ${{ github.event.inputs.version }} -- 'Demo/Demo/Info.plist'
-          plutil -replace CFBundleShortVersionString -string ${{ github.event.inputs.version }} -- 'Demo/Demo/Info.plist'
-          plutil -replace CFBundleVersion -string ${{ github.event.inputs.version }} -- 'Sources/PopupBridge/PopupBridge-Framework-Info.plist'
-          plutil -replace CFBundleShortVersionString -string ${{ github.event.inputs.version }} -- 'Sources/PopupBridge/PopupBridge-Framework-Info.plist'
+          sed -i '' 's/## unreleased.*/## '"${RELEASE_VERSION}"' ('"$today"')/' CHANGELOG.md
+          sed -i '' 's/\(s\.version *= *\).*/\1"'"${RELEASE_VERSION}"'\"/' PopupBridge.podspec
+          plutil -replace CFBundleVersion -string "${RELEASE_VERSION}" -- 'Demo/Demo/Info.plist'
+          plutil -replace CFBundleShortVersionString -string "${RELEASE_VERSION}" -- 'Demo/Demo/Info.plist'
+          plutil -replace CFBundleVersion -string "${RELEASE_VERSION}" -- 'Sources/PopupBridge/PopupBridge-Framework-Info.plist'
+          plutil -replace CFBundleShortVersionString -string "${RELEASE_VERSION}" -- 'Sources/PopupBridge/PopupBridge-Framework-Info.plist'
 
           git add .
-          git commit -m 'Bump version to ${{ github.event.inputs.version }}'
-          git tag ${{ github.event.inputs.version }} -a -m 'Release ${{ github.event.inputs.version }}'
-      
+          git commit -m "Bump version to ${RELEASE_VERSION}"
+          git tag "${RELEASE_VERSION}" -a -m "Release ${RELEASE_VERSION}"
+
       - name: Push commits and tag
-        run: git push origin HEAD ${{ github.event.inputs.version }}
+        run: git push origin HEAD "${RELEASE_VERSION}"
 
       - name: Save changelog entries to a file
         run: |
+          set -euo pipefail
           sed -e '1,/##/d' -e '/##/,$d' CHANGELOG.md > changelog_entries.md
 
       - name: Create GitHub release
@@ -53,8 +81,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.version }}
-          release_name: ${{ github.event.inputs.version }}
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
           body_path: changelog_entries.md
           draft: false
           prerelease: false
@@ -62,4 +90,6 @@ jobs:
       - name: Publish to CocoaPods
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-        run: pod trunk push PopupBridge.podspec
+        run: |
+          set -euo pipefail
+          pod trunk push PopupBridge.podspec
