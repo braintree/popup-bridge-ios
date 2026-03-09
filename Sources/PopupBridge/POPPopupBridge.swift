@@ -16,13 +16,14 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let hostName = "popupbridgev1"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private let application: URLOpener
+    private var application: URLOpener = UIApplication.shared
     
     private let enablePopupBridgeAppSwitch: Bool
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     private var launchAppReturnObserver: NSObjectProtocol?
-
+    private var pendingLaunchAppResult: String?
+    
     // MARK: - Initializers
         
     /// Initialize a Popup Bridge.
@@ -37,7 +38,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
     public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false) {
         self.webView = webView
-        self.application = UIApplication.shared
         self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
 
         super.init()
@@ -127,35 +127,57 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            guard let self else {
+            guard let self,
+                  let url = notification.userInfo?["url"] as? URL else {
                 return
             }
-
-            guard let url = notification.userInfo?["url"] as? URL else {
-                return
-            }
-
             self.handleLaunchAppReturn(url: url)
         }
     }
 
     /// Parses the return URL and injects `window.popupBridge.onComplete()` into the WebView.
-    /// The return URL may include fragment-based data:
+    /// Venice uses fragment-based return for web_sdk integration:
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
-    /// Popup Bridge JavaScript is responsible for normalizing `path`, `queryItems`, and `hash`.
+    /// The fragment contains key=value pairs that must be merged into queryItems
+    /// since the JS SDK reads result.queryItems (not result.hash).
     private func handleLaunchAppReturn(url: URL) {
+        // One-shot: stop observing immediately
         if let launchAppReturnObserver {
             NotificationCenter.default.removeObserver(launchAppReturnObserver)
-            self.launchAppReturnObserver = nil
+            launchAppReturnObserver = nil
         }
 
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return
         }
 
-        let queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
+        // Start with query string params (if any)
+        var queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
         } ?? [:]
+
+        // Parse fragment params (e.g. "onApprove&PayerID=XXX&token=EC-YYY") and merge
+        if let fragment = urlComponents.fragment {
+            let fragmentComponents = fragment.components(separatedBy: "&")
+            for component in fragmentComponents {
+                let parts = component.components(separatedBy: "=")
+                if parts.count == 2 {
+                    queryItems[parts[0]] = parts[1].removingPercentEncoding ?? parts[1]
+                }
+            }
+        }
+
+        // Map the path to the opType expected by the JS SDK's popup-bridge payment flow.
+        // Venice returns /onApprove or /onCancel in the path; the JS SDK expects
+        // opType "payment" or "cancel" respectively.
+        if queryItems["opType"] == nil {
+            let path = urlComponents.path.lowercased()
+            if path.contains("onapprove") {
+                queryItems["opType"] = "payment"
+            } else if path.contains("oncancel") {
+                queryItems["opType"] = "cancel"
+            }
+        }
 
         let payload = URLDetailsPayload(
             path: urlComponents.path,
@@ -194,7 +216,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     // MARK: - Internal Methods
 
     /// Exposed for testing
-    /// 
+    ///
     /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
     /// - Parameter url: returnURL from the result of the ASWebAuthenticationSession.
     /// - Returns: JavaScript formatted completion.
@@ -252,6 +274,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return nil
         }()
 
+        Self.analyticsService.sendAnalyticsEvent(
+            isPayPalInstalled ? PopupBridgeAnalytics.paypalInstalled : PopupBridgeAnalytics.paypalNotInstalled,
+            sessionID: sessionID
+        )
+
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
@@ -294,7 +321,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                 Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
                 application.openURL(launchAppURL) { [weak self] success in
                     guard let self else { return }
-                    
                     if success {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
                         self.startObservingLaunchAppReturn()

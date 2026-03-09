@@ -39,10 +39,12 @@ struct PopupBridgeUserScript {
             };\(deepLinkJS)\(deepLinkProperty)
 
             window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
+
             window.popupBridge.isPayPalInstalled = \(isPayPalInstalled);
 
             window.popupBridge.launchApp = function launchApp(url) {
-                window.webkit.messageHandlers.\(scriptMessageHandlerName).postMessage({
+                window.webkit.messageHandlers.\(scriptMessageHandlerName)
+                    .postMessage({
                     launchApp: url
                 });
             };
@@ -61,7 +63,6 @@ struct PopupBridgeUserScript {
                     }
                 });
             };
-            
             return 0;
         })();
         """
