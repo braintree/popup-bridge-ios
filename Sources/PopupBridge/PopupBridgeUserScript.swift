@@ -6,6 +6,7 @@ struct PopupBridgeUserScript {
     let scriptMessageHandlerName: String
     let host: String
     let isVenmoInstalled: Bool
+    let isPayPalInstalled: Bool
     
     var rawJavascript: String {
         """
@@ -17,7 +18,16 @@ struct PopupBridgeUserScript {
             };
             
             window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
-            
+
+            window.popupBridge.isPayPalInstalled = \(isPayPalInstalled);
+
+            window.popupBridge.launchApp = function launchApp(url) {
+                window.webkit.messageHandlers.\(scriptMessageHandlerName)
+                    .postMessage({
+                    launchApp: url
+                });
+            };
+
             window.popupBridge.open = function open(url) {
                 window.webkit.messageHandlers.\(scriptMessageHandlerName)
                     .postMessage({
@@ -34,7 +44,7 @@ struct PopupBridgeUserScript {
                     }
                 });
             };
-        
+
             return 0;
         })();
         """
