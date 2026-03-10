@@ -7,16 +7,29 @@ struct PopupBridgeUserScript {
     let host: String
     let isVenmoInstalled: Bool
     let isPayPalInstalled: Bool
-    
+    let returnUrlScheme: String?
+
     var rawJavascript: String {
-        """
+        let deepLinkJs: String
+        if let returnUrlScheme {
+            deepLinkJs = """
+
+                        window.popupBridge.getDeepLinkReturnUrlPrefix = function getDeepLinkReturnUrlPrefix() {
+                            return '\(returnUrlScheme)://\(host)/';
+                        };
+            """
+        } else {
+            deepLinkJs = ""
+        }
+
+        return """
         ;(function () {
             if (!window.popupBridge) { window.popupBridge = {}; };
 
             window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
                 return '\(scheme)://\(host)/';
-            };
-            
+            };\(deepLinkJs)
+
             window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
 
             window.popupBridge.isPayPalInstalled = \(isPayPalInstalled);
