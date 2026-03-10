@@ -257,12 +257,26 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             sessionID: sessionID
         )
 
+        // Read the merchant app's registered URL scheme from Info.plist CFBundleURLSchemes
+        let returnUrlScheme: String? = {
+            guard let urlTypes = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
+                return nil
+            }
+            for urlType in urlTypes {
+                if let schemes = urlType["CFBundleURLSchemes"] as? [String], let scheme = schemes.first {
+                    return scheme
+                }
+            }
+            return nil
+        }()
+
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
             host: hostName,
             isVenmoInstalled: application.isVenmoAppInstalled(),
-            isPayPalInstalled: isPayPalInstalled
+            isPayPalInstalled: isPayPalInstalled,
+            returnUrlScheme: returnUrlScheme
         ).rawJavascript
         
         let script = WKUserScript(
