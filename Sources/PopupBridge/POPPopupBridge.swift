@@ -21,8 +21,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     private var launchAppReturnObserver: NSObjectProtocol?
-    private var pendingLaunchAppResult: String?
-    
+
+    private static let logDateFormatter = ISO8601DateFormatter()
     // MARK: - Initializers
         
     /// Initialize a Popup Bridge.
@@ -105,6 +105,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             NotificationCenter.default.removeObserver(observer)
         }
 
+        NSLog(
+            "[tanya] POPPopupBridge.startObservingLaunchAppReturn: sessionID=%@ time=%@",
+            sessionID,
+            Self.logDateFormatter.string(from: Date())
+        )
+
         launchAppReturnObserver = NotificationCenter.default.addObserver(
             forName: Notification.Name("popupBridgeReturnURL"),
             object: nil,
@@ -114,6 +120,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                   let url = notification.userInfo?["url"] as? URL else {
                 return
             }
+            NSLog(
+                "[tanya] POPPopupBridge.popupBridgeReturnURL observer fired: sessionID=%@ url=%@ time=%@",
+                self.sessionID,
+                url.absoluteString,
+                Self.logDateFormatter.string(from: Date())
+            )
             self.handleLaunchAppReturn(url: url)
         }
     }
@@ -124,6 +136,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// The fragment contains key=value pairs that must be merged into queryItems
     /// since the JS SDK reads result.queryItems (not result.hash).
     private func handleLaunchAppReturn(url: URL) {
+        NSLog(
+            "[tanya] POPPopupBridge.handleLaunchAppReturn ENTER: sessionID=%@ url=%@ time=%@",
+            sessionID,
+            url.absoluteString,
+            Self.logDateFormatter.string(from: Date())
+        )
+
         // One-shot: stop observing immediately
         if let observer = launchAppReturnObserver {
             NotificationCenter.default.removeObserver(observer)
@@ -134,7 +153,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return
         }
 
-        // Start with query string params (if any)
         var queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
         } ?? [:]
@@ -171,30 +189,26 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         if let payloadData = try? JSONEncoder().encode(payload),
            let payloadString = String(data: payloadData, encoding: .utf8) {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
+            NSLog(
+                "[tanya] POPPopupBridge.handleLaunchAppReturn payload built: sessionID=%@ payload=%@",
+                sessionID,
+                payloadString
+            )
 
-            // Store result so it survives WKWebView content process termination.
-            // Also inject a WKUserScript that will set __pendingResult on the
-            // next page load, allowing the JS SDK to pick it up on re-init.
-            pendingLaunchAppResult = payloadString
-            let pendingJs = """
+            let script = """
                 ;(function() {
-                    if (!window.popupBridge) { window.popupBridge = {}; }
-                    window.popupBridge.__pendingResult = \(payloadString);
+                    if (typeof window.popupBridge !== 'undefined' && typeof window.popupBridge.onComplete === 'function') {
+                        window.popupBridge.onComplete(null, \(payloadString));
+                    } else {
+                        if (!window.popupBridge) { window.popupBridge = {}; }
+                        window.popupBridge.__pendingResult = \(payloadString);
+                    }
                 })();
             """
-            let pendingScript = WKUserScript(
-                source: pendingJs,
-                injectionTime: .atDocumentStart,
-                forMainFrameOnly: false
+            NSLog(
+                "[tanya] POPPopupBridge.handleLaunchAppReturn injecting completion JS: sessionID=%@",
+                sessionID
             )
-            webView.configuration.userContentController.addUserScript(pendingScript)
-
-            // Try immediate injection for the case where the page is still alive
-            let script = """
-                if (typeof window.popupBridge !== 'undefined' && typeof window.popupBridge.onComplete === 'function') {
-                    window.popupBridge.onComplete(null, \(payloadString));
-                }
-            """
             injectWebView(webView: webView, withJavaScript: script)
         } else {
             let errorMessage = "Failed to parse query items from return URL."
@@ -309,9 +323,21 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
 
             if let launchAppURLString = script.launchApp, let launchAppURL = URL(string: launchAppURLString) {
+                NSLog(
+                    "[tanya] POPPopupBridge.launchApp requested: sessionID=%@ url=%@ time=%@",
+                    sessionID,
+                    launchAppURL.absoluteString,
+                    Self.logDateFormatter.string(from: Date())
+                )
                 Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
                 application.openURL(launchAppURL) { [weak self] success in
                     guard let self else { return }
+                    NSLog(
+                        "[tanya] POPPopupBridge.launchApp completion: sessionID=%@ success=%@ time=%@",
+                        self.sessionID,
+                        success.description,
+                        Self.logDateFormatter.string(from: Date())
+                    )
                     if success {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
                         self.startObservingLaunchAppReturn()

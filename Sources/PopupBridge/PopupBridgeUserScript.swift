@@ -1,7 +1,7 @@
 import Foundation
 
 struct PopupBridgeUserScript {
-    
+
     let scheme: String
     let scriptMessageHandlerName: String
     let host: String
@@ -10,16 +10,25 @@ struct PopupBridgeUserScript {
     let returnUrlScheme: String?
 
     var rawJavascript: String {
+        let returnUrlPrefix = "\(scheme)://\(host)/"
         let deepLinkJs: String
+        let deepLinkProperty: String
+
         if let returnUrlScheme {
+            let deepLinkReturnUrlPrefix = "\(returnUrlScheme)://\(host)/"
             deepLinkJs = """
 
                         window.popupBridge.getDeepLinkReturnUrlPrefix = function getDeepLinkReturnUrlPrefix() {
-                            return '\(returnUrlScheme)://\(host)/';
+                            return '\(deepLinkReturnUrlPrefix)';
                         };
+            """
+            deepLinkProperty = """
+
+            window.popupBridge.deepLinkReturnUrlPrefix = '\(deepLinkReturnUrlPrefix)';
             """
         } else {
             deepLinkJs = ""
+            deepLinkProperty = ""
         }
 
         return """
@@ -27,30 +36,26 @@ struct PopupBridgeUserScript {
             if (!window.popupBridge) { window.popupBridge = {}; };
 
             window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
-                return '\(scheme)://\(host)/';
-            };\(deepLinkJs)
+                return '\(returnUrlPrefix)';
+            };\(deepLinkJs)\(deepLinkProperty)
 
             window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
-
             window.popupBridge.isPayPalInstalled = \(isPayPalInstalled);
 
             window.popupBridge.launchApp = function launchApp(url) {
-                window.webkit.messageHandlers.\(scriptMessageHandlerName)
-                    .postMessage({
+                window.webkit.messageHandlers.\(scriptMessageHandlerName).postMessage({
                     launchApp: url
                 });
             };
 
             window.popupBridge.open = function open(url) {
-                window.webkit.messageHandlers.\(scriptMessageHandlerName)
-                    .postMessage({
+                window.webkit.messageHandlers.\(scriptMessageHandlerName).postMessage({
                     url: url
                 });
             };
-        
+
             window.popupBridge.sendMessage = function sendMessage(message, data) {
-                window.webkit.messageHandlers.\(scriptMessageHandlerName)
-                    .postMessage({
+                window.webkit.messageHandlers.\(scriptMessageHandlerName).postMessage({
                     message: {
                         name: message,
                         data: data
