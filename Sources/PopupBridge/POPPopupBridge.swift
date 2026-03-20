@@ -131,10 +131,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Parses the return URL and injects `window.popupBridge.onComplete()` into the WebView.
-    /// Venice uses fragment-based return for web_sdk integration:
+    /// Venice may return fragment-based data for web_sdk integration:
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
-    /// The fragment contains key=value pairs that must be merged into queryItems
-    /// since the JS SDK reads result.queryItems (not result.hash).
+    /// The JS SDK is responsible for normalizing `path`, `queryItems`, and `hash`.
     private func handleLaunchAppReturn(url: URL) {
         NSLog(
             "[tanya] POPPopupBridge.handleLaunchAppReturn ENTER: sessionID=%@ url=%@ time=%@",
@@ -153,32 +152,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return
         }
 
-        var queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
+        let queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
         } ?? [:]
-
-        // Parse fragment params (e.g. "onApprove&PayerID=XXX&token=EC-YYY") and merge
-        if let fragment = urlComponents.fragment {
-            let fragmentComponents = fragment.components(separatedBy: "&")
-            for component in fragmentComponents {
-                let parts = component.components(separatedBy: "=")
-                if parts.count == 2 {
-                    queryItems[parts[0]] = parts[1].removingPercentEncoding ?? parts[1]
-                }
-            }
-        }
-
-        // Map the path to the opType expected by the JS SDK's popup-bridge payment flow.
-        // Venice returns /onApprove or /onCancel in the path; the JS SDK expects
-        // opType "payment" or "cancel" respectively.
-        if queryItems["opType"] == nil {
-            let path = urlComponents.path.lowercased()
-            if path.contains("onapprove") {
-                queryItems["opType"] = "payment"
-            } else if path.contains("oncancel") {
-                queryItems["opType"] = "cancel"
-            }
-        }
 
         let payload = URLDetailsPayload(
             path: urlComponents.path,
