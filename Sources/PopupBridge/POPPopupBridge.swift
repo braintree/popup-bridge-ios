@@ -88,6 +88,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Internal designated init that accepts a URLOpener for testing
     init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, application: URLOpener) {
         self.webView = webView
+        self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
         self.application = application
         self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
 
