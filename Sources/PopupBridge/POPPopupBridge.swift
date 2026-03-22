@@ -18,6 +18,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let webView: WKWebView
     private var application: URLOpener = UIApplication.shared
     
+    private let enablePopupBridgeAppSwitch: Bool
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     private var launchAppReturnObserver: NSObjectProtocol?
@@ -29,10 +30,15 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
-    ///   or other browsing data between the authenthication session and the user’s normal browser session.
+    ///   or other browsing data between the authenthication session and the user's normal browser session.
     ///   Defaults to `true`.
-    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true) {
+    ///   - enablePopupBridgeAppSwitch: When true, allows the SDK to launch the native PayPal app for checkout
+    ///   instead of opening a browser. Defaults to false for backward compatibility.
+    ///   This is specific to the popup bridge flow and is separate from the JS SDK's
+    ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
+    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false) {
         self.webView = webView
+        self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
 
         super.init()
 
@@ -69,8 +75,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Internal designated init that accepts a URLOpener for testing
-    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, application: URLOpener) {
+    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, application: URLOpener) {
         self.webView = webView
+        self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
         self.application = application
 
         super.init()
@@ -241,11 +248,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             name: messageHandlerName
         )
         
-        let isPayPalInstalled = application.isPayPalAppInstalled()
-        Self.analyticsService.sendAnalyticsEvent(
-            isPayPalInstalled ? PopupBridgeAnalytics.paypalInstalled : PopupBridgeAnalytics.paypalNotInstalled,
-            sessionID: sessionID
-        )
+        let isPayPalInstalled = enablePopupBridgeAppSwitch && application.isPayPalAppInstalled()
+        if enablePopupBridgeAppSwitch {
+            Self.analyticsService.sendAnalyticsEvent(
+                isPayPalInstalled ? PopupBridgeAnalytics.paypalInstalled : PopupBridgeAnalytics.paypalNotInstalled,
+                sessionID: sessionID
+            )
+        }
 
         // Read the merchant app's registered URL scheme from Info.plist CFBundleURLSchemes
         let returnUrlScheme: String? = {
