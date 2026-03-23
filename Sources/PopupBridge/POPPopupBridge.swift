@@ -177,7 +177,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     // MARK: - Internal Methods
 
     /// Exposed for testing
-    ///
+    /// 
     /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
     /// - Parameter url: returnURL from the result of the ASWebAuthenticationSession.
     /// - Returns: JavaScript formatted completion.
@@ -323,7 +323,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                     """
 
                     Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: sessionID)
-                    
+
                     injectWebView(webView: webView, withJavaScript: script)
                     return
                 }
