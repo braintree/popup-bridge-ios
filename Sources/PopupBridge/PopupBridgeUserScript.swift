@@ -1,7 +1,6 @@
 import Foundation
 
 struct PopupBridgeUserScript {
-
     let scheme: String
     let scriptMessageHandlerName: String
     let host: String
@@ -62,7 +61,7 @@ struct PopupBridgeUserScript {
                     }
                 });
             };
-
+            
             return 0;
         })();
         """

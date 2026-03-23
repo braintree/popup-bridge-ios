@@ -1,14 +1,12 @@
 import UIKit
 
 protocol URLOpener {
-
     func isVenmoAppInstalled() -> Bool
     func isPayPalAppInstalled() -> Bool
     func openURL(_ url: URL, completionHandler: @escaping (Bool) -> Void)
 }
 
 extension UIApplication: URLOpener {
-
     /// Indicates whether the Venmo App is installed.
     func isVenmoAppInstalled() -> Bool {
         guard let venmoURL = URL(string: "com.venmo.touch.v2://") else {
