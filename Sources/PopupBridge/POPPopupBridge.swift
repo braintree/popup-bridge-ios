@@ -22,7 +22,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     private var launchAppReturnObserver: NSObjectProtocol?
-
     private static let logDateFormatter = ISO8601DateFormatter()
     // MARK: - Initializers
         
@@ -324,7 +323,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                     """
 
                     Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: sessionID)
-
+                    
                     injectWebView(webView: webView, withJavaScript: script)
                     return
                 }
