@@ -527,6 +527,13 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
-        XCTAssertTrue(mockAnalyticsService.allEventNames.contains(PopupBridgeAnalytics.appLaunchStarted))
+        XCTAssertEqual(
+            mockAnalyticsService.sentEventNames,
+            [
+                PopupBridgeAnalytics.started,
+                PopupBridgeAnalytics.appLaunchStarted,
+                PopupBridgeAnalytics.appLaunchSucceeded
+            ]
+        )
     }
 }
