@@ -17,10 +17,10 @@ extension UIApplication: URLOpener {
 
     /// Indicates whether the PayPal App is installed.
     func isPayPalAppInstalled() -> Bool {
-        guard let paypalURL = URL(string: "paypal-app-switch-checkout://") else {
+        guard let payPalURL = URL(string: "paypal://") else {
             return false
         }
-        return canOpenURL(paypalURL)
+        return canOpenURL(payPalURL)
     }
 
     func openURL(_ url: URL, completionHandler: @escaping (Bool) -> Void) {

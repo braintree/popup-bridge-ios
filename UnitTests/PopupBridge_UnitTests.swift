@@ -378,12 +378,13 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
     func testUserScript_whenPayPalInstalled_containsIsPayPalInstalledTrue() {
         let mockURLOpener = MockURLOpener()
-        mockURLOpener.paypalInstalled = true
+        mockURLOpener.payPalInstalled = true
 
         let webView = WKWebView()
         let _ = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -393,12 +394,13 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
     func testUserScript_whenPayPalNotInstalled_containsIsPayPalInstalledFalse() {
         let mockURLOpener = MockURLOpener()
-        mockURLOpener.paypalInstalled = false
+        mockURLOpener.payPalInstalled = false
 
         let webView = WKWebView()
         let _ = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -412,6 +414,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let _ = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -434,6 +437,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -459,6 +463,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -485,6 +490,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -496,36 +502,6 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
 
         XCTAssertTrue(pub.returnedWithURL)
         XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.appLaunchFailed)
-    }
-
-    // MARK: - App Detection Analytics Tests
-
-    func testInit_whenPayPalInstalled_sendsPayPalInstalledAnalytics() {
-        let mockURLOpener = MockURLOpener()
-        mockURLOpener.paypalInstalled = true
-
-        POPPopupBridge.analyticsService = mockAnalyticsService
-        let _ = POPPopupBridge(
-            webView: WKWebView(),
-            webAuthenticationSession: mockWebAuthenticationSession,
-            application: mockURLOpener
-        )
-
-        XCTAssertTrue(mockAnalyticsService.allEventNames.contains(PopupBridgeAnalytics.paypalInstalled))
-    }
-
-    func testInit_whenPayPalNotInstalled_sendsPayPalNotInstalledAnalytics() {
-        let mockURLOpener = MockURLOpener()
-        mockURLOpener.paypalInstalled = false
-
-        POPPopupBridge.analyticsService = mockAnalyticsService
-        let _ = POPPopupBridge(
-            webView: WKWebView(),
-            webAuthenticationSession: mockWebAuthenticationSession,
-            application: mockURLOpener
-        )
-
-        XCTAssertTrue(mockAnalyticsService.allEventNames.contains(PopupBridgeAnalytics.paypalNotInstalled))
     }
 
     func testReceiveScriptMessage_whenLaunchApp_sendsAppLaunchStartedAnalytics() {
@@ -541,6 +517,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
             application: mockURLOpener
         )
 
