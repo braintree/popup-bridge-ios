@@ -16,13 +16,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let hostName = "popupbridgev1"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private var application: URLOpener = UIApplication.shared
+    private let application: URLOpener
     
     private let enablePopupBridgeAppSwitch: Bool
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     private var launchAppReturnObserver: NSObjectProtocol?
-    private static let logDateFormatter = ISO8601DateFormatter()
+
     // MARK: - Initializers
         
     /// Initialize a Popup Bridge.
@@ -37,6 +37,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
     public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false) {
         self.webView = webView
+        self.application = UIApplication.shared
         self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
 
         super.init()
@@ -87,7 +88,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Internal designated init that accepts a URLOpener for testing
     init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, application: URLOpener) {
         self.webView = webView
-        self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
         self.application = application
         self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
 
@@ -127,18 +127,22 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            guard let self,
-                  let url = notification.userInfo?["url"] as? URL else {
+            guard let self else {
                 return
             }
+
+            guard let url = notification.userInfo?["url"] as? URL else {
+                return
+            }
+
             self.handleLaunchAppReturn(url: url)
         }
     }
 
     /// Parses the return URL and injects `window.popupBridge.onComplete()` into the WebView.
-    /// Venice may return fragment-based data for web_sdk integration:
+    /// The return URL may include fragment-based data:
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
-    /// The JS SDK is responsible for normalizing `path`, `queryItems`, and `hash`.
+    /// Popup Bridge JavaScript is responsible for normalizing `path`, `queryItems`, and `hash`.
     private func handleLaunchAppReturn(url: URL) {
 
         // One-shot: stop observing immediately
@@ -254,19 +258,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             isPayPalInstalled ? PopupBridgeAnalytics.paypalInstalled : PopupBridgeAnalytics.paypalNotInstalled,
             sessionID: sessionID
         )
-
-        // Read the merchant app's registered URL scheme from Info.plist CFBundleURLSchemes
-        let returnUrlScheme: String? = {
-            guard let urlTypes = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
-                return nil
-            }
-            for urlType in urlTypes {
-                if let schemes = urlType["CFBundleURLSchemes"] as? [String], let scheme = schemes.first {
-                    return scheme
-                }
-            }
-            return nil
-        }()
 
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,

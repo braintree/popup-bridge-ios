@@ -4,7 +4,7 @@ import Foundation
 class MockURLOpener: URLOpener {
 
     var venmoInstalled = false
-    var paypalInstalled = false
+    var payPalInstalled = false
     var openURLSuccess = true
     var lastOpenedURL: URL?
 
@@ -13,7 +13,7 @@ class MockURLOpener: URLOpener {
     }
 
     func isPayPalAppInstalled() -> Bool {
-        paypalInstalled
+        payPalInstalled
     }
 
     func openURL(_ url: URL, completionHandler: @escaping (Bool) -> Void) {

@@ -10,24 +10,24 @@ struct PopupBridgeUserScript {
 
     var rawJavascript: String {
         let returnURLPrefix = "\(scheme)://\(host)/"
-        let deepLinkJS: String
-        let deepLinkProperty: String
+        let deepLinkAccessorJS: String
+        let deepLinkPropertyAssignment: String
 
         if let returnURLScheme {
             let deepLinkReturnURLPrefix = "\(returnURLScheme)://\(host)/"
-            deepLinkJS = """
+            deepLinkAccessorJS = """
 
                         window.popupBridge.getDeepLinkReturnUrlPrefix = function getDeepLinkReturnUrlPrefix() {
                             return '\(deepLinkReturnURLPrefix)';
                         };
             """
-            deepLinkProperty = """
+            deepLinkPropertyAssignment = """
 
             window.popupBridge.deepLinkReturnUrlPrefix = '\(deepLinkReturnURLPrefix)';
             """
         } else {
-            deepLinkJS = ""
-            deepLinkProperty = ""
+            deepLinkAccessorJS = ""
+            deepLinkPropertyAssignment = ""
         }
 
         return """
@@ -36,7 +36,7 @@ struct PopupBridgeUserScript {
 
             window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
                 return '\(returnURLPrefix)';
-            };\(deepLinkJS)\(deepLinkProperty)
+            };\(deepLinkAccessorJS)\(deepLinkPropertyAssignment)
 
             window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
             window.popupBridge.isPayPalInstalled = \(isPayPalInstalled);
