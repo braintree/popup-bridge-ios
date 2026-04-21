@@ -6,28 +6,28 @@ struct PopupBridgeUserScript {
     let host: String
     let isVenmoInstalled: Bool
     let isPayPalInstalled: Bool
-    let returnUrlScheme: String?
+    let returnURLScheme: String?
 
     var rawJavascript: String {
-        let returnUrlPrefix = "\(scheme)://\(host)/"
-        let deepLinkJs: String
-        let deepLinkProperty: String
+        let returnURLPrefix = "\(scheme)://\(host)/"
+        let deepLinkAccessorJS: String
+        let deepLinkPropertyAssignment: String
 
-        if let returnUrlScheme {
-            let deepLinkReturnUrlPrefix = "\(returnUrlScheme)://\(host)/"
-            deepLinkJs = """
+        if let returnURLScheme {
+            let deepLinkReturnURLPrefix = "\(returnURLScheme)://\(host)/"
+            deepLinkAccessorJS = """
 
                         window.popupBridge.getDeepLinkReturnUrlPrefix = function getDeepLinkReturnUrlPrefix() {
-                            return '\(deepLinkReturnUrlPrefix)';
+                            return '\(deepLinkReturnURLPrefix)';
                         };
             """
-            deepLinkProperty = """
+            deepLinkPropertyAssignment = """
 
-            window.popupBridge.deepLinkReturnUrlPrefix = '\(deepLinkReturnUrlPrefix)';
+            window.popupBridge.deepLinkReturnUrlPrefix = '\(deepLinkReturnURLPrefix)';
             """
         } else {
-            deepLinkJs = ""
-            deepLinkProperty = ""
+            deepLinkAccessorJS = ""
+            deepLinkPropertyAssignment = ""
         }
 
         return """
@@ -35,8 +35,8 @@ struct PopupBridgeUserScript {
             if (!window.popupBridge) { window.popupBridge = {}; };
 
             window.popupBridge.getReturnUrlPrefix = function getReturnUrlPrefix() {
-                return '\(returnUrlPrefix)';
-            };\(deepLinkJs)\(deepLinkProperty)
+                return '\(returnURLPrefix)';
+            };\(deepLinkAccessorJS)\(deepLinkPropertyAssignment)
 
             window.popupBridge.isVenmoInstalled = \(isVenmoInstalled);
             window.popupBridge.isPayPalInstalled = \(isPayPalInstalled);
