@@ -301,6 +301,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                 Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
                 application.openURL(launchAppURL) { [weak self] success in
                     guard let self else { return }
+                    
                     if success {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
                         self.startObservingLaunchAppReturn()
