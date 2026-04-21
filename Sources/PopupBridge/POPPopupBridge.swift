@@ -153,7 +153,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         )
 
         if let payloadData = try? JSONEncoder().encode(payload),
-           let payloadString = String(data: payloadData, encoding: .utf8) {
+            let payloadString = String(data: payloadData, encoding: .utf8) {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
 
             let script = """
@@ -202,7 +202,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         )
 
         if let payloadData = try? JSONEncoder().encode(payload),
-           let payload = String(data: payloadData, encoding: .utf8) {
+            let payload = String(data: payloadData, encoding: .utf8) {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
             return "window.popupBridge.onComplete(null, \(payload));"
         } else {
@@ -279,6 +279,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                 Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
                 application.openURL(launchAppURL) { [weak self] success in
                     guard let self else { return }
+                    
                     if success {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
                         self.startObservingLaunchAppReturn()
