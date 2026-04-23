@@ -5,6 +5,10 @@ workspace 'PopupBridge.xcworkspace'
 
 use_frameworks!
 
+target 'IntegrationTests' do
+  project 'PopupBridge'
+end
+
 target 'UnitTests' do
   project 'PopupBridge'
   pod 'xcbeautify'
