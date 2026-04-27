@@ -3,6 +3,7 @@ import XCTest
 import WebKit
 @testable import PopupBridge
 
+@MainActor
 final class PopupBridge_IntegrationTests: XCTestCase {
 
     override func setUp() {
@@ -30,7 +31,6 @@ final class PopupBridge_IntegrationTests: XCTestCase {
         XCTAssertFalse(webView.configuration.userContentController.userScripts[0].isForMainFrameOnly)
     }
 
-    @MainActor
     func test_init_withRealAnalyticsService_sendsStartedEvent() async {
         let expectation = expectation(description: "started analytics event sent")
 
