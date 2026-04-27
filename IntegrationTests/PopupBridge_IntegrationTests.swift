@@ -3,7 +3,6 @@ import XCTest
 import WebKit
 @testable import PopupBridge
 
-@MainActor
 final class PopupBridge_IntegrationTests: XCTestCase {
 
     override func setUp() {
@@ -31,27 +30,24 @@ final class PopupBridge_IntegrationTests: XCTestCase {
         XCTAssertFalse(webView.configuration.userContentController.userScripts[0].isForMainFrameOnly)
     }
 
+    @MainActor
     func test_init_withRealAnalyticsService_sendsStartedEvent() async {
-        let expectation = expectation(description: "started analytics event sent")
-
-        StubURLProtocol.reset()
-        StubURLProtocol.stubbedStatusCode = 200
-        StubURLProtocol.onRequest = { request in
-            guard let body = request.httpBody,
-                  let decoded = try? JSONDecoder().decode(FPTIBatchData.self, from: body),
-                  decoded.events.first?.fptiEvents.first?.eventName == PopupBridgeAnalytics.started else {
-                return
-            }
-            expectation.fulfill()
-        }
-
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [StubURLProtocol.self]
         POPPopupBridge.analyticsService = AnalyticsService(session: URLSession(configuration: config))
 
-        let _ = POPPopupBridge(webView: WKWebView())
-
-        await fulfillment(of: [expectation], timeout: 10.0)
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            var resumed = false
+            StubURLProtocol.onRequest = { request in
+                guard let body = request.httpBody,
+                      let decoded = try? JSONDecoder().decode(FPTIBatchData.self, from: body),
+                      decoded.events.first?.fptiEvents.first?.eventName == PopupBridgeAnalytics.started,
+                      !resumed else { return }
+                resumed = true
+                continuation.resume()
+            }
+            let _ = POPPopupBridge(webView: WKWebView())
+        }
     }
 
     // MARK: - userContentController
