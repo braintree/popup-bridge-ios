@@ -4,6 +4,7 @@ import AuthenticationServices
 final class MockWebAuthSession: WebAuthenticationSession {
 
     var startWasCalled = false
+    var capturedURL: URL?
 
     override func start(
         url: URL,
@@ -12,5 +13,6 @@ final class MockWebAuthSession: WebAuthenticationSession {
         sessionDidCancel: @escaping () -> Void
     ) {
         startWasCalled = true
+        capturedURL = url
     }
 }

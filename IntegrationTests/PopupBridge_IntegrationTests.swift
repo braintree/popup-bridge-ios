@@ -96,13 +96,14 @@ final class PopupBridge_IntegrationTests: XCTestCase {
         bridge.userContentController(WKUserContentController(), didReceive: message)
 
         XCTAssertTrue(mockSession.startWasCalled, "ASWebAuthenticationSession should start for a message with a valid URL")
+        XCTAssertEqual(mockSession.capturedURL, URL(string: "https://example.com/auth"))
     }
 
     // MARK: - constructJavaScriptCompletionResult
 
     func test_constructJavaScriptCompletionResult_validURL_returnsOnCompleteScript() {
         let bridge = POPPopupBridge(webView: WKWebView())
-        let url = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return?color=red")!
+        let url = URL(string: "\(PopupBridgeConstants.callbackURLScheme)://popupbridgev1/return?color=red")!
 
         let result = bridge.constructJavaScriptCompletionResult(returnURL: url)
 
@@ -120,14 +121,14 @@ final class PopupBridge_IntegrationTests: XCTestCase {
 
     func test_constructJavaScriptCompletionResult_wrongHost_returnsNil() {
         let bridge = POPPopupBridge(webView: WKWebView())
-        let url = URL(string: "sdk.ios.popup-bridge://differenthost/return?color=red")!
+        let url = URL(string: "\(PopupBridgeConstants.callbackURLScheme)://differenthost/return?color=red")!
 
         XCTAssertNil(bridge.constructJavaScriptCompletionResult(returnURL: url))
     }
 
     func test_constructJavaScriptCompletionResult_withQueryParams_includesThemInPayload() {
         let bridge = POPPopupBridge(webView: WKWebView())
-        let url = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return?token=abc&status=success")!
+        let url = URL(string: "\(PopupBridgeConstants.callbackURLScheme)://popupbridgev1/return?token=abc&status=success")!
 
         let result = bridge.constructJavaScriptCompletionResult(returnURL: url)
 
@@ -138,7 +139,7 @@ final class PopupBridge_IntegrationTests: XCTestCase {
 
     func test_constructJavaScriptCompletionResult_withFragment_includesHashInPayload() {
         let bridge = POPPopupBridge(webView: WKWebView())
-        let url = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return#section=top")!
+        let url = URL(string: "\(PopupBridgeConstants.callbackURLScheme)://popupbridgev1/return#section=top")!
 
         let result = bridge.constructJavaScriptCompletionResult(returnURL: url)
 

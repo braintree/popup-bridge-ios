@@ -31,12 +31,13 @@ final class StubURLProtocol: URLProtocol {
         }
         Self.lastRequest = capturedRequest
         Self.onRequest?(capturedRequest)
-        let httpResponse = HTTPURLResponse(
-            url: request.url!,
-            statusCode: Self.stubbedStatusCode,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        guard let url = request.url,
+              let httpResponse = HTTPURLResponse(
+                url: url,
+                statusCode: Self.stubbedStatusCode,
+                httpVersion: nil,
+                headerFields: nil
+              ) else { return }
         client?.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: Data())
         client?.urlProtocolDidFinishLoading(self)
