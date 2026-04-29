@@ -373,4 +373,167 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         ))
         webView.load(URLRequest(url: URL(string: "some-popup-bridge-example")!))
     }
+
+    // MARK: - isPayPalInstalled Tests
+
+    func testUserScript_whenPayPalInstalled_containsIsPayPalInstalledTrue() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.payPalInstalled = true
+
+        let webView = WKWebView()
+        let _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("window.popupBridge.isPayPalInstalled = true"))
+    }
+
+    func testUserScript_whenPayPalNotInstalled_containsIsPayPalInstalledFalse() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.payPalInstalled = false
+
+        let webView = WKWebView()
+        let _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("window.popupBridge.isPayPalInstalled = false"))
+    }
+
+    func testUserScript_containsLaunchAppFunction() {
+        let mockURLOpener = MockURLOpener()
+        let webView = WKWebView()
+        let _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("window.popupBridge.launchApp = function launchApp(url)"))
+    }
+
+    // MARK: - launchApp Message Handling Tests
+
+    func testReceiveScriptMessage_whenLaunchAppMessage_opensURL() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = true
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = ["launchApp": "https://example.com/checkout"]
+        stubMessage.name = scriptMessageHandlerName
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        XCTAssertEqual(mockURLOpener.lastOpenedURL?.absoluteString, "https://example.com/checkout")
+    }
+
+    func testReceiveScriptMessage_whenLaunchAppSucceeds_sendsSucceededAnalytics() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = true
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = ["launchApp": "https://example.com/checkout"]
+        stubMessage.name = scriptMessageHandlerName
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.appLaunchSucceeded)
+    }
+
+    func testReceiveScriptMessage_whenLaunchAppFails_fallsBackToWebAuthenticationSession() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = false
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        mockWebAuthenticationSession.cannedResponseURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return?foo=bar")
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = ["launchApp": "https://example.com/checkout"]
+        stubMessage.name = scriptMessageHandlerName
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        XCTAssertTrue(pub.returnedWithURL)
+        XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.appLaunchFailed)
+    }
+
+    func testReceiveScriptMessage_whenLaunchApp_sendsAppLaunchStartedAnalytics() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = true
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePopupBridgeAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = ["launchApp": "https://example.com/checkout"]
+        stubMessage.name = scriptMessageHandlerName
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        XCTAssertEqual(
+            mockAnalyticsService.sentEventNames,
+            [
+                PopupBridgeAnalytics.started,
+                PopupBridgeAnalytics.appLaunchStarted,
+                PopupBridgeAnalytics.appLaunchSucceeded
+            ]
+        )
+    }
 }
