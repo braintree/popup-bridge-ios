@@ -22,7 +22,7 @@ final class AnalyticsService: AnalyticsServiceable {
     
     func sendAnalyticsEvent(_ eventName: String, sessionID: String) {
         Task(priority: .background) {
-            await performEventRequest(eventName, sessionID: sessionID)
+            await self.performEventRequest(eventName, sessionID: sessionID)
         }
     }
     
