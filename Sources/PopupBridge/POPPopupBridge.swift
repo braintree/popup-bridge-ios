@@ -148,7 +148,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         // One-shot: stop observing immediately
         if let launchAppReturnObserver {
             NotificationCenter.default.removeObserver(launchAppReturnObserver)
-            launchAppReturnObserver = nil
+            self.launchAppReturnObserver = nil
         }
 
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
