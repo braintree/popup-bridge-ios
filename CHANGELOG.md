@@ -1,5 +1,10 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+
+* Add optional `enablePopupBridgeAppSwitch` flag to `POPPopupBridge` initializer. When enabled, the SDK attempts to launch the native PayPal app for checkout instead of opening a browser session. Falls back to `ASWebAuthenticationSession` if the app launch fails.
+* Expose `isPayPalInstalled`, `launchApp()`, and `getDeepLinkReturnUrlPrefix()` on `window.popupBridge` in JavaScript.
+
 ## 3.0.0 (2025-04-01)
 * Breaking Changes
   * Bump minimum supported deployment target to iOS 16+
