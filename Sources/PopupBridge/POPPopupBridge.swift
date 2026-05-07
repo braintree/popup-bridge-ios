@@ -74,6 +74,17 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.webAuthenticationSession = webAuthenticationSession
     }
 
+    /// Exposed for testing
+    convenience init(
+        webView: WKWebView,
+        webAuthenticationSession: WebAuthenticationSession,
+        enablePopupBridgeAppSwitch: Bool = false,
+        application: URLOpener
+    ) {
+        self.init(webView: webView, enablePopupBridgeAppSwitch: enablePopupBridgeAppSwitch, application: application)
+        self.webAuthenticationSession = webAuthenticationSession
+    }
+
     /// Internal designated init that accepts a URLOpener for testing
     init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, application: URLOpener) {
         self.webView = webView
@@ -135,7 +146,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private func handleLaunchAppReturn(url: URL) {
         if let launchAppReturnObserver {
             NotificationCenter.default.removeObserver(launchAppReturnObserver)
-            launchAppReturnObserver = nil
+            self.launchAppReturnObserver = nil
         }
 
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -156,6 +167,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             let payloadString = String(data: payloadData, encoding: .utf8) {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
 
+            // The leading semicolon is a defensive IIFE guard: if the previous JS statement
+            // on the page was left without a semicolon, concatenating a bare `(function(){…})()`
+            // would be parsed as a function-call on that expression and throw. The `;` ensures
+            // a clean statement boundary regardless of surrounding page JS.
             let script = """
                 ;(function() {
                     if (typeof window.popupBridge !== 'undefined' && typeof window.popupBridge.onComplete === 'function') {
