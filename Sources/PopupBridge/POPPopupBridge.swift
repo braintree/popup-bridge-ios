@@ -300,19 +300,25 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         self.startObservingLaunchAppReturn()
                     } else {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchFailed, sessionID: self.sessionID)
+                        let cancelScript = """
+                            if (typeof window.popupBridge.onCancel === 'function') {\
+                                window.popupBridge.onCancel();\
+                            } else {\
+                                window.popupBridge.onComplete(null, null);\
+                            }
+                        """
+                        let scheme = launchAppURL.scheme?.lowercased()
+                        guard scheme == "https" || scheme == "http" else {
+                            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: self.sessionID)
+                            self.injectWebView(webView: self.webView, withJavaScript: cancelScript)
+                            return
+                        }
                         self.webAuthenticationSession.start(url: launchAppURL, context: self) { url, _ in
                             if let url, let returnBlock = self.returnBlock {
                                 self.returnedWithURL = true
                                 returnBlock(url)
                             }
                         } sessionDidCancel: {
-                            let cancelScript = """
-                                if (typeof window.popupBridge.onCancel === 'function') {\
-                                    window.popupBridge.onCancel();\
-                                } else {\
-                                    window.popupBridge.onComplete(null, null);\
-                                }
-                            """
                             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: self.sessionID)
                             self.injectWebView(webView: self.webView, withJavaScript: cancelScript)
                         }
