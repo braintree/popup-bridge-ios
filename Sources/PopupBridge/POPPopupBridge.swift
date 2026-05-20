@@ -123,7 +123,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
 
         launchAppReturnObserver = NotificationCenter.default.addObserver(
-            forName: Notification.Name("popupBridgeReturnURL"),
+            forName: Notification.Name(PopupBridgeConstants.notificationName),
             object: nil,
             queue: .main
         ) { [weak self] notification in
