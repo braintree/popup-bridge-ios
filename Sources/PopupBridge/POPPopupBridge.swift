@@ -36,6 +36,21 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   instead of opening a browser. Defaults to false for backward compatibility.
     ///   This is specific to the popup bridge flow and is separate from the JS SDK's
     ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
+    ///
+    ///   **Required SceneDelegate integration:** when this flag is `true`, the host app must forward
+    ///   incoming URLs from its `SceneDelegate` to PopupBridge via a `NotificationCenter` post,
+    ///   otherwise the checkout flow will hang indefinitely after the PayPal app returns.
+    ///   In your `SceneDelegate`:
+    ///   ```swift
+    ///   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    ///       guard let url = URLContexts.first?.url else { return }
+    ///       NotificationCenter.default.post(
+    ///           name: Notification.Name(PopupBridgeConstants.notificationName),
+    ///           object: nil,
+    ///           userInfo: ["url": url]
+    ///       )
+    ///   }
+    ///   ```
     ///   - returnURLScheme: The URL scheme registered in the app's `Info.plist` that PopupBridge should
     ///   use as the return URL for the checkout flow. If `nil`, PopupBridge will attempt to read the first
     ///   scheme from `CFBundleURLTypes`. Providing this value explicitly is recommended when the app
