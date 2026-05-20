@@ -89,16 +89,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     convenience init(
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession,
-        application: URLOpener
-    ) {
-        self.init(webView: webView, application: application)
-        self.webAuthenticationSession = webAuthenticationSession
-    }
-
-    /// Exposed for testing
-    convenience init(
-        webView: WKWebView,
-        webAuthenticationSession: WebAuthenticationSession,
         enablePopupBridgeAppSwitch: Bool = false,
         application: URLOpener
     ) {
@@ -205,7 +195,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             """
             injectWebView(webView: webView, withJavaScript: script)
         } else {
-            let errorMessage = "Failed to parse query items from return URL."
+            let errorMessage = "Failed to serialize return URL payload as JSON."
             let errorResponse = "new Error(\"\(errorMessage)\")"
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
             let script = "window.popupBridge.onComplete(\(errorResponse), null);"
@@ -243,7 +233,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
             return "window.popupBridge.onComplete(null, \(payload));"
         } else {
-            let errorMessage = "Failed to parse query items from return URL."
+            let errorMessage = "Failed to serialize return URL payload as JSON."
             let errorResponse = "new Error(\"\(errorMessage)\")"
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
             return "window.popupBridge.onComplete(\(errorResponse), null);"
