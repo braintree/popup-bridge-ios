@@ -251,6 +251,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             name: messageHandlerName
         )
         
+        // Even if the PayPal app is physically installed on the device, we intentionally
+        // report it as absent to the JavaScript layer when enablePopupBridgeAppSwitch is false.
+        // This ensures the JS SDK never attempts the native app switch path unless the
+        // integrator has explicitly opted in, preserving backward-compatible behavior.
         let isPayPalInstalled = enablePopupBridgeAppSwitch && application.isPayPalAppInstalled()
 
         // Use the explicitly provided scheme, or fall back to reading from Info.plist.
