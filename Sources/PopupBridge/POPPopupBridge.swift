@@ -19,6 +19,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let application: URLOpener
     
     private let enablePopupBridgeAppSwitch: Bool
+    private let returnURLScheme: String?
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     private var launchAppReturnObserver: NSObjectProtocol?
@@ -35,10 +36,15 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   instead of opening a browser. Defaults to false for backward compatibility.
     ///   This is specific to the popup bridge flow and is separate from the JS SDK's
     ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
-    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false) {
+    ///   - returnURLScheme: The URL scheme registered in the app's `Info.plist` that PopupBridge should
+    ///   use as the return URL for the checkout flow. If `nil`, PopupBridge will attempt to read the first
+    ///   scheme from `CFBundleURLTypes`. Providing this value explicitly is recommended when the app
+    ///   registers multiple URL schemes (e.g. Facebook, Google Sign-In).
+    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, returnURLScheme: String? = nil) {
         self.webView = webView
         self.application = UIApplication.shared
         self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
+        self.returnURLScheme = returnURLScheme
 
         super.init()
 
@@ -86,10 +92,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Internal designated init that accepts a URLOpener for testing
-    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, application: URLOpener) {
+    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, returnURLScheme: String? = nil, application: URLOpener) {
         self.webView = webView
         self.application = application
         self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
+        self.returnURLScheme = returnURLScheme
 
         super.init()
 
@@ -241,8 +248,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         
         let isPayPalInstalled = enablePopupBridgeAppSwitch && application.isPayPalAppInstalled()
 
-        // Read the merchant app's registered URL scheme from Info.plist CFBundleURLSchemes
-        let returnURLScheme: String? = {
+        // Use the explicitly provided scheme, or fall back to reading from Info.plist.
+        // Reading from Info.plist is a best-effort fallback: apps that register multiple URL
+        // schemes (e.g. Facebook, Google Sign-In) may have a third-party scheme listed first,
+        // so integrators should provide returnURLScheme explicitly in the initializer.
+        let resolvedReturnURLScheme: String? = returnURLScheme ?? {
             guard let urlTypes = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
                 return nil
             }
@@ -265,7 +275,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             host: hostName,
             isVenmoInstalled: application.isVenmoAppInstalled(),
             isPayPalInstalled: isPayPalInstalled,
-            returnURLScheme: returnURLScheme
+            returnURLScheme: resolvedReturnURLScheme
         ).rawJavascript
         
         let script = WKUserScript(
