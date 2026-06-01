@@ -273,11 +273,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return nil
         }()
 
-        Self.analyticsService.sendAnalyticsEvent(
-            isPayPalInstalled ? PopupBridgeAnalytics.paypalInstalled : PopupBridgeAnalytics.paypalNotInstalled,
-            sessionID: sessionID
-        )
-
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
