@@ -17,7 +17,6 @@ struct PopupBridgeUserScript {
         if let returnURLScheme {
             let deepLinkReturnURLPrefix = "\(returnURLScheme)://\(host)/"
             deepLinkJS = """
-
                         window.popupBridge.getDeepLinkReturnUrlPrefix = function getDeepLinkReturnUrlPrefix() {
                             return '\(deepLinkReturnURLPrefix)';
                         };
