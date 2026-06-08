@@ -3,7 +3,16 @@ struct WebViewMessage: Codable {
     
     let url: String?
     let message: MessageDetails?
-    let launchApp: String?
+    let launchPayPalAppSwitch: String?
+
+    enum CodingKeys: String, CodingKey {
+        case url
+        case message
+        // The wire protocol key stays `launchApp` (the JS contract used by
+        // `window.popupBridge.launchApp(url)`); only the Swift property name is
+        // PayPal-specific to signal this is an exclusive PayPal app switch flow.
+        case launchPayPalAppSwitch = "launchApp"
+    }
 }
 
 struct MessageDetails: Codable {

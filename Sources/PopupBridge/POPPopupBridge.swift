@@ -310,7 +310,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                 return
             }
 
-            if let launchAppURLString = script.launchApp, let launchAppURL = URL(string: launchAppURLString) {
+            if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
                 Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
                 application.openURL(launchAppURL) { [weak self] success in
                     guard let self else { return }
