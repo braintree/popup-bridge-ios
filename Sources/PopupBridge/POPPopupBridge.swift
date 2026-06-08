@@ -256,38 +256,47 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         // integrator has explicitly opted in, preserving backward-compatible behavior.
         let isPayPalAppSwitchAvailable = enablePayPalAppSwitch && application.isPayPalAppInstalled()
 
-        // Use the explicitly provided scheme, or fall back to reading from Info.plist.
-        // Reading from Info.plist is a best-effort fallback: apps that register multiple URL
-        // schemes (e.g. Facebook, Google Sign-In) may have a third-party scheme listed first,
-        // so integrators should provide returnURLScheme explicitly in the initializer.
-        let resolvedReturnURLScheme: String? = returnURLScheme ?? {
-            guard let urlTypes = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
-                return nil
-            }
-            for urlType in urlTypes {
-                if let schemes = urlType["CFBundleURLSchemes"] as? [String], let scheme = schemes.first {
-                    return scheme
-                }
-            }
-            return nil
-        }()
-
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
             host: hostName,
             isVenmoInstalled: application.isVenmoAppInstalled(),
             isPayPalInstalled: isPayPalAppSwitchAvailable,
-            returnURLScheme: resolvedReturnURLScheme
+            returnURLScheme: resolveReturnURLScheme()
         ).rawJavascript
-        
+
         let script = WKUserScript(
             source: javascript,
             injectionTime: .atDocumentStart,
             forMainFrameOnly: false
         )
-        
+
         webView.configuration.userContentController.addUserScript(script)
+    }
+
+    /// Resolves the URL scheme used as the checkout return URL.
+    ///
+    /// Prefers the scheme explicitly provided in the initializer. When none is given, falls back to
+    /// reading the first scheme from `CFBundleURLTypes` in the app's `Info.plist`. This fallback is
+    /// best-effort: apps that register multiple URL schemes (e.g. Facebook, Google Sign-In) may have
+    /// a third-party scheme listed first, so integrators should provide `returnURLScheme` explicitly.
+    /// - Returns: The resolved return URL scheme, or `nil` if none could be determined.
+    private func resolveReturnURLScheme() -> String? {
+        if let returnURLScheme {
+            return returnURLScheme
+        }
+
+        guard let urlTypes = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
+            return nil
+        }
+
+        for urlType in urlTypes {
+            if let schemes = urlType["CFBundleURLSchemes"] as? [String], let scheme = schemes.first {
+                return scheme
+            }
+        }
+
+        return nil
     }
 
     private func injectWebView(webView: WKWebView, withJavaScript script: String) {
