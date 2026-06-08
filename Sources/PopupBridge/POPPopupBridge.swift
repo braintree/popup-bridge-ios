@@ -17,8 +17,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
     private let application: URLOpener
-    
-    private let enablePopupBridgeAppSwitch: Bool
+
+    private let enablePayPalAppSwitch: Bool
     private let returnURLScheme: String?
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
@@ -32,7 +32,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
     ///   or other browsing data between the authenthication session and the user's normal browser session.
     ///   Defaults to `true`.
-    ///   - enablePopupBridgeAppSwitch: When true, allows the SDK to launch the native PayPal app for checkout
+    ///   - enablePayPalAppSwitch: When true, allows the SDK to launch the native PayPal app for checkout
     ///   instead of opening a browser. Defaults to false for backward compatibility.
     ///   This is specific to the popup bridge flow and is separate from the JS SDK's
     ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
@@ -55,10 +55,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   use as the return URL for the checkout flow. If `nil`, PopupBridge will attempt to read the first
     ///   scheme from `CFBundleURLTypes`. Providing this value explicitly is recommended when the app
     ///   registers multiple URL schemes (e.g. Facebook, Google Sign-In).
-    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, returnURLScheme: String? = nil) {
+    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil) {
         self.webView = webView
         self.application = UIApplication.shared
-        self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
+        self.enablePayPalAppSwitch = enablePayPalAppSwitch
         self.returnURLScheme = returnURLScheme
 
         super.init()
@@ -89,18 +89,18 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     convenience init(
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession,
-        enablePopupBridgeAppSwitch: Bool = false,
+        enablePayPalAppSwitch: Bool = false,
         application: URLOpener
     ) {
-        self.init(webView: webView, enablePopupBridgeAppSwitch: enablePopupBridgeAppSwitch, application: application)
+        self.init(webView: webView, enablePayPalAppSwitch: enablePayPalAppSwitch, application: application)
         self.webAuthenticationSession = webAuthenticationSession
     }
 
     /// Internal designated init that accepts a URLOpener for testing
-    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePopupBridgeAppSwitch: Bool = false, returnURLScheme: String? = nil, application: URLOpener) {
+    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil, application: URLOpener) {
         self.webView = webView
         self.application = application
-        self.enablePopupBridgeAppSwitch = enablePopupBridgeAppSwitch
+        self.enablePayPalAppSwitch = enablePayPalAppSwitch
         self.returnURLScheme = returnURLScheme
 
         super.init()
@@ -252,10 +252,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         )
         
         // Even if the PayPal app is physically installed on the device, we intentionally
-        // report it as absent to the JavaScript layer when enablePopupBridgeAppSwitch is false.
+        // report it as absent to the JavaScript layer when enablePayPalAppSwitch is false.
         // This ensures the JS SDK never attempts the native app switch path unless the
         // integrator has explicitly opted in, preserving backward-compatible behavior.
-        let isPayPalInstalled = enablePopupBridgeAppSwitch && application.isPayPalAppInstalled()
+        let isPayPalInstalled = enablePayPalAppSwitch && application.isPayPalAppInstalled()
 
         // Use the explicitly provided scheme, or fall back to reading from Info.plist.
         // Reading from Info.plist is a best-effort fallback: apps that register multiple URL

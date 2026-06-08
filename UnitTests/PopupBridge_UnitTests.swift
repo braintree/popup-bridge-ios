@@ -384,7 +384,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let _ = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -400,7 +400,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let _ = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -414,7 +414,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let _ = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -437,7 +437,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -463,7 +463,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -490,7 +490,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
@@ -519,7 +519,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         let pub = POPPopupBridge(
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
-            enablePopupBridgeAppSwitch: true,
+            enablePayPalAppSwitch: true,
             application: mockURLOpener
         )
 
