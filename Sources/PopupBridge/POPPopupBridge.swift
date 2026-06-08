@@ -22,7 +22,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let returnURLScheme: String?
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
-    private var launchAppReturnObserver: NSObjectProtocol?
+    private var payPalLaunchAppReturnObserver: NSObjectProtocol?
 
     // MARK: - Initializers
         
@@ -119,8 +119,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     deinit {
-        if let launchAppReturnObserver {
-            NotificationCenter.default.removeObserver(launchAppReturnObserver)
+        if let payPalLaunchAppReturnObserver {
+            NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
         }
         webView.configuration.userContentController.removeAllScriptMessageHandlers()
     }
@@ -129,12 +129,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
     /// Starts listening for the return URL notification posted by the host app's SceneDelegate.
     /// Called only after a successful launchApp; removed after handling.
-    private func startObservingLaunchAppReturn() {
-        if let launchAppReturnObserver {
-            NotificationCenter.default.removeObserver(launchAppReturnObserver)
+    private func startObservingPayPalLaunchAppReturn() {
+        if let payPalLaunchAppReturnObserver {
+            NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
         }
 
-        launchAppReturnObserver = NotificationCenter.default.addObserver(
+        payPalLaunchAppReturnObserver = NotificationCenter.default.addObserver(
             forName: Notification.Name(PopupBridgeConstants.notificationName),
             object: nil,
             queue: .main
@@ -147,7 +147,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                 return
             }
 
-            self.handleLaunchAppReturn(url: url)
+            self.handlePayPalLaunchAppReturn(url: url)
         }
     }
 
@@ -155,12 +155,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// The return URL may include fragment-based data:
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
     /// Popup Bridge JavaScript is responsible for normalizing `path`, `queryItems`, and `hash`.
-    private func handleLaunchAppReturn(url: URL) {
+    private func handlePayPalLaunchAppReturn(url: URL) {
 
         // One-shot: stop observing immediately
-        if let launchAppReturnObserver {
-            NotificationCenter.default.removeObserver(launchAppReturnObserver)
-            self.launchAppReturnObserver = nil
+        if let payPalLaunchAppReturnObserver {
+            NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
+            self.payPalLaunchAppReturnObserver = nil
         }
 
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -318,7 +318,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                     
                     if success {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
-                        self.startObservingLaunchAppReturn()
+                        self.startObservingPayPalLaunchAppReturn()
                     } else {
                         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchFailed, sessionID: self.sessionID)
                         let cancelScript = """
