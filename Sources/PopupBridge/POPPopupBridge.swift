@@ -329,7 +329,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
                         """
                         let scheme = launchAppURL.scheme?.lowercased()
                         guard scheme == "https" || scheme == "http" else {
-                            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: self.sessionID)
+                            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: self.sessionID)
                             self.injectWebView(webView: self.webView, withJavaScript: cancelScript)
                             return
                         }
