@@ -254,7 +254,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         // report it as absent to the JavaScript layer when enablePayPalAppSwitch is false.
         // This ensures the JS SDK never attempts the native app switch path unless the
         // integrator has explicitly opted in, preserving backward-compatible behavior.
-        let isPayPalInstalled = enablePayPalAppSwitch && application.isPayPalAppInstalled()
+        let isPayPalAppSwitchAvailable = enablePayPalAppSwitch && application.isPayPalAppInstalled()
 
         // Use the explicitly provided scheme, or fall back to reading from Info.plist.
         // Reading from Info.plist is a best-effort fallback: apps that register multiple URL
@@ -277,7 +277,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             scriptMessageHandlerName: messageHandlerName,
             host: hostName,
             isVenmoInstalled: application.isVenmoAppInstalled(),
-            isPayPalInstalled: isPayPalInstalled,
+            isPayPalInstalled: isPayPalAppSwitchAvailable,
             returnURLScheme: resolvedReturnURLScheme
         ).rawJavascript
         
