@@ -156,7 +156,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
     /// Popup Bridge JavaScript is responsible for normalizing `path`, `queryItems`, and `hash`.
     private func handlePayPalLaunchAppReturn(url: URL) {
-
         // One-shot: stop observing immediately
         if let payPalLaunchAppReturnObserver {
             NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
