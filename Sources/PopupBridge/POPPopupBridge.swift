@@ -151,19 +151,26 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
     }
 
+    /// Exposed for testing
+    ///
     /// Parses the return URL and injects `window.popupBridge.onComplete()` into the WebView.
     /// The return URL may include fragment-based data:
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
     /// Popup Bridge JavaScript is responsible for normalizing `path`, `queryItems`, and `hash`.
-    private func handlePayPalLaunchAppReturn(url: URL) {
-        // One-shot: stop observing immediately
+    func handlePayPalLaunchAppReturn(url: URL) {
+        // Validate before doing anything: the return notification is an open channel, so any code
+        // in the host app could post an arbitrary URL to it. Only PopupBridge return URLs may be
+        // injected into the WebView. Invalid posts are ignored without consuming the one-shot
+        // observer, so a later legitimate return still completes the flow.
+        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              isValidPayPalReturnURL(urlComponents) else {
+            return
+        }
+
+        // Valid return: stop observing (one-shot).
         if let payPalLaunchAppReturnObserver {
             NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
             self.payPalLaunchAppReturnObserver = nil
-        }
-
-        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            return
         }
 
         let queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
@@ -202,6 +209,28 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             let script = "window.popupBridge.onComplete(\(errorResponse), null);"
             injectWebView(webView: webView, withJavaScript: script)
         }
+    }
+
+    /// Exposed for testing
+    ///
+    /// Validates that a URL delivered via `PopupBridgeConstants.notificationName` is an actual
+    /// PopupBridge return URL, rather than arbitrary data posted to that notification by other
+    /// code in the host app. Mirrors the scheme/host check on the `ASWebAuthenticationSession` path.
+    /// - Parameter components: the components of the URL received from the return notification.
+    /// - Returns: `true` if the URL matches the expected PopupBridge return URL signature.
+    func isValidPayPalReturnURL(_ components: URLComponents) -> Bool {
+        // Host must be the PopupBridge host (e.g. popupbridgev1).
+        guard components.host?.caseInsensitiveCompare(hostName) == .orderedSame else {
+            return false
+        }
+
+        // Scheme must match the return URL scheme PopupBridge advertised to PayPal. When a scheme
+        // can be resolved, enforce it so URLs minted for other schemes are rejected.
+        if let expectedScheme = resolveReturnURLScheme() {
+            return components.scheme?.caseInsensitiveCompare(expectedScheme) == .orderedSame
+        }
+
+        return true
     }
 
     // MARK: - Internal Methods

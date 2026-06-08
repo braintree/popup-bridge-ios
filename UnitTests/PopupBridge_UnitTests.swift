@@ -538,4 +538,68 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
             ]
         )
     }
+
+    // MARK: - PayPal Launch App Return Validation Tests
+
+    func testIsValidPayPalReturnURL_whenSchemeAndHostMatch_returnsTrue() {
+        let pub = makePayPalAppSwitchBridge(returnURLScheme: "my-app-scheme")
+        let components = URLComponents(string: "my-app-scheme://popupbridgev1/return?token=EC-123")!
+
+        XCTAssertTrue(pub.isValidPayPalReturnURL(components))
+    }
+
+    func testIsValidPayPalReturnURL_whenHostDoesNotMatch_returnsFalse() {
+        let pub = makePayPalAppSwitchBridge(returnURLScheme: "my-app-scheme")
+        let components = URLComponents(string: "my-app-scheme://attacker-host/return?token=EC-123")!
+
+        XCTAssertFalse(pub.isValidPayPalReturnURL(components))
+    }
+
+    func testIsValidPayPalReturnURL_whenSchemeDoesNotMatch_returnsFalse() {
+        let pub = makePayPalAppSwitchBridge(returnURLScheme: "my-app-scheme")
+        let components = URLComponents(string: "other-scheme://popupbridgev1/return?token=EC-123")!
+
+        XCTAssertFalse(pub.isValidPayPalReturnURL(components))
+    }
+
+    func testIsValidPayPalReturnURL_whenSchemeAndHostMatchWithDifferentCasing_returnsTrue() {
+        let pub = makePayPalAppSwitchBridge(returnURLScheme: "my-app-scheme")
+        let components = URLComponents(string: "MY-APP-SCHEME://POPUPBRIDGEV1/return")!
+
+        XCTAssertTrue(pub.isValidPayPalReturnURL(components))
+    }
+
+    // MARK: - PayPal Launch App Return Handling Tests
+
+    func testHandlePayPalLaunchAppReturn_whenValidReturnURL_sendsSucceededAnalytics() {
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = makePayPalAppSwitchBridge(returnURLScheme: "my-app-scheme")
+
+        pub.handlePayPalLaunchAppReturn(url: URL(string: "my-app-scheme://popupbridgev1/return?token=EC-123")!)
+
+        XCTAssertEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.succeeded)
+    }
+
+    func testHandlePayPalLaunchAppReturn_whenInvalidReturnURL_doesNotSendSucceededAnalytics() {
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = makePayPalAppSwitchBridge(returnURLScheme: "my-app-scheme")
+        // Only the `started` event from init should have been sent so far.
+        let eventCountAfterInit = mockAnalyticsService.eventCount
+
+        // Arbitrary URL posted to the return notification by other code — wrong host.
+        pub.handlePayPalLaunchAppReturn(url: URL(string: "my-app-scheme://attacker-host/return?token=EC-123")!)
+
+        XCTAssertEqual(mockAnalyticsService.eventCount, eventCountAfterInit)
+        XCTAssertNotEqual(mockAnalyticsService.lastEventName, PopupBridgeAnalytics.succeeded)
+    }
+
+    private func makePayPalAppSwitchBridge(returnURLScheme: String) -> POPPopupBridge {
+        POPPopupBridge(
+            webView: WKWebView(),
+            prefersEphemeralWebBrowserSession: true,
+            enablePayPalAppSwitch: true,
+            returnURLScheme: returnURLScheme,
+            application: MockURLOpener()
+        )
+    }
 }
