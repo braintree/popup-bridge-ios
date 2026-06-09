@@ -45,7 +45,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
     ///       guard let url = URLContexts.first?.url else { return }
     ///       NotificationCenter.default.post(
-    ///           name: Notification.Name(PopupBridgeConstants.notificationName),
+    ///           name: PopupBridgeConstants.notificationName,
     ///           object: nil,
     ///           userInfo: ["url": url]
     ///       )
@@ -135,7 +135,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
 
         payPalLaunchAppReturnObserver = NotificationCenter.default.addObserver(
-            forName: Notification.Name(PopupBridgeConstants.notificationName),
+            forName: PopupBridgeConstants.notificationName,
             object: nil,
             queue: .main
         ) { [weak self] notification in
@@ -226,11 +226,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         // Scheme must match the return URL scheme PopupBridge advertised to PayPal. When a scheme
         // can be resolved, enforce it so URLs minted for other schemes are rejected.
-        if let expectedScheme = resolveReturnURLScheme() {
-            return components.scheme?.caseInsensitiveCompare(expectedScheme) == .orderedSame
+        guard let expectedScheme = resolveReturnURLScheme() else {
+            return false
         }
 
-        return true
+        return components.scheme?.caseInsensitiveCompare(expectedScheme) == .orderedSame
     }
 
     // MARK: - Internal Methods

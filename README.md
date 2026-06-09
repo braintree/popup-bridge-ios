@@ -86,7 +86,7 @@ Quick Start
 
 2. **(Required when using `enablePayPalAppSwitch: true`)** Forward return URLs from your `SceneDelegate`:
 
-    When `enablePayPalAppSwitch` is enabled, the SDK launches the native PayPal app for checkout and waits for the app to return via a deep link. For PopupBridge to receive that return URL, your `SceneDelegate` must post a `NotificationCenter` notification. Without this, the checkout flow will hang indefinitely after the PayPal app returns.
+    When `enablePayPalAppSwitch` is enabled, the SDK launches the native PayPal app for checkout and waits for the app to return via a deep link. For PopupBridge to receive that return URL, your `SceneDelegate` must post a `NotificationCenter` notification. Without this, the checkout flow will hang indefinitely after the PayPal app returns. To enable PayPal installation detection (`window.popupBridge.isPayPalInstalled`), add `paypal` to `LSApplicationQueriesSchemes` in your app's `Info.plist`.
 
     ```swift
     import PopupBridge
@@ -98,7 +98,7 @@ Quick Start
         func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
             guard let url = URLContexts.first?.url else { return }
             NotificationCenter.default.post(
-                name: Notification.Name(PopupBridgeConstants.notificationName),
+                name: PopupBridgeConstants.notificationName,
                 object: nil,
                 userInfo: ["url": url]
             )
