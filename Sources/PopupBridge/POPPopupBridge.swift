@@ -30,7 +30,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
-    ///   or other browsing data between the authenthication session and the user's normal browser session.
+    ///   or other browsing data between the authentication session and the user's normal browser session.
     ///   Defaults to `true`.
     ///   - enablePayPalAppSwitch: When true, allows the SDK to launch the native PayPal app for checkout
     ///   instead of opening a browser. Defaults to false for backward compatibility.
