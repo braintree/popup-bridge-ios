@@ -83,6 +83,34 @@ Quick Start
         }
     }
     ```
+
+2. **(Required when using `enablePayPalAppSwitch: true`)** Forward return URLs from your `SceneDelegate`:
+
+    When `enablePayPalAppSwitch` is enabled, the SDK launches the native PayPal app for checkout and waits for the app to return via a deep link. For PopupBridge to receive that return URL, your `SceneDelegate` must post a `NotificationCenter` notification. Without this, the checkout flow will hang indefinitely after the PayPal app returns. To enable PayPal installation detection (`window.popupBridge.isPayPalInstalled`), add `paypal` to `LSApplicationQueriesSchemes` in your app's `Info.plist`.
+
+    ```swift
+    import PopupBridge
+
+    class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+        // ... your existing SceneDelegate code ...
+
+        func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+            guard let url = URLContexts.first?.url else { return }
+            NotificationCenter.default.post(
+                name: PopupBridgeConstants.notificationName,
+                object: nil,
+                userInfo: ["url": url]
+            )
+        }
+    }
+    ```
+
+    You must also register a URL scheme in your app's `Info.plist` under `CFBundleURLTypes` so that the PayPal app can redirect back to your app. If your app registers multiple URL schemes (e.g. for Facebook or Google Sign-In), pass the correct scheme explicitly:
+
+    ```swift
+    popupBridge = POPPopupBridge(webView: webView, enablePayPalAppSwitch: true, returnURLScheme: "your-app-scheme")
+    ```
     
 PayPal Example
 --------------

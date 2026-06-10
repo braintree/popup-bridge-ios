@@ -373,4 +373,87 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         ))
         webView.load(URLRequest(url: URL(string: "some-popup-bridge-example")!))
     }
+
+    // MARK: - isPayPalInstalled Tests
+
+    func testUserScript_whenPayPalInstalled_containsIsPayPalInstalledTrue() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.payPalInstalled = true
+
+        let webView = WKWebView()
+        let _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePayPalAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("window.popupBridge.isPayPalInstalled = true"))
+    }
+
+    func testUserScript_whenPayPalNotInstalled_containsIsPayPalInstalledFalse() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.payPalInstalled = false
+
+        let webView = WKWebView()
+        let _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePayPalAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("window.popupBridge.isPayPalInstalled = false"))
+    }
+
+    func testUserScript_containsLaunchAppFunction() {
+        let mockURLOpener = MockURLOpener()
+        let webView = WKWebView()
+        let _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePayPalAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("window.popupBridge.launchApp = function launchApp(url)"))
+    }
+
+    // MARK: - launchApp Message Handling Tests
+
+    /// Coordinator-level wiring: a `launchApp` message whose native launch fails routes through the
+    /// app switch handler and falls back to the web authentication session. The app switch flow
+    /// itself is covered in `PayPalAppSwitchHandler_UnitTests`.
+    func testReceiveScriptMessage_whenLaunchAppFails_fallsBackToWebAuthenticationSession() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = false
+
+        let configuration = WKWebViewConfiguration()
+        let mockUserContentController = MockUserContentController()
+        configuration.userContentController = mockUserContentController
+
+        let webView = WKWebView(frame: CGRect(), configuration: configuration)
+        mockWebAuthenticationSession.cannedResponseURL = URL(string: "sdk.ios.popup-bridge://popupbridgev1/return?foo=bar")
+        POPPopupBridge.analyticsService = mockAnalyticsService
+        let pub = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            enablePayPalAppSwitch: true,
+            application: mockURLOpener
+        )
+
+        let stubMessage = MockScriptMessage()
+        stubMessage.body = ["launchApp": "https://example.com/checkout"]
+        stubMessage.name = scriptMessageHandlerName
+
+        pub.userContentController(WKUserContentController(), didReceive: stubMessage)
+
+        XCTAssertTrue(pub.returnedWithURL)
+        // appLaunchFailed is sent before the WebAuthenticationSession fallback fires succeeded,
+        // so check the full event sequence rather than just lastEventName.
+        XCTAssertTrue(mockAnalyticsService.sentEventNames.contains(PopupBridgeAnalytics.appLaunchFailed))
+    }
 }

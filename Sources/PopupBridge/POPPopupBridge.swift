@@ -7,36 +7,67 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
     /// Exposed for testing
     var returnedWithURL: Bool = false
-    
+
     static var analyticsService: AnalyticsServiceable = AnalyticsService()
-    
+
     // MARK: - Private Properties
-    
+
     private let messageHandlerName = "POPPopupBridge"
-    private let hostName = "popupbridgev1"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private let application: URLOpener = UIApplication.shared
-    
+    private let application: URLOpener
+
+    private let enablePayPalAppSwitch: Bool
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
-    
+
+    /// Owns the strictly PayPal app switch flow (native launch + SceneDelegate return handling),
+    /// keeping `POPPopupBridge` a coordinator. Implicitly unwrapped because its callbacks capture
+    /// `self`, so it can only be created after `super.init()`.
+    private var appSwitchHandler: PayPalAppSwitchHandler!
+
     // MARK: - Initializers
-        
+
     /// Initialize a Popup Bridge.
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
-    ///   or other browsing data between the authenthication session and the user’s normal browser session.
+    ///   or other browsing data between the authentication session and the user's normal browser session.
     ///   Defaults to `true`.
-    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true) {
+    ///   - enablePayPalAppSwitch: When true, allows the SDK to launch the native PayPal app for checkout
+    ///   instead of opening a browser. Defaults to false for backward compatibility.
+    ///   This is specific to the popup bridge flow and is separate from the JS SDK's
+    ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
+    ///
+    ///   **Required SceneDelegate integration:** when this flag is `true`, the host app must forward
+    ///   incoming URLs from its `SceneDelegate` to PopupBridge via a `NotificationCenter` post,
+    ///   otherwise the checkout flow will hang indefinitely after the PayPal app returns.
+    ///   In your `SceneDelegate`:
+    ///   ```swift
+    ///   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    ///       guard let url = URLContexts.first?.url else { return }
+    ///       NotificationCenter.default.post(
+    ///           name: PopupBridgeConstants.notificationName,
+    ///           object: nil,
+    ///           userInfo: ["url": url]
+    ///       )
+    ///   }
+    ///   ```
+    ///   - returnURLScheme: The URL scheme registered in the app's `Info.plist` that PopupBridge should
+    ///   use as the return URL for the checkout flow. If `nil`, PopupBridge will attempt to read the first
+    ///   scheme from `CFBundleURLTypes`. Providing this value explicitly is recommended when the app
+    ///   registers multiple URL schemes (e.g. Facebook, Google Sign-In).
+    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil) {
         self.webView = webView
-        
+        self.application = UIApplication.shared
+        self.enablePayPalAppSwitch = enablePayPalAppSwitch
+
         super.init()
 
+        self.appSwitchHandler = makeAppSwitchHandler(application: application, returnURLScheme: returnURLScheme)
         configureWebView()
         webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
-                
+
         returnBlock = { [weak self] url in
             guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
@@ -55,38 +86,81 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.init(webView: webView)
         self.webAuthenticationSession = webAuthenticationSession
     }
-    
+
+    /// Exposed for testing
+    convenience init(
+        webView: WKWebView,
+        webAuthenticationSession: WebAuthenticationSession,
+        enablePayPalAppSwitch: Bool = false,
+        application: URLOpener
+    ) {
+        self.init(webView: webView, enablePayPalAppSwitch: enablePayPalAppSwitch, application: application)
+        self.webAuthenticationSession = webAuthenticationSession
+    }
+
+    /// Internal designated init that accepts a URLOpener for testing
+    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil, application: URLOpener) {
+        self.webView = webView
+        self.application = application
+        self.enablePayPalAppSwitch = enablePayPalAppSwitch
+
+        super.init()
+
+        self.appSwitchHandler = makeAppSwitchHandler(application: application, returnURLScheme: returnURLScheme)
+        configureWebView()
+        webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
+
+        returnBlock = { [weak self] url in
+            guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
+                return
+            }
+
+            self?.injectWebView(webView: webView, withJavaScript: script)
+            return
+        }
+    }
+
     deinit {
         webView.configuration.userContentController.removeAllScriptMessageHandlers()
     }
-    
+
+    /// Builds the app switch handler, wiring its results back to this coordinator: completion JS is
+    /// injected into the WebView, and a failed native launch falls back to a web authentication session.
+    private func makeAppSwitchHandler(application: URLOpener, returnURLScheme: String?) -> PayPalAppSwitchHandler {
+        PayPalAppSwitchHandler(
+            application: application,
+            returnURLScheme: returnURLScheme,
+            sessionID: sessionID,
+            analyticsService: Self.analyticsService,
+            onComplete: { [weak self] script in
+                guard let self else { return }
+                self.injectWebView(webView: self.webView, withJavaScript: script)
+            },
+            onLaunchFailed: { [weak self] url in
+                self?.handlePayPalAppSwitchFailure(url: url)
+            }
+        )
+    }
+
     // MARK: - Internal Methods
 
     /// Exposed for testing
-    /// 
+    ///
     /// Constructs custom JavaScript to be injected into the merchant's WKWebView, based on redirectURL details from the SFSafariViewController pop-up result.
     /// - Parameter url: returnURL from the result of the ASWebAuthenticationSession.
     /// - Returns: JavaScript formatted completion.
     func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
               urlComponents.scheme?.caseInsensitiveCompare(PopupBridgeConstants.callbackURLScheme) == .orderedSame,
-              urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
+              urlComponents.host?.caseInsensitiveCompare(PopupBridgeConstants.host) == .orderedSame
         else {
             return nil
         }
 
-        let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
-            partialResult[queryItem.name] = queryItem.value
-        }
-
-        let payload = URLDetailsPayload(
-            path: urlComponents.path,
-            queryItems: queryItems ?? [:],
-            hash: urlComponents.fragment
-        )
+        let payload = URLDetailsPayload(components: urlComponents)
 
         if let payloadData = try? JSONEncoder().encode(payload),
-           let payload = String(data: payloadData, encoding: .utf8) {
+            let payload = String(data: payloadData, encoding: .utf8) {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
             return "window.popupBridge.onComplete(null, \(payload));"
         } else {
@@ -96,7 +170,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return "window.popupBridge.onComplete(\(errorResponse), null);"
         }
     }
-    
+
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
@@ -105,20 +179,28 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             WebViewScriptHandler(proxy: self),
             name: messageHandlerName
         )
-        
+
+        // Even if the PayPal app is physically installed on the device, we intentionally
+        // report it as absent to the JavaScript layer when enablePayPalAppSwitch is false.
+        // This ensures the JS SDK never attempts the native app switch path unless the
+        // integrator has explicitly opted in, preserving backward-compatible behavior.
+        let isPayPalAppSwitchAvailable = enablePayPalAppSwitch && appSwitchHandler.isPayPalAppInstalled()
+
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
             scriptMessageHandlerName: messageHandlerName,
-            host: hostName,
-            isVenmoInstalled: application.isVenmoAppInstalled()
+            host: PopupBridgeConstants.host,
+            isVenmoInstalled: application.isVenmoAppInstalled(),
+            isPayPalInstalled: isPayPalAppSwitchAvailable,
+            returnURLScheme: appSwitchHandler.resolvedReturnURLScheme
         ).rawJavascript
-        
+
         let script = WKUserScript(
             source: javascript,
             injectionTime: .atDocumentStart,
             forMainFrameOnly: false
         )
-        
+
         webView.configuration.userContentController.addUserScript(script)
     }
 
@@ -129,42 +211,64 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             }
         }
     }
-    
+
     // MARK: - WKScriptMessageHandler conformance
-    
+
     /// :nodoc: This method is not covered by Semantic Versioning. Do not use.
     ///
     /// Called when the webpage sends a JavaScript message back to the native app
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == messageHandlerName {
-            guard let jsonData = try? JSONSerialization.data(withJSONObject: message.body),
-                  let script = try? JSONDecoder().decode(WebViewMessage.self, from: jsonData) else {
-                return
-            }
-            
-            if let urlString = script.url, let url = URL(string: urlString) {
-                webAuthenticationSession.start(url: url, context: self) { url, _ in
-                    if let url, let returnBlock = self.returnBlock {
-                        self.returnedWithURL = true
-                        returnBlock(url)
-                        return
-                    }
-                } sessionDidCancel: { [self] in
-                    let script = """
-                        if (typeof window.popupBridge.onCancel === 'function') {\
-                            window.popupBridge.onCancel();\
-                        } else {\
-                            window.popupBridge.onComplete(null, null);\
-                        }
-                    """
-                    
-                    Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: sessionID)
-                    
-                    injectWebView(webView: webView, withJavaScript: script)
-                    return
-                }
-            }
+        guard message.name == messageHandlerName,
+              let jsonData = try? JSONSerialization.data(withJSONObject: message.body),
+              let script = try? JSONDecoder().decode(WebViewMessage.self, from: jsonData) else {
+            return
         }
+
+        if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
+            appSwitchHandler.launch(url: launchAppURL)
+        } else if let urlString = script.url, let url = URL(string: urlString) {
+            startWebAuthenticationSession(url: url)
+        }
+    }
+
+    // MARK: - Message Handling
+
+    /// Handles a failed PayPal app launch: web URLs fall back to a web authentication session,
+    /// anything else cancels the flow.
+    private func handlePayPalAppSwitchFailure(url: URL) {
+        let scheme = url.scheme?.lowercased()
+        guard scheme == "https" || scheme == "http" else {
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
+            injectWebView(webView: webView, withJavaScript: cancelOrCompleteScript)
+            return
+        }
+
+        startWebAuthenticationSession(url: url)
+    }
+
+    /// Starts an `ASWebAuthenticationSession` for the URL, forwarding the return URL on success and
+    /// cancelling the flow if the user dismisses the session.
+    private func startWebAuthenticationSession(url: URL) {
+        webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
+            guard let self, let url, let returnBlock = self.returnBlock else { return }
+            self.returnedWithURL = true
+            returnBlock(url)
+        } sessionDidCancel: { [weak self] in
+            guard let self else { return }
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: self.sessionID)
+            self.injectWebView(webView: self.webView, withJavaScript: self.cancelOrCompleteScript)
+        }
+    }
+
+    /// JS that invokes `onCancel` if the page defines it, otherwise completes with no payload or error.
+    private var cancelOrCompleteScript: String {
+        """
+        if (typeof window.popupBridge.onCancel === 'function') {\
+            window.popupBridge.onCancel();\
+        } else {\
+            window.popupBridge.onComplete(null, null);\
+        }
+        """
     }
 }
 

@@ -13,6 +13,7 @@
 		451348272D8CAD7C009265C9 /* WebViewScriptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */; };
 		4513482B2D8DDA25009265C9 /* XCTestCase+trackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks.swift */; };
 		45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */; };
+		2E366BA6BAAD47F59451C258 /* MockURLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9F83E50044083861D6B42 /* MockURLOpener.swift */; };
 		45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */; };
 		45CD0C2E2D664D140072C5A4 /* Date+MilisecondTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */; };
 		45CD0C302D6788A10072C5A4 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */; };
@@ -29,6 +30,8 @@
 		800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A09D72995F143003ED16E /* POPPopupBridge.swift */; };
 		800E789D29E0958A00D1B0FC /* WebViewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E789C29E0958A00D1B0FC /* WebViewMessage.swift */; };
 		800E789F29E09A2A00D1B0FC /* URLDetailsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */; };
+		ABCDEF0000000000000000B1 /* PayPalAppSwitchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCDEF0000000000000000A1 /* PayPalAppSwitchHandler.swift */; };
+		ABCDEF0000000000000000B2 /* PayPalAppSwitchHandler_UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCDEF0000000000000000A2 /* PayPalAppSwitchHandler_UnitTests.swift */; };
 		804CC12D25AE1C5B0015D5D7 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */; };
 		8079D71A2996F6C200A2E336 /* PopupBridgeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */; };
 		956F069A1D8A232E4559DCE8 /* Pods_IntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8EC6AA38C749E1E41AD21F /* Pods_IntegrationTests.framework */; };
@@ -54,6 +57,7 @@
 		451348262D8CAD6D009265C9 /* WebViewScriptHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptHandler.swift; sourceTree = "<group>"; };
 		4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+trackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
+		9AD9F83E50044083861D6B42 /* MockURLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLOpener.swift; sourceTree = "<group>"; };
 		45CD0C2B2D64F0810072C5A4 /* FPTIBatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTIBatchData.swift; sourceTree = "<group>"; };
 		45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+MilisecondTimestamp.swift"; sourceTree = "<group>"; };
 		45CD0C2F2D67888F0072C5A4 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 		800A09D72995F143003ED16E /* POPPopupBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POPPopupBridge.swift; sourceTree = "<group>"; };
 		800E789C29E0958A00D1B0FC /* WebViewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewMessage.swift; sourceTree = "<group>"; };
 		800E789E29E09A2A00D1B0FC /* URLDetailsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDetailsPayload.swift; sourceTree = "<group>"; };
+		ABCDEF0000000000000000A1 /* PayPalAppSwitchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalAppSwitchHandler.swift; sourceTree = "<group>"; };
+		ABCDEF0000000000000000A2 /* PayPalAppSwitchHandler_UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalAppSwitchHandler_UnitTests.swift; sourceTree = "<group>"; };
 		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		99BD69466A25C4F26B335778 /* Pods-IntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-IntegrationTests/Pods-IntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A15D038B71F540B38D21330B /* PopupBridge_IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_IntegrationTests.swift; sourceTree = "<group>"; };
@@ -225,9 +231,11 @@
 				45AE41D12D7649EE00388548 /* MockAnalyticsService.swift */,
 				BE2524552A17FB9F00168D77 /* MockScriptMessage.swift */,
 				45FBAF2E2D701E1D000D550B /* MockSessionable.swift */,
+				9AD9F83E50044083861D6B42 /* MockURLOpener.swift */,
 				BE2524532A17DFCC00168D77 /* MockUserContentController.swift */,
 				BEF9ED202A2A4896005D54AB /* MockWebAuthenticationSession.swift */,
 				BE2524512A17DF8200168D77 /* PopupBridge_UnitTests.swift */,
+				ABCDEF0000000000000000A2 /* PayPalAppSwitchHandler_UnitTests.swift */,
 				4513482A2D8DDA17009265C9 /* XCTestCase+trackForMemoryLeaks.swift */,
 			);
 			path = UnitTests;
@@ -241,6 +249,7 @@
 				45CD0C2D2D664CF50072C5A4 /* Date+MilisecondTimestamp.swift */,
 				45FBAF2A2D701B0D000D550B /* NetworkError.swift */,
 				800A09D72995F143003ED16E /* POPPopupBridge.swift */,
+				ABCDEF0000000000000000A1 /* PayPalAppSwitchHandler.swift */,
 				A79330F01DF0F98F00EE479D /* PopupBridge-Framework-Info.plist */,
 				BEF9ED222A2A6A2C005D54AB /* PopupBridgeConstants.swift */,
 				8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */,
@@ -472,9 +481,11 @@
 				BE2524542A17DFCC00168D77 /* MockUserContentController.swift in Sources */,
 				4513482B2D8DDA25009265C9 /* XCTestCase+trackForMemoryLeaks.swift in Sources */,
 				45AE41D22D7649F800388548 /* MockAnalyticsService.swift in Sources */,
+				2E366BA6BAAD47F59451C258 /* MockURLOpener.swift in Sources */,
 				BE2524562A17FB9F00168D77 /* MockScriptMessage.swift in Sources */,
 				BEF9ED212A2A4896005D54AB /* MockWebAuthenticationSession.swift in Sources */,
 				BE2524522A17DF8200168D77 /* PopupBridge_UnitTests.swift in Sources */,
+				ABCDEF0000000000000000B2 /* PayPalAppSwitchHandler_UnitTests.swift in Sources */,
 				45FBAF352D70CFB6000D550B /* AnalyticsService_Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +503,7 @@
 				451348272D8CAD7C009265C9 /* WebViewScriptHandler.swift in Sources */,
 				45FC74C22D8347B500E50035 /* UIApplication+URLOpener.swift in Sources */,
 				800A09D82995F143003ED16E /* POPPopupBridge.swift in Sources */,
+				ABCDEF0000000000000000B1 /* PayPalAppSwitchHandler.swift in Sources */,
 				BE8E37B62A17B79E00181FDA /* WebAuthenticationSession.swift in Sources */,
 				45CD0C2C2D64F08F0072C5A4 /* FPTIBatchData.swift in Sources */,
 				45CD0C322D6793FB0072C5A4 /* PopupBridgeAnalytics.swift in Sources */,
