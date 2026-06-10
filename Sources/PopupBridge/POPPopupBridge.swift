@@ -130,9 +130,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Starts listening for the return URL notification posted by the host app's SceneDelegate.
     /// Called only after a successful launchApp; removed after handling.
     private func startObservingPayPalLaunchAppReturn() {
-        if let payPalLaunchAppReturnObserver {
-            NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
-        }
+        stopObservingPayPalLaunchAppReturn()
 
         payPalLaunchAppReturnObserver = NotificationCenter.default.addObserver(
             forName: PopupBridgeConstants.notificationName,
@@ -167,48 +165,66 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return
         }
 
-        // Valid return: stop observing (one-shot).
+        // Valid return: stop observing (one-shot), then forward the result to the WebView.
+        stopObservingPayPalLaunchAppReturn()
+        injectPayPalReturnResult(makeURLDetailsPayload(from: urlComponents))
+    }
+
+    /// Removes the one-shot PayPal launch-app return observer, if registered.
+    private func stopObservingPayPalLaunchAppReturn() {
         if let payPalLaunchAppReturnObserver {
             NotificationCenter.default.removeObserver(payPalLaunchAppReturnObserver)
             self.payPalLaunchAppReturnObserver = nil
         }
+    }
 
-        let queryItems = urlComponents.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
+    /// Flattens a return URL's components into the `URLDetailsPayload` sent to the WebView.
+    private func makeURLDetailsPayload(from components: URLComponents) -> URLDetailsPayload {
+        let queryItems = components.queryItems?.reduce(into: [String: String]()) { partialResult, queryItem in
             partialResult[queryItem.name] = queryItem.value
         } ?? [:]
 
-        let payload = URLDetailsPayload(
-            path: urlComponents.path,
+        return URLDetailsPayload(
+            path: components.path,
             queryItems: queryItems,
-            hash: urlComponents.fragment
+            hash: components.fragment
         )
+    }
 
-        if let payloadData = try? JSONEncoder().encode(payload),
-            let payloadString = String(data: payloadData, encoding: .utf8) {
-            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
-
-            // The leading semicolon is a defensive IIFE guard: if the previous JS statement
-            // on the page was left without a semicolon, concatenating a bare `(function(){…})()`
-            // would be parsed as a function-call on that expression and throw. The `;` ensures
-            // a clean statement boundary regardless of surrounding page JS.
-            let script = """
-                ;(function() {
-                    if (typeof window.popupBridge !== 'undefined' && typeof window.popupBridge.onComplete === 'function') {
-                        window.popupBridge.onComplete(null, \(payloadString));
-                    } else {
-                        if (!window.popupBridge) { window.popupBridge = {}; }
-                        window.popupBridge.__pendingResult = \(payloadString);
-                    }
-                })();
-            """
-            injectWebView(webView: webView, withJavaScript: script)
-        } else {
-            let errorMessage = "Failed to serialize return URL payload as JSON."
-            let errorResponse = "new Error(\"\(errorMessage)\")"
+    /// Serializes the payload and injects the completion JS into the WebView, emitting the matching analytics event.
+    private func injectPayPalReturnResult(_ payload: URLDetailsPayload) {
+        guard let payloadData = try? JSONEncoder().encode(payload),
+              let payloadString = String(data: payloadData, encoding: .utf8) else {
             Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
-            let script = "window.popupBridge.onComplete(\(errorResponse), null);"
-            injectWebView(webView: webView, withJavaScript: script)
+            let errorResponse = "new Error(\"Failed to serialize return URL payload as JSON.\")"
+            injectWebView(webView: webView, withJavaScript: "window.popupBridge.onComplete(\(errorResponse), null);")
+            return
         }
+
+        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.succeeded, sessionID: sessionID)
+        injectWebView(webView: webView, withJavaScript: payPalReturnCompletionScript(payloadString: payloadString))
+    }
+
+    /// Builds the JS injected after a successful PayPal app switch return.
+    ///
+    /// The leading semicolon is a defensive IIFE guard: if the previous JS statement on the page was
+    /// left without a semicolon, concatenating a bare `(function(){…})()` would be parsed as a
+    /// function-call on that expression and throw. The `;` ensures a clean statement boundary
+    /// regardless of surrounding page JS.
+    ///
+    /// If `onComplete` isn't ready yet (the page's JS may still be loading when the app returns), the
+    /// result is stashed on `window.popupBridge.__pendingResult` for the page to pick up.
+    private func payPalReturnCompletionScript(payloadString: String) -> String {
+        """
+        ;(function() {
+            if (typeof window.popupBridge !== 'undefined' && typeof window.popupBridge.onComplete === 'function') {
+                window.popupBridge.onComplete(null, \(payloadString));
+            } else {
+                if (!window.popupBridge) { window.popupBridge = {}; }
+                window.popupBridge.__pendingResult = \(payloadString);
+            }
+        })();
+        """
     }
 
     /// Exposed for testing
@@ -248,15 +264,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return nil
         }
 
-        let queryItems = urlComponents.queryItems?.reduce(into: [:]) { partialResult, queryItem in
-            partialResult[queryItem.name] = queryItem.value
-        }
-
-        let payload = URLDetailsPayload(
-            path: urlComponents.path,
-            queryItems: queryItems ?? [:],
-            hash: urlComponents.fragment
-        )
+        let payload = makeURLDetailsPayload(from: urlComponents)
 
         if let payloadData = try? JSONEncoder().encode(payload),
             let payload = String(data: payloadData, encoding: .utf8) {
@@ -342,69 +350,75 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///
     /// Called when the webpage sends a JavaScript message back to the native app
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == messageHandlerName {
-            guard let jsonData = try? JSONSerialization.data(withJSONObject: message.body),
-                  let script = try? JSONDecoder().decode(WebViewMessage.self, from: jsonData) else {
-                return
-            }
+        guard message.name == messageHandlerName,
+              let jsonData = try? JSONSerialization.data(withJSONObject: message.body),
+              let script = try? JSONDecoder().decode(WebViewMessage.self, from: jsonData) else {
+            return
+        }
 
-            if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
-                Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
-                application.openURL(launchAppURL) { [weak self] success in
-                    guard let self else { return }
-                    
-                    if success {
-                        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
-                        self.startObservingPayPalLaunchAppReturn()
-                    } else {
-                        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchFailed, sessionID: self.sessionID)
-                        let cancelScript = """
-                            if (typeof window.popupBridge.onCancel === 'function') {\
-                                window.popupBridge.onCancel();\
-                            } else {\
-                                window.popupBridge.onComplete(null, null);\
-                            }
-                        """
-                        let scheme = launchAppURL.scheme?.lowercased()
-                        guard scheme == "https" || scheme == "http" else {
-                            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: self.sessionID)
-                            self.injectWebView(webView: self.webView, withJavaScript: cancelScript)
-                            return
-                        }
-                        self.webAuthenticationSession.start(url: launchAppURL, context: self) { url, _ in
-                            if let url, let returnBlock = self.returnBlock {
-                                self.returnedWithURL = true
-                                returnBlock(url)
-                            }
-                        } sessionDidCancel: {
-                            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: self.sessionID)
-                            self.injectWebView(webView: self.webView, withJavaScript: cancelScript)
-                        }
-                    }
-                }
-            } else if let urlString = script.url, let url = URL(string: urlString) {
-                webAuthenticationSession.start(url: url, context: self) { url, _ in
-                    if let url, let returnBlock = self.returnBlock {
-                        self.returnedWithURL = true
-                        returnBlock(url)
-                        return
-                    }
-                } sessionDidCancel: { [self] in
-                    let script = """
-                        if (typeof window.popupBridge.onCancel === 'function') {\
-                            window.popupBridge.onCancel();\
-                        } else {\
-                            window.popupBridge.onComplete(null, null);\
-                        }
-                    """
+        if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
+            handlePayPalAppSwitch(url: launchAppURL)
+        } else if let urlString = script.url, let url = URL(string: urlString) {
+            startWebAuthenticationSession(url: url)
+        }
+    }
 
-                    Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: sessionID)
+    // MARK: - Message Handling
 
-                    injectWebView(webView: webView, withJavaScript: script)
-                    return
-                }
+    /// Attempts a native PayPal app switch for the given URL, falling back to a web authentication
+    /// session if the app can't be launched.
+    private func handlePayPalAppSwitch(url: URL) {
+        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
+        application.openURL(url) { [weak self] success in
+            guard let self else { return }
+
+            if success {
+                Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
+                self.startObservingPayPalLaunchAppReturn()
+            } else {
+                self.handlePayPalAppSwitchFailure(url: url)
             }
         }
+    }
+
+    /// Handles a failed PayPal app launch: web URLs fall back to a web authentication session,
+    /// anything else cancels the flow.
+    private func handlePayPalAppSwitchFailure(url: URL) {
+        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchFailed, sessionID: sessionID)
+
+        let scheme = url.scheme?.lowercased()
+        guard scheme == "https" || scheme == "http" else {
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.failed, sessionID: sessionID)
+            injectWebView(webView: webView, withJavaScript: cancelOrCompleteScript)
+            return
+        }
+
+        startWebAuthenticationSession(url: url)
+    }
+
+    /// Starts an `ASWebAuthenticationSession` for the URL, forwarding the return URL on success and
+    /// cancelling the flow if the user dismisses the session.
+    private func startWebAuthenticationSession(url: URL) {
+        webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
+            guard let self, let url, let returnBlock = self.returnBlock else { return }
+            self.returnedWithURL = true
+            returnBlock(url)
+        } sessionDidCancel: { [weak self] in
+            guard let self else { return }
+            Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.canceled, sessionID: self.sessionID)
+            self.injectWebView(webView: self.webView, withJavaScript: self.cancelOrCompleteScript)
+        }
+    }
+
+    /// JS that invokes `onCancel` if the page defines it, otherwise completes with no payload or error.
+    private var cancelOrCompleteScript: String {
+        """
+        if (typeof window.popupBridge.onCancel === 'function') {\
+            window.popupBridge.onCancel();\
+        } else {\
+            window.popupBridge.onComplete(null, null);\
+        }
+        """
     }
 }
 
