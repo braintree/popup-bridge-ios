@@ -385,6 +385,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
             enablePayPalAppSwitch: true,
+            returnURLScheme: "my-app-scheme",
             application: mockURLOpener
         )
 
@@ -401,6 +402,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
             enablePayPalAppSwitch: true,
+            returnURLScheme: "my-app-scheme",
             application: mockURLOpener
         )
 
@@ -415,6 +417,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
             enablePayPalAppSwitch: true,
+            returnURLScheme: "my-app-scheme",
             application: mockURLOpener
         )
 
@@ -442,6 +445,7 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
             webView: webView,
             webAuthenticationSession: mockWebAuthenticationSession,
             enablePayPalAppSwitch: true,
+            returnURLScheme: "my-app-scheme",
             application: mockURLOpener
         )
 

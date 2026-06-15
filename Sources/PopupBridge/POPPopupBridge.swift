@@ -40,23 +40,21 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   appSwitchWhenAvailable which controls non-webview mobile browser app switch.
     ///
     ///   **Required SceneDelegate integration:** when this flag is `true`, the host app must forward
-    ///   incoming URLs from its `SceneDelegate` to PopupBridge via a `NotificationCenter` post,
-    ///   otherwise the checkout flow will hang indefinitely after the PayPal app returns.
+    ///   incoming URLs from its `SceneDelegate` to PopupBridge via
+    ///   `PopupBridgeAppContextSwitcher.shared.handleReturnURL(_:)`, otherwise the checkout flow will
+    ///   hang indefinitely after the PayPal app returns. The method returns a `Bool` indicating
+    ///   whether PopupBridge handled the URL, so you can chain it to other app-switch handlers.
     ///   In your `SceneDelegate`:
     ///   ```swift
     ///   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
     ///       guard let url = URLContexts.first?.url else { return }
-    ///       NotificationCenter.default.post(
-    ///           name: PopupBridgeConstants.notificationName,
-    ///           object: nil,
-    ///           userInfo: ["url": url]
-    ///       )
+    ///       PopupBridgeAppContextSwitcher.shared.handleReturnURL(url)
     ///   }
     ///   ```
     ///   - returnURLScheme: The URL scheme registered in the app's `Info.plist` that PopupBridge should
-    ///   use as the return URL for the checkout flow. If `nil`, PopupBridge will attempt to read the first
-    ///   scheme from `CFBundleURLTypes`. Providing this value explicitly is recommended when the app
-    ///   registers multiple URL schemes (e.g. Facebook, Google Sign-In).
+    ///   use as the return URL for the checkout flow. **Required when `enablePayPalAppSwitch` is `true`** —
+    ///   PopupBridge does not guess the scheme from `CFBundleURLTypes`, since apps that register multiple
+    ///   URL schemes (e.g. Facebook, Google Sign-In) would resolve the wrong one.
     public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil) {
         self.webView = webView
         self.application = UIApplication.shared
@@ -92,9 +90,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession,
         enablePayPalAppSwitch: Bool = false,
+        returnURLScheme: String? = nil,
         application: URLOpener
     ) {
-        self.init(webView: webView, enablePayPalAppSwitch: enablePayPalAppSwitch, application: application)
+        self.init(webView: webView, enablePayPalAppSwitch: enablePayPalAppSwitch, returnURLScheme: returnURLScheme, application: application)
         self.webAuthenticationSession = webAuthenticationSession
     }
 
@@ -180,11 +179,21 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             name: messageHandlerName
         )
 
+        // The app switch path requires an explicit returnURLScheme. If the integrator opted into
+        // enablePayPalAppSwitch but didn't provide one, fail fast (loud in debug) and keep app
+        // switch disabled rather than guessing a scheme or hanging the flow at return time.
+        if enablePayPalAppSwitch && appSwitchHandler.resolvedReturnURLScheme == nil {
+            assertionFailure("enablePayPalAppSwitch requires a returnURLScheme; pass it to POPPopupBridge(...). App switch disabled.")
+        }
+
         // Even if the PayPal app is physically installed on the device, we intentionally
-        // report it as absent to the JavaScript layer when enablePayPalAppSwitch is false.
-        // This ensures the JS SDK never attempts the native app switch path unless the
-        // integrator has explicitly opted in, preserving backward-compatible behavior.
-        let isPayPalAppSwitchAvailable = enablePayPalAppSwitch && appSwitchHandler.isPayPalAppInstalled()
+        // report it as absent to the JavaScript layer when enablePayPalAppSwitch is false (or no
+        // returnURLScheme was provided). This ensures the JS SDK never attempts the native app
+        // switch path unless the integrator has explicitly and correctly opted in, preserving
+        // backward-compatible behavior.
+        let isPayPalAppSwitchAvailable = enablePayPalAppSwitch
+            && appSwitchHandler.resolvedReturnURLScheme != nil
+            && appSwitchHandler.isPayPalAppInstalled()
 
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,

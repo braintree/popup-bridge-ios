@@ -9,6 +9,12 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
     private var completedScripts: [String] = []
     private var launchFailedURLs: [URL] = []
 
+    override func tearDown() {
+        // The switcher is a shared singleton; clear any pending registration left by a test.
+        PopupBridgeAppContextSwitcher.shared.pendingHandler = nil
+        super.tearDown()
+    }
+
     private func makeHandler(
         application: URLOpener,
         returnURLScheme: String? = "my-app-scheme"
@@ -48,6 +54,26 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         )
     }
 
+    func testLaunch_whenSucceeds_registersAsPendingHandler() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = true
+        let handler = makeHandler(application: mockURLOpener)
+
+        handler.launch(url: URL(string: "https://example.com/checkout")!)
+
+        XCTAssertTrue(PopupBridgeAppContextSwitcher.shared.pendingHandler === handler)
+    }
+
+    func testLaunch_whenFails_doesNotRegisterAsPendingHandler() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.openURLSuccess = false
+        let handler = makeHandler(application: mockURLOpener)
+
+        handler.launch(url: URL(string: "https://example.com/checkout")!)
+
+        XCTAssertNil(PopupBridgeAppContextSwitcher.shared.pendingHandler)
+    }
+
     func testLaunch_whenFails_sendsAppLaunchFailedAndCallsOnLaunchFailed() {
         let mockURLOpener = MockURLOpener()
         mockURLOpener.openURLSuccess = false
@@ -63,34 +89,41 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         )
     }
 
-    // MARK: - Return URL Validation Tests
+    // MARK: - Return URL Routing Tests
 
-    func testIsValidPayPalReturnURL_whenSchemeAndHostMatch_returnsTrue() {
+    func testCanHandleReturnURL_whenSchemeAndHostMatch_returnsTrue() {
         let handler = makeHandler(application: MockURLOpener())
-        let components = URLComponents(string: "my-app-scheme://popupbridgev1/return?token=EC-123")!
+        let url = URL(string: "my-app-scheme://popupbridgev1/return?token=EC-123")!
 
-        XCTAssertTrue(handler.isValidPayPalReturnURL(components))
+        XCTAssertTrue(handler.canHandleReturnURL(url))
     }
 
-    func testIsValidPayPalReturnURL_whenHostDoesNotMatch_returnsFalse() {
+    func testCanHandleReturnURL_whenHostDoesNotMatch_returnsFalse() {
         let handler = makeHandler(application: MockURLOpener())
-        let components = URLComponents(string: "my-app-scheme://attacker-host/return?token=EC-123")!
+        let url = URL(string: "my-app-scheme://attacker-host/return?token=EC-123")!
 
-        XCTAssertFalse(handler.isValidPayPalReturnURL(components))
+        XCTAssertFalse(handler.canHandleReturnURL(url))
     }
 
-    func testIsValidPayPalReturnURL_whenSchemeDoesNotMatch_returnsFalse() {
+    func testCanHandleReturnURL_whenSchemeDoesNotMatch_returnsFalse() {
         let handler = makeHandler(application: MockURLOpener())
-        let components = URLComponents(string: "other-scheme://popupbridgev1/return?token=EC-123")!
+        let url = URL(string: "other-scheme://popupbridgev1/return?token=EC-123")!
 
-        XCTAssertFalse(handler.isValidPayPalReturnURL(components))
+        XCTAssertFalse(handler.canHandleReturnURL(url))
     }
 
-    func testIsValidPayPalReturnURL_whenSchemeAndHostMatchWithDifferentCasing_returnsTrue() {
+    func testCanHandleReturnURL_whenSchemeAndHostMatchWithDifferentCasing_returnsTrue() {
         let handler = makeHandler(application: MockURLOpener())
-        let components = URLComponents(string: "MY-APP-SCHEME://POPUPBRIDGEV1/return")!
+        let url = URL(string: "MY-APP-SCHEME://POPUPBRIDGEV1/return")!
 
-        XCTAssertTrue(handler.isValidPayPalReturnURL(components))
+        XCTAssertTrue(handler.canHandleReturnURL(url))
+    }
+
+    func testCanHandleReturnURL_whenReturnURLSchemeIsNil_returnsFalse() {
+        let handler = makeHandler(application: MockURLOpener(), returnURLScheme: nil)
+        let url = URL(string: "my-app-scheme://popupbridgev1/return?token=EC-123")!
+
+        XCTAssertFalse(handler.canHandleReturnURL(url))
     }
 
     // MARK: - Return Handling Tests

@@ -1,8 +1,8 @@
 import Foundation
 
-/// Encapsulates the PayPal app switch flow: launching the native PayPal app, observing the deep-link
-/// return posted by the host app's `SceneDelegate`, validating it, and building the JavaScript that
-/// completes the checkout in the WebView.
+/// Encapsulates the PayPal app switch flow: launching the native PayPal app, handling the deep-link
+/// return routed from the host app's `SceneDelegate` via `PopupBridgeAppContextSwitcher`, validating
+/// it, and building the JavaScript that completes the checkout in the WebView.
 ///
 /// This is intentionally PayPal-specific — Venmo has no app switch logic in this SDK, it only reports
 /// a flag to the JS layer. Keeping this flow here lets `POPPopupBridge` stay a thin coordinator.
@@ -21,8 +21,6 @@ final class PayPalAppSwitchHandler {
     private let onComplete: (String) -> Void
     private let onLaunchFailed: (URL) -> Void
 
-    private var returnObserver: NSObjectProtocol?
-
     init(
         application: URLOpener,
         returnURLScheme: String?,
@@ -40,7 +38,7 @@ final class PayPalAppSwitchHandler {
     }
 
     deinit {
-        stopObserving()
+        PopupBridgeAppContextSwitcher.shared.unregister(self)
     }
 
     // MARK: - Coordinator Queries
@@ -57,8 +55,9 @@ final class PayPalAppSwitchHandler {
 
     // MARK: - Launch
 
-    /// Attempts a native PayPal app switch for the given URL. On success, starts observing the
-    /// SceneDelegate return; on failure, reports back so the coordinator can fall back or cancel.
+    /// Attempts a native PayPal app switch for the given URL. On success, registers as the pending
+    /// handler so the SceneDelegate return can be routed back via `PopupBridgeAppContextSwitcher`;
+    /// on failure, reports back so the coordinator can fall back or cancel.
     func launch(url: URL) {
         analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
         application.openURL(url) { [weak self] success in
@@ -66,7 +65,7 @@ final class PayPalAppSwitchHandler {
 
             if success {
                 self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
-                self.startObserving()
+                PopupBridgeAppContextSwitcher.shared.register(self)
             } else {
                 self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchFailed, sessionID: self.sessionID)
                 self.onLaunchFailed(url)
@@ -76,54 +75,24 @@ final class PayPalAppSwitchHandler {
 
     // MARK: - Return Handling
 
-    /// Starts listening for the return URL notification posted by the host app's SceneDelegate.
-    /// Called only after a successful launch; removed after handling.
-    private func startObserving() {
-        stopObserving()
-
-        returnObserver = NotificationCenter.default.addObserver(
-            forName: PopupBridgeConstants.notificationName,
-            object: nil,
-            queue: .main
-        ) { [weak self] notification in
-            guard let self else {
-                return
-            }
-
-            guard let url = notification.userInfo?["url"] as? URL else {
-                return
-            }
-
-            self.handlePayPalLaunchAppReturn(url: url)
-        }
-    }
-
-    /// Removes the one-shot return observer, if registered.
-    private func stopObserving() {
-        if let returnObserver {
-            NotificationCenter.default.removeObserver(returnObserver)
-            self.returnObserver = nil
-        }
-    }
-
     /// Exposed for testing
     ///
-    /// Parses the return URL and produces the `window.popupBridge.onComplete()` JavaScript for the
-    /// WebView. The return URL may include fragment-based data:
+    /// Handles a return URL routed in from `PopupBridgeAppContextSwitcher`. Parses the URL and
+    /// produces the `window.popupBridge.onComplete()` JavaScript for the WebView. The return URL may
+    /// include fragment-based data:
     ///   merchantapp://popupbridgev1/onApprove#onApprove&PayerID=XXX&token=EC-YYY
     /// Popup Bridge JavaScript is responsible for normalizing `path`, `queryItems`, and `hash`.
     func handlePayPalLaunchAppReturn(url: URL) {
-        // Validate before doing anything: the return notification is an open channel, so any code
-        // in the host app could post an arbitrary URL to it. Only PopupBridge return URLs may be
-        // injected into the WebView. Invalid posts are ignored without consuming the one-shot
-        // observer, so a later legitimate return still completes the flow.
-        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              isValidPayPalReturnURL(urlComponents) else {
+        // Defense in depth: the switcher only routes URLs that pass canHandleReturnURL, but re-check
+        // here so this entry point is safe regardless of caller. A non-matching URL is ignored
+        // without clearing the pending registration, so a later legitimate return still completes.
+        guard canHandleReturnURL(url),
+              let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return
         }
 
-        // Valid return: stop observing (one-shot), then forward the result to the WebView.
-        stopObserving()
+        // Valid return: clear the one-shot registration, then forward the result to the WebView.
+        PopupBridgeAppContextSwitcher.shared.unregister(self)
         injectReturnResult(URLDetailsPayload(components: urlComponents))
     }
 
@@ -165,12 +134,17 @@ final class PayPalAppSwitchHandler {
 
     /// Exposed for testing
     ///
-    /// Validates that a URL delivered via `PopupBridgeConstants.notificationName` is an actual
-    /// PopupBridge return URL, rather than arbitrary data posted to that notification by other
-    /// code in the host app. Mirrors the scheme/host check on the `ASWebAuthenticationSession` path.
-    /// - Parameter components: the components of the URL received from the return notification.
+    /// Routing check: returns whether this handler recognizes `url` as its PopupBridge return URL.
+    /// `PopupBridgeAppContextSwitcher` uses it to decide whether to route a SceneDelegate return
+    /// here or report it as unhandled (so the integrator can chain to other app-switch handlers).
+    /// Mirrors the scheme/host check on the `ASWebAuthenticationSession` path.
+    /// - Parameter url: the URL received from the host app's SceneDelegate.
     /// - Returns: `true` if the URL matches the expected PopupBridge return URL signature.
-    func isValidPayPalReturnURL(_ components: URLComponents) -> Bool {
+    func canHandleReturnURL(_ url: URL) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return false
+        }
+
         // Host must be the PopupBridge host (e.g. popupbridgev1).
         guard components.host?.caseInsensitiveCompare(PopupBridgeConstants.host) == .orderedSame else {
             return false
@@ -189,26 +163,12 @@ final class PayPalAppSwitchHandler {
 
     /// Resolves the URL scheme used as the checkout return URL.
     ///
-    /// Prefers the scheme explicitly provided in the initializer. When none is given, falls back to
-    /// reading the first scheme from `CFBundleURLTypes` in the app's `Info.plist`. This fallback is
-    /// best-effort: apps that register multiple URL schemes (e.g. Facebook, Google Sign-In) may have
-    /// a third-party scheme listed first, so integrators should provide `returnURLScheme` explicitly.
-    /// - Returns: The resolved return URL scheme, or `nil` if none could be determined.
+    /// The app switch path requires an explicit `returnURLScheme`: guessing the first scheme from
+    /// `CFBundleURLTypes` is fragile for apps that register multiple schemes (e.g. Facebook, Google
+    /// Sign-In), so PopupBridge fails fast instead of guessing. When `enablePayPalAppSwitch` is
+    /// `true`, `POPPopupBridge` requires this to be non-`nil`.
+    /// - Returns: The explicitly provided return URL scheme, or `nil` if none was given.
     private func resolveReturnURLScheme() -> String? {
-        if let returnURLScheme {
-            return returnURLScheme
-        }
-
-        guard let urlTypes = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
-            return nil
-        }
-
-        for urlType in urlTypes {
-            if let schemes = urlType["CFBundleURLSchemes"] as? [String], let scheme = schemes.first {
-                return scheme
-            }
-        }
-
-        return nil
+        returnURLScheme
     }
 }
