@@ -59,15 +59,15 @@ final class PayPalAppSwitchHandler {
     /// handler so the SceneDelegate return can be routed back via `PopupBridgeAppContextSwitcher`;
     /// on failure, reports back so the coordinator can fall back or cancel.
     func launch(url: URL) {
-        analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchStarted, sessionID: sessionID)
+        analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appSwitchStarted, sessionID: sessionID)
         application.openURL(url) { [weak self] success in
             guard let self else { return }
 
             if success {
-                self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchSucceeded, sessionID: self.sessionID)
+                self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appSwitchSucceeded, sessionID: self.sessionID)
                 PopupBridgeAppContextSwitcher.shared.register(self)
             } else {
-                self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appLaunchFailed, sessionID: self.sessionID)
+                self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appSwitchFailed, sessionID: self.sessionID)
                 self.onLaunchFailed(url)
             }
         }

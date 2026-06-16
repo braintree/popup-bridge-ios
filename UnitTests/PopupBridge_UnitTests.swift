@@ -456,8 +456,8 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         pub.userContentController(WKUserContentController(), didReceive: stubMessage)
 
         XCTAssertTrue(pub.returnedWithURL)
-        // appLaunchFailed is sent before the WebAuthenticationSession fallback fires succeeded,
+        // appSwitchFailed is sent before the WebAuthenticationSession fallback fires succeeded,
         // so check the full event sequence rather than just lastEventName.
-        XCTAssertTrue(mockAnalyticsService.sentEventNames.contains(PopupBridgeAnalytics.appLaunchFailed))
+        XCTAssertTrue(mockAnalyticsService.sentEventNames.contains(PopupBridgeAnalytics.appSwitchFailed))
     }
 }

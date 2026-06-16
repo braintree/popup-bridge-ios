@@ -50,7 +50,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
 
         XCTAssertEqual(
             mockAnalyticsService.sentEventNames,
-            [PopupBridgeAnalytics.appLaunchStarted, PopupBridgeAnalytics.appLaunchSucceeded]
+            [PopupBridgeAnalytics.appSwitchStarted, PopupBridgeAnalytics.appSwitchSucceeded]
         )
     }
 
@@ -85,7 +85,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         XCTAssertEqual(launchFailedURLs, [url])
         XCTAssertEqual(
             mockAnalyticsService.sentEventNames,
-            [PopupBridgeAnalytics.appLaunchStarted, PopupBridgeAnalytics.appLaunchFailed]
+            [PopupBridgeAnalytics.appSwitchStarted, PopupBridgeAnalytics.appSwitchFailed]
         )
     }
 
