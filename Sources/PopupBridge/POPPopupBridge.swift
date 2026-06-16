@@ -80,7 +80,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
     }
 
-    /// Exposed for testing
+    /// Exposed for testing.
+    ///
+    /// Convenience initializer that injects a custom `WebAuthenticationSession` so tests can stub the
+    /// browser authentication flow. App switch stays disabled (delegates to the public `init`).
+    /// - Parameters:
+    ///   - webView: The web view to add a script message handler to.
+    ///   - webAuthenticationSession: The (typically mocked) session used to drive the web auth flow.
     convenience init(
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession
@@ -89,7 +95,16 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.webAuthenticationSession = webAuthenticationSession
     }
 
-    /// Exposed for testing
+    /// Exposed for testing.
+    ///
+    /// Convenience initializer that injects both a custom `WebAuthenticationSession` and a `URLOpener`,
+    /// allowing tests to exercise the PayPal app switch path end to end with mocked dependencies.
+    /// - Parameters:
+    ///   - webView: The web view to add a script message handler to.
+    ///   - webAuthenticationSession: The (typically mocked) session used to drive the web auth flow.
+    ///   - enablePayPalAppSwitch: When true, enables the native PayPal app switch path. Defaults to false.
+    ///   - returnURLScheme: The return URL scheme advertised to PayPal. Required when `enablePayPalAppSwitch` is true.
+    ///   - application: The (typically mocked) `URLOpener` used to detect installed apps and open URLs.
     convenience init(
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession,
@@ -101,7 +116,17 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         self.webAuthenticationSession = webAuthenticationSession
     }
 
-    /// Internal designated init that accepts a URLOpener for testing
+    /// Exposed for testing.
+    ///
+    /// Internal designated initializer that accepts a `URLOpener`, letting tests inject a mock instead
+    /// of `UIApplication.shared`. Mirrors the public `init` but with the injectable application.
+    /// - Parameters:
+    ///   - webView: The web view to add a script message handler to.
+    ///   - prefersEphemeralWebBrowserSession: When true, the browser does not share cookies or browsing
+    ///   data between the authentication session and the user's normal browser session. Defaults to `true`.
+    ///   - enablePayPalAppSwitch: When true, enables the native PayPal app switch path. Defaults to false.
+    ///   - returnURLScheme: The return URL scheme advertised to PayPal. Required when `enablePayPalAppSwitch` is true.
+    ///   - application: The `URLOpener` used to detect installed apps and open URLs.
     init(
         webView: WKWebView,
         prefersEphemeralWebBrowserSession: Bool = true,
