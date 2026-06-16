@@ -48,7 +48,6 @@ final class PayPalAppSwitchHandler {
         resolveReturnURLScheme()
     }
 
-    /// Whether the PayPal app is installed and can be switched to.
     func isPayPalAppInstalled() -> Bool {
         application.isPayPalAppInstalled()
     }

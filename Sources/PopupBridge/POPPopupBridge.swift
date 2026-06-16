@@ -22,9 +22,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private var returnBlock: ((URL) -> Void)? = nil
 
     /// Owns the strictly PayPal app switch flow (native launch + SceneDelegate return handling),
-    /// keeping `POPPopupBridge` a coordinator. Implicitly unwrapped because its callbacks capture
-    /// `self`, so it can only be created after `super.init()`.
-    private var appSwitchHandler: PayPalAppSwitchHandler!
+    /// keeping `POPPopupBridge` a coordinator.
+    private var appSwitchHandler: PayPalAppSwitchHandler?
 
     // MARK: - Initializers
 
@@ -182,7 +181,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         // The app switch path requires an explicit returnURLScheme. If the integrator opted into
         // enablePayPalAppSwitch but didn't provide one, fail fast (loud in debug) and keep app
         // switch disabled rather than guessing a scheme or hanging the flow at return time.
-        if enablePayPalAppSwitch && appSwitchHandler.resolvedReturnURLScheme == nil {
+        if enablePayPalAppSwitch && appSwitchHandler?.resolvedReturnURLScheme == nil {
             assertionFailure("enablePayPalAppSwitch requires a returnURLScheme; pass it to POPPopupBridge(...). App switch disabled.")
         }
 
@@ -192,8 +191,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         // switch path unless the integrator has explicitly and correctly opted in, preserving
         // backward-compatible behavior.
         let isPayPalAppSwitchAvailable = enablePayPalAppSwitch
-            && appSwitchHandler.resolvedReturnURLScheme != nil
-            && appSwitchHandler.isPayPalAppInstalled()
+            && appSwitchHandler?.resolvedReturnURLScheme != nil
+            && (appSwitchHandler?.isPayPalAppInstalled() ?? false)
 
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
@@ -201,7 +200,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             host: PopupBridgeConstants.host,
             isVenmoInstalled: application.isVenmoAppInstalled(),
             isPayPalInstalled: isPayPalAppSwitchAvailable,
-            returnURLScheme: appSwitchHandler.resolvedReturnURLScheme
+            returnURLScheme: appSwitchHandler?.resolvedReturnURLScheme
         ).rawJavascript
 
         let script = WKUserScript(
@@ -234,7 +233,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
 
         if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
-            appSwitchHandler.launch(url: launchAppURL)
+            appSwitchHandler?.launch(url: launchAppURL)
         } else if let urlString = script.url, let url = URL(string: urlString) {
             startWebAuthenticationSession(url: url)
         }
