@@ -54,7 +54,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   use as the return URL for the checkout flow. **Required when `enablePayPalAppSwitch` is `true`** —
     ///   PopupBridge does not guess the scheme from `CFBundleURLTypes`, since apps that register multiple
     ///   URL schemes (e.g. Facebook, Google Sign-In) would resolve the wrong one.
-    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil) {
+    public init(
+        webView: WKWebView,
+        prefersEphemeralWebBrowserSession: Bool = true,
+        enablePayPalAppSwitch: Bool = false,
+        returnURLScheme: String? = nil
+    ) {
         self.webView = webView
         self.application = UIApplication.shared
         self.enablePayPalAppSwitch = enablePayPalAppSwitch
@@ -97,7 +102,13 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     }
 
     /// Internal designated init that accepts a URLOpener for testing
-    init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true, enablePayPalAppSwitch: Bool = false, returnURLScheme: String? = nil, application: URLOpener) {
+    init(
+        webView: WKWebView,
+        prefersEphemeralWebBrowserSession: Bool = true,
+        enablePayPalAppSwitch: Bool = false,
+        returnURLScheme: String? = nil,
+        application: URLOpener
+    ) {
         self.webView = webView
         self.application = application
         self.enablePayPalAppSwitch = enablePayPalAppSwitch
