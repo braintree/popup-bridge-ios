@@ -15,7 +15,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let messageHandlerName = "POPPopupBridge"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private let application: URLOpener
+    private var application: URLOpener = UIApplication.shared
 
     private let enablePayPalAppSwitch: Bool
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
@@ -61,7 +61,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         returnURLScheme: String? = nil
     ) {
         self.webView = webView
-        self.application = UIApplication.shared
         self.enablePayPalAppSwitch = enablePayPalAppSwitch
 
         super.init()
