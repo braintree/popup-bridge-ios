@@ -264,7 +264,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         }
 
         if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
-            appSwitchHandler?.launch(url: launchAppURL)
+            appSwitchHandler?.launch(launchAppURL)
         } else if let urlString = script.url, let url = URL(string: urlString) {
             startWebAuthenticationSession(with: url)
         }

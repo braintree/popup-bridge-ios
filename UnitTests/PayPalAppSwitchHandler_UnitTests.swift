@@ -36,7 +36,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         mockURLOpener.openURLSuccess = true
         let handler = makeHandler(application: mockURLOpener)
 
-        handler.launch(url: URL(string: "https://example.com/checkout")!)
+        handler.launch(URL(string: "https://example.com/checkout")!)
 
         XCTAssertEqual(mockURLOpener.lastOpenedURL?.absoluteString, "https://example.com/checkout")
     }
@@ -46,7 +46,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         mockURLOpener.openURLSuccess = true
         let handler = makeHandler(application: mockURLOpener)
 
-        handler.launch(url: URL(string: "https://example.com/checkout")!)
+        handler.launch(URL(string: "https://example.com/checkout")!)
 
         XCTAssertEqual(
             mockAnalyticsService.sentEventNames,
@@ -59,7 +59,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         mockURLOpener.openURLSuccess = true
         let handler = makeHandler(application: mockURLOpener)
 
-        handler.launch(url: URL(string: "https://example.com/checkout")!)
+        handler.launch(URL(string: "https://example.com/checkout")!)
 
         XCTAssertTrue(PopupBridgeAppContextSwitcher.shared.pendingHandler === handler)
     }
@@ -69,7 +69,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         mockURLOpener.openURLSuccess = false
         let handler = makeHandler(application: mockURLOpener)
 
-        handler.launch(url: URL(string: "https://example.com/checkout")!)
+        handler.launch(URL(string: "https://example.com/checkout")!)
 
         XCTAssertNil(PopupBridgeAppContextSwitcher.shared.pendingHandler)
     }
@@ -80,7 +80,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         let handler = makeHandler(application: mockURLOpener)
         let url = URL(string: "https://example.com/checkout")!
 
-        handler.launch(url: url)
+        handler.launch(url)
 
         XCTAssertEqual(launchFailedURLs, [url])
         XCTAssertEqual(
