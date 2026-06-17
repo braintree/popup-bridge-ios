@@ -164,8 +164,9 @@ final class PayPalAppSwitchHandler {
     ///
     /// The app switch path requires an explicit `returnURLScheme`: guessing the first scheme from
     /// `CFBundleURLTypes` is fragile for apps that register multiple schemes (e.g. Facebook, Google
-    /// Sign-In), so PopupBridge fails fast instead of guessing. When `enablePayPalAppSwitch` is
-    /// `true`, `POPPopupBridge` requires this to be non-`nil`.
+    /// Sign-In), so PopupBridge requires it instead of guessing. The PayPal app switch initializer
+    /// (`POPPopupBridge(webView:returnURLScheme:)`) makes this non-`nil`; the standard initializer
+    /// leaves it `nil`, which keeps the native app switch path disabled.
     /// - Returns: The explicitly provided return URL scheme, or `nil` if none was given.
     private func resolveReturnURLScheme() -> String? {
         returnURLScheme
