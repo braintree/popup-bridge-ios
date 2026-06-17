@@ -1,6 +1,6 @@
 import Foundation
 
-public class PopupBridgeConstants {
+enum PopupBridgeConstants {
 
     static let callbackURLScheme: String = "sdk.ios.popup-bridge"
     static let host: String = "popupbridgev1"
