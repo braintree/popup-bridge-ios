@@ -143,7 +143,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         super.init()
 
-        self.appSwitchHandler = makeAppSwitchHandler(application: application, returnURLScheme: returnURLScheme)
+        if let returnURLScheme {
+            self.appSwitchHandler = buildAppSwitchHandler(with: application, returnURLScheme: returnURLScheme)
+        }
         configureWebView()
         self.webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
 
@@ -163,7 +165,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
     /// Builds the app switch handler, wiring its results back to this coordinator: completion JS is
     /// injected into the WebView, and a failed native launch falls back to a web authentication session.
-    private func makeAppSwitchHandler(application: URLOpener, returnURLScheme: String?) -> PayPalAppSwitchHandler {
+    private func buildAppSwitchHandler(with application: URLOpener, returnURLScheme: String) -> PayPalAppSwitchHandler {
         PayPalAppSwitchHandler(
             application: application,
             returnURLScheme: returnURLScheme,
