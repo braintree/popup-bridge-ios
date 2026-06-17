@@ -17,7 +17,7 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
 
     private func makeHandler(
         application: URLOpener,
-        returnURLScheme: String? = "my-app-scheme"
+        returnURLScheme: String = "my-app-scheme"
     ) -> PayPalAppSwitchHandler {
         PayPalAppSwitchHandler(
             application: application,
@@ -117,13 +117,6 @@ final class PayPalAppSwitchHandler_UnitTests: XCTestCase {
         let url = URL(string: "MY-APP-SCHEME://POPUPBRIDGEV1/return")!
 
         XCTAssertTrue(handler.canHandleReturnURL(url))
-    }
-
-    func testCanHandleReturnURL_whenReturnURLSchemeIsNil_returnsFalse() {
-        let handler = makeHandler(application: MockURLOpener(), returnURLScheme: nil)
-        let url = URL(string: "my-app-scheme://popupbridgev1/return?token=EC-123")!
-
-        XCTAssertFalse(handler.canHandleReturnURL(url))
     }
 
     // MARK: - Return Handling Tests

@@ -219,12 +219,11 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             name: messageHandlerName
         )
 
-        // App switch is available only when a returnURLScheme was provided (i.e. the integrator used the
-        // PayPal app switch initializer) and the PayPal app is actually installed. Otherwise we report it
-        // as absent to the JavaScript layer so the JS SDK never attempts the native app switch path,
-        // preserving backward-compatible behavior for the standard browser flow.
-        let isPayPalAppSwitchAvailable = appSwitchHandler?.resolvedReturnURLScheme != nil
-            && (appSwitchHandler?.isPayPalAppInstalled() ?? false)
+        // `appSwitchHandler` is non-nil only when the integrator used the PayPal app switch initializer,
+        // so this is true only when app switch is enabled AND the PayPal app is installed. Otherwise we
+        // report it as absent to the JavaScript layer so the JS SDK never attempts the native app switch
+        // path, preserving backward-compatible behavior for the standard browser flow.
+        let isPayPalAppSwitchAvailable = appSwitchHandler?.isPayPalAppInstalled() ?? false
 
         let javascript = PopupBridgeUserScript(
             scheme: PopupBridgeConstants.callbackURLScheme,
@@ -232,7 +231,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             host: PopupBridgeConstants.host,
             isVenmoInstalled: application.isVenmoAppInstalled(),
             isPayPalInstalled: isPayPalAppSwitchAvailable,
-            returnURLScheme: appSwitchHandler?.resolvedReturnURLScheme
+            returnURLScheme: appSwitchHandler?.returnURLScheme
         ).rawJavascript
 
         let script = WKUserScript(
@@ -267,7 +266,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         if let launchAppURLString = script.launchPayPalAppSwitch, let launchAppURL = URL(string: launchAppURLString) {
             appSwitchHandler?.launch(url: launchAppURL)
         } else if let urlString = script.url, let url = URL(string: urlString) {
-            startWebAuthenticationSession(url: url)
+            startWebAuthenticationSession(with: url)
         }
     }
 
@@ -283,12 +282,12 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             return
         }
 
-        startWebAuthenticationSession(url: url)
+        startWebAuthenticationSession(with: url)
     }
 
     /// Starts an `ASWebAuthenticationSession` for the URL, forwarding the return URL on success and
     /// cancelling the flow if the user dismisses the session.
-    private func startWebAuthenticationSession(url: URL) {
+    private func startWebAuthenticationSession(with url: URL) {
         webAuthenticationSession.start(url: url, context: self) { [weak self] url, _ in
             guard let self, let url, let returnBlock = self.returnBlock else { return }
             self.returnedWithURL = true

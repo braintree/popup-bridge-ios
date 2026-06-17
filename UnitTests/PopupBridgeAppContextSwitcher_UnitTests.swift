@@ -12,7 +12,7 @@ final class PopupBridgeAppContextSwitcher_UnitTests: XCTestCase {
         super.tearDown()
     }
 
-    private func makeHandler(returnURLScheme: String? = "my-app-scheme") -> PayPalAppSwitchHandler {
+    private func makeHandler(returnURLScheme: String = "my-app-scheme") -> PayPalAppSwitchHandler {
         PayPalAppSwitchHandler(
             application: MockURLOpener(),
             returnURLScheme: returnURLScheme,
