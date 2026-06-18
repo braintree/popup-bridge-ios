@@ -53,9 +53,10 @@ final class PayPalAppSwitchHandler {
 
     // MARK: - Launch
 
-    /// Attempts a native PayPal app switch for the given URL. On success, registers as the pending
-    /// handler so the SceneDelegate return can be routed back via `PopupBridgeAppContextSwitcher`;
-    /// on failure, reports back so the coordinator can fall back or cancel.
+    /// Attempts a native PayPal app switch for the given URL.
+    /// - On success: registers as the pending handler so the SceneDelegate return can be routed back
+    ///   via `PopupBridgeAppContextSwitcher`.
+    /// - On failure: reports back so the coordinator can fall back or cancel.
     func launch(_ url: URL) {
         analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.appSwitchStarted, sessionID: sessionID)
         application.openURL(url) { [weak self] success in

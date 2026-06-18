@@ -42,10 +42,10 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ) {
         self.init(
             webView: webView,
+            webAuthenticationSession: WebAuthenticationSession(),
             returnURLScheme: nil,
-            prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession,
             application: UIApplication.shared,
-            webAuthenticationSession: WebAuthenticationSession()
+            prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession
         )
     }
 
@@ -83,44 +83,30 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ) {
         self.init(
             webView: webView,
+            webAuthenticationSession: WebAuthenticationSession(),
             returnURLScheme: returnURLScheme,
-            prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession,
             application: UIApplication.shared,
-            webAuthenticationSession: WebAuthenticationSession()
+            prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession
         )
     }
 
     /// Exposed for testing.
     ///
-    /// Convenience initializer that injects a custom `WebAuthenticationSession` so tests can stub the
+    /// Designated initializer that injects a custom `WebAuthenticationSession` so tests can stub the
     /// browser authentication flow. Pass `returnURLScheme` and a mocked `URLOpener` to exercise the
     /// PayPal app switch flow end to end; omit them to test the standard browser flow with app switch
     /// disabled.
-    convenience init(
+    ///
+    /// A non-`nil` `returnURLScheme` selects the PayPal app switch flow; when it is `nil`, the standard
+    /// browser-based flow is used and the native app switch path stays disabled. Kept `internal` so the
+    /// only public entry points are the two flow-specific initializers above, keeping the internal
+    /// `URLOpener` out of the public API.
+    init(
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession,
         returnURLScheme: String? = nil,
-        application: URLOpener = UIApplication.shared
-    ) {
-        self.init(
-            webView: webView,
-            returnURLScheme: returnURLScheme,
-            prefersEphemeralWebBrowserSession: true,
-            application: application,
-            webAuthenticationSession: webAuthenticationSession
-        )
-    }
-
-    /// Designated initializer. A non-`nil` `returnURLScheme` selects the PayPal app switch flow; when it
-    /// is `nil`, the standard browser-based flow is used and the native app switch path stays disabled.
-    /// Private so the only public entry points are the two flow-specific initializers above, keeping the
-    /// internal `URLOpener` out of the public API.
-    private init(
-        webView: WKWebView,
-        returnURLScheme: String?,
-        prefersEphemeralWebBrowserSession: Bool,
-        application: URLOpener,
-        webAuthenticationSession: WebAuthenticationSession
+        application: URLOpener = UIApplication.shared,
+        prefersEphemeralWebBrowserSession: Bool = true
     ) {
         self.webView = webView
         self.application = application
