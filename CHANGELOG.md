@@ -3,7 +3,7 @@
 ## unreleased
 
 * Add support for the PayPal app switch flow. When enabled, checkout launches the native PayPal app and falls back to `ASWebAuthenticationSession` if the launch fails. Requires additional `SceneDelegate` integration — see the README.
-* Add `enablePayPalAppSwitch` and `returnURLScheme` parameters to the `POPPopupBridge` initializer.
+* Add a `POPPopupBridge` initializer that takes a `returnURLScheme` to enable the PayPal app switch flow.
 
 ## 3.0.0 (2025-04-01)
 * Breaking Changes
