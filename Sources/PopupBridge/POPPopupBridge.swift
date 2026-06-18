@@ -93,29 +93,14 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Exposed for testing.
     ///
     /// Convenience initializer that injects a custom `WebAuthenticationSession` so tests can stub the
-    /// browser authentication flow. App switch stays disabled (no `returnURLScheme`).
-    convenience init(
-        webView: WKWebView,
-        webAuthenticationSession: WebAuthenticationSession
-    ) {
-        self.init(
-            webView: webView,
-            returnURLScheme: nil,
-            prefersEphemeralWebBrowserSession: true,
-            application: UIApplication.shared,
-            webAuthenticationSession: webAuthenticationSession
-        )
-    }
-
-    /// Exposed for testing.
-    ///
-    /// Convenience initializer that injects a custom `WebAuthenticationSession` and `URLOpener` and
-    /// enables the PayPal app switch flow, letting tests exercise it end to end with mocked dependencies.
+    /// browser authentication flow. Pass `returnURLScheme` and a mocked `URLOpener` to exercise the
+    /// PayPal app switch flow end to end; omit them to test the standard browser flow with app switch
+    /// disabled.
     convenience init(
         webView: WKWebView,
         webAuthenticationSession: WebAuthenticationSession,
-        returnURLScheme: String,
-        application: URLOpener
+        returnURLScheme: String? = nil,
+        application: URLOpener = UIApplication.shared
     ) {
         self.init(
             webView: webView,
