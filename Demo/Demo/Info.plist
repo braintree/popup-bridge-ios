@@ -18,9 +18,19 @@
 	<string>3.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>3.0.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.braintreepayments.Demo</string>
+			</array>
+		</dict>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>com.venmo.touch.v2</string>
+		<string>paypal</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

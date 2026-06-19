@@ -1,4 +1,5 @@
 import UIKit
+import PopupBridge
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,6 +14,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = PopupBridgeViewController()
         window?.makeKeyAndVisible()
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        // Forward the PayPal app switch return URL to PopupBridge so it can complete the checkout.
+        guard let url = URLContexts.first?.url else { return }
+        PopupBridgeAppContextSwitcher.shared.handleReturnURL(url)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

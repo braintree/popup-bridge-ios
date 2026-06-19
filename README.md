@@ -47,6 +47,16 @@ You must add the following to the queries schemes allowlist in your app's info.p
 </array>
 ```
 
+### Allowlist PayPal URL scheme (PayPal app switch only)
+To enable PayPal installation detection (`window.popupBridge.isPayPalInstalled`) for the PayPal app switch flow, add the following to the queries schemes allowlist in your app's info.plist:
+
+``` xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>paypal</string>
+</array>
+```
+
 Sample App
 -------
 

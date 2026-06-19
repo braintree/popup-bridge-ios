@@ -15,7 +15,10 @@ final class PopupBridgeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
-        popupBridge = POPPopupBridge(webView: webView)
+        // `returnURLScheme` must match a scheme registered under CFBundleURLTypes in Info.plist so the
+        // PayPal app can deep-link back into the demo. Forwarded from SceneDelegate via
+        // `PopupBridgeAppContextSwitcher.shared.handleReturnURL(_:)`.
+        popupBridge = POPPopupBridge(webView: webView, returnURLScheme: "com.braintreepayments.Demo")
         webView.load(URLRequest(url: URL(string: "https://braintree.github.io/popup-bridge-example/")!))
     }
     
