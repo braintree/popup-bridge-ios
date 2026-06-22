@@ -97,8 +97,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         super.init()
 
-        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
-
         configureWebView()
         self.webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
         self.webAuthenticationSession.callbackURLScheme = returnURLPrefixScheme
@@ -157,6 +155,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// Injects custom JavaScript into the merchant's webpage.
     /// - Parameter scheme: the url scheme provided by the merchant
     private func configureWebView() {
+        Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
         webView.configuration.userContentController.add(
             WebViewScriptHandler(proxy: self),
             name: messageHandlerName
