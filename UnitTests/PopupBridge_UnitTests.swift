@@ -373,4 +373,53 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         ))
         webView.load(URLRequest(url: URL(string: "some-popup-bridge-example")!))
     }
+
+    // MARK: - returnURLScheme app switch tests
+
+    func testUserScript_whenReturnURLSchemeProvidedAndVenmoInstalled_advertisesReturnURLSchemeAsReturnUrlPrefix() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = true
+
+        let webView = WKWebView()
+        _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            returnURLScheme: "my-app-scheme",
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("return 'my-app-scheme://popupbridgev1/';"))
+    }
+
+    func testUserScript_whenReturnURLSchemeProvidedButVenmoNotInstalled_advertisesCallbackScheme() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = false
+
+        let webView = WKWebView()
+        _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            returnURLScheme: "my-app-scheme",
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("return 'sdk.ios.popup-bridge://popupbridgev1/';"))
+    }
+
+    func testUserScript_whenNoReturnURLSchemeAndVenmoInstalled_advertisesCallbackScheme() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = true
+
+        let webView = WKWebView()
+        _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("return 'sdk.ios.popup-bridge://popupbridgev1/';"))
+    }
 }

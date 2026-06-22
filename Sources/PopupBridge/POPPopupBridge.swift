@@ -16,29 +16,79 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let hostName = "popupbridgev1"
     private let sessionID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
     private let webView: WKWebView
-    private let application: URLOpener = UIApplication.shared
+    private let returnURLScheme: String?
+    private var application: URLOpener = UIApplication.shared
     
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
     
     // MARK: - Initializers
         
-    /// Initialize a Popup Bridge.
+    /// Initialize a Popup Bridge for the standard browser-based (ASWeb) checkout flow.
     /// - Parameters:
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
-    ///   or other browsing data between the authenthication session and the user’s normal browser session.
+    ///   or other browsing data between the authentication session and the user's normal browser session.
     ///   Defaults to `true`.
-    public init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true) {
+    public convenience init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true) {
+        self.init(
+            webView: webView,
+            webAuthenticationSession: WebAuthenticationSession(),
+            returnURLScheme: nil,
+            application: UIApplication.shared,
+            prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession
+        )
+    }
+
+    /// Initialize a Popup Bridge with a return URL scheme for app switch flows (e.g. Venmo).
+    ///
+    /// When a `returnURLScheme` is provided and the Venmo app is installed, the flow app switches into
+    /// the Venmo app, which deep-links back into the app via this scheme. In that case the scheme is
+    /// advertised to the JavaScript layer as the return URL prefix (instead of the SDK's internal
+    /// ASWeb callback scheme).
+    /// - Parameters:
+    ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
+    ///   - returnURLScheme: The URL scheme registered under `CFBundleURLTypes` in the app's `Info.plist`
+    ///   that the Venmo app uses to deep-link back into the app.
+    ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
+    ///   or other browsing data between the authentication session and the user's normal browser session.
+    ///   Defaults to `true`.
+    public convenience init(webView: WKWebView, returnURLScheme: String, prefersEphemeralWebBrowserSession: Bool = true) {
+        self.init(
+            webView: webView,
+            webAuthenticationSession: WebAuthenticationSession(),
+            returnURLScheme: returnURLScheme,
+            application: UIApplication.shared,
+            prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession
+        )
+    }
+
+    /// Exposed for testing.
+    ///
+    /// Designated initializer that injects a custom `WebAuthenticationSession` and `URLOpener` so tests
+    /// can stub the browser authentication flow and simulate whether the Venmo app is installed. Kept
+    /// `internal` so the only public entry points are the two initializers above, keeping the internal
+    /// `URLOpener` out of the public API. `returnURLScheme` must be set before `configureWebView()`
+    /// runs so the generated user script advertises the correct return URL prefix.
+    init(
+        webView: WKWebView,
+        webAuthenticationSession: WebAuthenticationSession,
+        returnURLScheme: String? = nil,
+        application: URLOpener = UIApplication.shared,
+        prefersEphemeralWebBrowserSession: Bool = true
+    ) {
         self.webView = webView
-        
+        self.returnURLScheme = returnURLScheme
+        self.application = application
+        self.webAuthenticationSession = webAuthenticationSession
+
         super.init()
-        
+
         Self.analyticsService.sendAnalyticsEvent(PopupBridgeAnalytics.started, sessionID: sessionID)
-        
+
         configureWebView()
-        webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
-                
+        self.webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
+
         returnBlock = { [weak self] url in
             guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
                 return
@@ -47,15 +97,6 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             self?.injectWebView(webView: webView, withJavaScript: script)
             return
         }
-    }
-
-    /// Exposed for testing
-    convenience init(
-        webView: WKWebView,
-        webAuthenticationSession: WebAuthenticationSession
-    ) {
-        self.init(webView: webView)
-        self.webAuthenticationSession = webAuthenticationSession
     }
     
     deinit {
@@ -107,8 +148,19 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             name: messageHandlerName
         )
         
+        // When a returnURLScheme was provided and the Venmo app is installed, the flow app switches
+        // into the Venmo app, which deep-links back via the merchant's scheme — so advertise that
+        // scheme to the JS as the return URL prefix. Otherwise keep the SDK's internal ASWeb callback
+        // scheme (ASWebAuthenticationSession intercepts it without any Info.plist registration).
+        let scheme: String
+        if let returnURLScheme, application.isVenmoAppInstalled() {
+            scheme = returnURLScheme
+        } else {
+            scheme = PopupBridgeConstants.callbackURLScheme
+        }
+
         let javascript = PopupBridgeUserScript(
-            scheme: PopupBridgeConstants.callbackURLScheme,
+            scheme: scheme,
             scriptMessageHandlerName: messageHandlerName,
             host: hostName,
             isVenmoInstalled: application.isVenmoAppInstalled()

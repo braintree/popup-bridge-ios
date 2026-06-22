@@ -15,7 +15,7 @@ final class PopupBridgeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
-        popupBridge = POPPopupBridge(webView: webView)
+        popupBridge = POPPopupBridge(webView: webView, returnURLScheme: "com.braintreepayments.Demo")
         webView.load(URLRequest(url: URL(string: "https://braintree.github.io/popup-bridge-example/")!))
     }
     
