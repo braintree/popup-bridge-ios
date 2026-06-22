@@ -55,7 +55,7 @@ When using the Venmo app switch flow, initialize PopupBridge with the URL scheme
 popupBridge = POPPopupBridge(webView: webView, returnURLScheme: "your-app-scheme")
 ```
 
-When the Venmo app is installed, PopupBridge advertises this scheme to the web SDK as the return URL prefix (`window.popupBridge.getReturnUrlPrefix()`), so the Venmo app can deep-link back into your app. You must register the same scheme under `CFBundleURLTypes` in your app's `Info.plist`:
+When the Venmo app is installed, PopupBridge sends this scheme to the web SDK as the return URL prefix (`window.popupBridge.getReturnUrlPrefix()`), so the Venmo app can deep-link back into your app. You must register the same scheme under `CFBundleURLTypes` in your app's `Info.plist`:
 
 ```xml
 <key>CFBundleURLTypes</key>
@@ -68,6 +68,8 @@ When the Venmo app is installed, PopupBridge advertises this scheme to the web S
   </dict>
 </array>
 ```
+
+Additionally, you must add this scheme to your applications URL types. All 3 cases must match exactly to return to your app as expected after completing the app switch flow.
 
 Sample App
 -------
