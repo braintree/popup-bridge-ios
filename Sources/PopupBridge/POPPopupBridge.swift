@@ -21,7 +21,20 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     
     private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
-    
+
+    /// The URL scheme used consistently across the return URL prefix advertised to the JS
+    /// (`getReturnUrlPrefix()`), the ASWeb `callbackURLScheme`, and the return-URL validation. When a
+    /// `returnURLScheme` was provided and the Venmo app is installed, the flow app switches into the
+    /// Venmo app (which returns via the merchant scheme), so the merchant scheme is used everywhere.
+    /// Otherwise the SDK's internal callback scheme is used (the standard ASWeb popup flow). The web
+    /// SDK reads `getReturnUrlPrefix()` for both flows, so all three must agree on this one scheme.
+    private var returnURLPrefixScheme: String {
+        if let returnURLScheme, application.isVenmoAppInstalled() {
+            return returnURLScheme
+        }
+        return PopupBridgeConstants.callbackURLScheme
+    }
+
     // MARK: - Initializers
         
     /// Initialize a Popup Bridge for the standard browser-based (ASWeb) checkout flow.
@@ -88,6 +101,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
         configureWebView()
         self.webAuthenticationSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
+        self.webAuthenticationSession.callbackURLScheme = returnURLPrefixScheme
 
         returnBlock = { [weak self] url in
             guard let script = self?.constructJavaScriptCompletionResult(returnURL: url) else {
@@ -112,7 +126,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     /// - Returns: JavaScript formatted completion.
     func constructJavaScriptCompletionResult(returnURL: URL) -> String? {
         guard let urlComponents = URLComponents(url: returnURL, resolvingAgainstBaseURL: false),
-              urlComponents.scheme?.caseInsensitiveCompare(PopupBridgeConstants.callbackURLScheme) == .orderedSame,
+              urlComponents.scheme?.caseInsensitiveCompare(returnURLPrefixScheme) == .orderedSame,
               urlComponents.host?.caseInsensitiveCompare(hostName) == .orderedSame
         else {
             return nil
@@ -148,19 +162,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
             name: messageHandlerName
         )
         
-        // When a returnURLScheme was provided and the Venmo app is installed, the flow app switches
-        // into the Venmo app, which deep-links back via the merchant's scheme — so advertise that
-        // scheme to the JS as the return URL prefix. Otherwise keep the SDK's internal ASWeb callback
-        // scheme (ASWebAuthenticationSession intercepts it without any Info.plist registration).
-        let scheme: String
-        if let returnURLScheme, application.isVenmoAppInstalled() {
-            scheme = returnURLScheme
-        } else {
-            scheme = PopupBridgeConstants.callbackURLScheme
-        }
-
         let javascript = PopupBridgeUserScript(
-            scheme: scheme,
+            scheme: returnURLPrefixScheme,
             scriptMessageHandlerName: messageHandlerName,
             host: hostName,
             isVenmoInstalled: application.isVenmoAppInstalled()
