@@ -91,9 +91,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         prefersEphemeralWebBrowserSession: Bool = true
     ) {
         self.webView = webView
+        self.webAuthenticationSession = webAuthenticationSession
         self.returnURLScheme = returnURLScheme
         self.application = application
-        self.webAuthenticationSession = webAuthenticationSession
 
         super.init()
 
