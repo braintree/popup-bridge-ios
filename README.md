@@ -47,6 +47,30 @@ You must add the following to the queries schemes allowlist in your app's info.p
 </array>
 ```
 
+### Register your return URL scheme (Venmo app switch)
+
+When using the Venmo app switch flow, initialize PopupBridge with the URL scheme your app is registered to handle:
+
+```swift
+popupBridge = POPPopupBridge(webView: webView, returnURLScheme: "your-app-scheme")
+```
+
+When the Venmo app is installed, PopupBridge sends this scheme to the web SDK as the return URL prefix (`window.popupBridge.getReturnUrlPrefix()`), so the Venmo app can deep-link back into your app. You must register the same scheme under `CFBundleURLTypes` in your app's `Info.plist`:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>your-app-scheme</string>
+    </array>
+  </dict>
+</array>
+```
+
+Additionally, you must add this scheme to your applications URL types. All 3 cases must match exactly to return to your app as expected after completing the app switch flow.
+
 Sample App
 -------
 
