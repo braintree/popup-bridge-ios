@@ -24,7 +24,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
 
     /// The URL scheme used consistently across the return URL prefix advertised to the JS
     /// (`getReturnUrlPrefix()`), the ASWeb `callbackURLScheme`, and the return-URL validation. When a
-    /// `returnURLScheme` was provided and the Venmo app is installed, the flow app switches into the
+    /// `returnURLScheme` is provided and the Venmo app is installed, the flow app switches into the
     /// Venmo app (which returns via the merchant scheme), so the merchant scheme is used everywhere.
     /// Otherwise the SDK's internal callback scheme is used (the standard ASWeb popup flow). The web
     /// SDK reads `getReturnUrlPrefix()` for both flows, so all three must agree on this one scheme.
