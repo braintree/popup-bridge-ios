@@ -456,4 +456,92 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         // so check the full event sequence rather than just lastEventName.
         XCTAssertTrue(mockAnalyticsService.sentEventNames.contains(PopupBridgeAnalytics.appSwitchFailed))
     }
+
+    // MARK: - returnURLScheme app switch tests
+
+    func testUserScript_whenReturnURLSchemeProvidedAndVenmoInstalled_advertisesReturnURLSchemeAsReturnUrlPrefix() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = true
+
+        let webView = WKWebView()
+        _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            returnURLScheme: "my-app-scheme",
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("return 'my-app-scheme://popupbridgev1/';"))
+    }
+
+    func testUserScript_whenReturnURLSchemeProvidedButVenmoNotInstalled_advertisesCallbackScheme() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = false
+
+        let webView = WKWebView()
+        _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            returnURLScheme: "my-app-scheme",
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("return 'sdk.ios.popup-bridge://popupbridgev1/';"))
+    }
+
+    func testUserScript_whenNoReturnURLSchemeAndVenmoInstalled_advertisesCallbackScheme() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = true
+
+        let webView = WKWebView()
+        _ = POPPopupBridge(
+            webView: webView,
+            webAuthenticationSession: mockWebAuthenticationSession,
+            application: mockURLOpener
+        )
+
+        let userScript = webView.configuration.userContentController.userScripts[0]
+        XCTAssertTrue(userScript.source.contains("return 'sdk.ios.popup-bridge://popupbridgev1/';"))
+    }
+
+    func testConstructJavaScriptCompletionResult_whenReturnURLSchemeAndVenmoInstalled_acceptsMerchantSchemeReturn() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = true
+
+        let pub = POPPopupBridge(
+            webView: WKWebView(),
+            webAuthenticationSession: mockWebAuthenticationSession,
+            returnURLScheme: "my-app-scheme",
+            application: mockURLOpener
+        )
+
+        // The return validation keys off the effective (merchant) scheme, so a merchant-scheme return
+        // from the Venmo app is accepted and completed.
+        let result = pub.constructJavaScriptCompletionResult(
+            returnURL: URL(string: "my-app-scheme://popupbridgev1/return?token=abc")!
+        )
+        XCTAssertNotNil(result)
+        XCTAssertTrue(result!.contains("window.popupBridge.onComplete(null,"))
+    }
+
+    func testConstructJavaScriptCompletionResult_whenReturnURLSchemeAndVenmoInstalled_rejectsSDKSchemeReturn() {
+        let mockURLOpener = MockURLOpener()
+        mockURLOpener.venmoInstalled = true
+
+        let pub = POPPopupBridge(
+            webView: WKWebView(),
+            webAuthenticationSession: mockWebAuthenticationSession,
+            returnURLScheme: "my-app-scheme",
+            application: mockURLOpener
+        )
+
+        // When the merchant scheme is the effective scheme, the SDK's internal scheme is no longer a
+        // valid return for this instance.
+        let result = pub.constructJavaScriptCompletionResult(
+            returnURL: URL(string: "sdk.ios.popup-bridge://popupbridgev1/return")!
+        )
+        XCTAssertNil(result)
+    }
 }

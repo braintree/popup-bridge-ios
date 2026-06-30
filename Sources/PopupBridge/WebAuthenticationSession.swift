@@ -5,6 +5,7 @@ class WebAuthenticationSession: NSObject {
 
     var authenticationSession: ASWebAuthenticationSession?
     var prefersEphemeralWebBrowserSession: Bool = true
+    var callbackURLScheme: String = PopupBridgeConstants.callbackURLScheme
 
     func start(
         url: URL,
@@ -14,7 +15,7 @@ class WebAuthenticationSession: NSObject {
     ) {
         self.authenticationSession = ASWebAuthenticationSession(
             url: url,
-            callbackURLScheme: PopupBridgeConstants.callbackURLScheme
+            callbackURLScheme: callbackURLScheme
         ) { url, error in
             if let error = error as? NSError, error.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
                 sessionDidCancel()
