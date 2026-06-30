@@ -47,6 +47,16 @@ You must add the following to the queries schemes allowlist in your app's info.p
 </array>
 ```
 
+### Allowlist PayPal URL scheme (PayPal app switch only)
+To enable PayPal installation detection (`window.popupBridge.isPayPalInstalled`) for the PayPal app switch flow, add the following to the queries schemes allowlist in your app's info.plist:
+
+``` xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>paypal</string>
+</array>
+```
+
 ### Register your return URL scheme (Venmo app switch)
 
 When using the Venmo app switch flow, initialize PopupBridge with the URL scheme your app is registered to handle:
@@ -106,6 +116,30 @@ Quick Start
             webView.load(URLRequest(url: url))
         }
     }
+    ```
+
+2. **(Required when using the PayPal app switch initializer)** Forward return URLs from your `SceneDelegate`:
+
+    When you initialize PopupBridge with a `returnURLScheme`, the SDK launches the native PayPal app for checkout and waits for the app to return via a deep link. For PopupBridge to receive that return URL, forward it from your `SceneDelegate` to `PopupBridgeAppContextSwitcher.shared.handleReturnURL(_:)`. Without this, the checkout flow will hang indefinitely after the PayPal app returns. The method returns a `Bool` indicating whether PopupBridge handled the URL, so you can chain it to other app-switch handlers (e.g. Braintree). To enable PayPal installation detection (`window.popupBridge.isPayPalInstalled`), add `paypal` to `LSApplicationQueriesSchemes` in your app's `Info.plist`.
+
+    ```swift
+    import PopupBridge
+
+    class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+        // ... your existing SceneDelegate code ...
+
+        func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+            guard let url = URLContexts.first?.url else { return }
+            PopupBridgeAppContextSwitcher.shared.handleReturnURL(url)
+        }
+    }
+    ```
+
+    You must also register a URL scheme in your app's `Info.plist` under `CFBundleURLTypes` so that the PayPal app can redirect back to your app, and pass that scheme as `returnURLScheme`. Using the app switch initializer makes `returnURLScheme` **required** — PopupBridge does not guess the scheme from `CFBundleURLTypes`:
+
+    ```swift
+    popupBridge = POPPopupBridge(webView: webView, returnURLScheme: "your-app-scheme")
     ```
     
 PayPal Example
