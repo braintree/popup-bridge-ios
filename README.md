@@ -21,7 +21,7 @@ Installation
 
 ### CocoaPods
 
-⚠️ **Deprecation Notice:** CocoaPods support for `popup-bridge-ios` is deprecated and will be removed in a future release, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Going forward, we recommend migrating to **Swift Package Manager** (primary) or **Carthage**. See [#XXXX](https://github.com/braintree/popup-bridge-ios/issues/XXXX) for migration guidance and removal timing updates.
+⚠️ **Deprecation Notice:** CocoaPods support for `popup-bridge-ios` is deprecated and will be removed in a future release, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Going forward, we recommend migrating to **Swift Package Manager** (primary) or **Carthage**. See [#102](https://github.com/braintree/popup-bridge-ios/issues/102) for migration guidance and removal timing updates.
 
 To integrate using [CocoaPods](https://cocoapods.org), add the following line to your Podfile:
 
