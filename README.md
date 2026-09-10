@@ -37,7 +37,7 @@ pod 'PopupBridge'
 4. Update import statements if needed; module names are unchanged.
 5. Delete `Podfile`, `Podfile.lock`, and the `.xcworkspace` (if it existed only for CocoaPods), and reopen the project via `PopupBridge.xcodeproj`.
 
-If SPM isn't an option, Carthage remains supported below, or you can integrate a prebuilt `.xcframework` directly from the [Releases page](https://github.com/braintree/popup-bridge-ios/releases).
+If SPM isn't an option, Carthage remains supported below.
 
 ### Carthage
 
