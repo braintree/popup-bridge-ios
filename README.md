@@ -21,11 +21,23 @@ Installation
 
 ### CocoaPods
 
+⚠️ **Deprecation Notice:** CocoaPods support for `popup-bridge-ios` is deprecated and will be removed in a future release, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Going forward, we recommend migrating to **Swift Package Manager** (primary) or **Carthage**. See [#102](https://github.com/braintree/popup-bridge-ios/issues/102) for migration guidance and removal timing updates.
+
 To integrate using [CocoaPods](https://cocoapods.org), add the following line to your Podfile:
 
 ```ruby
 pod 'PopupBridge'
 ```
+
+#### Migrating from CocoaPods to Swift Package Manager
+
+1. Remove the `PopupBridge` pod from your `Podfile` and run `pod deintegrate`.
+2. In Xcode, go to **File → Add Package Dependencies…** and enter `https://github.com/braintree/popup-bridge-ios` as the repository URL.
+3. Tick the checkbox for `PopupBridge` — see the [Swift Package Manager](#swift-package-manager) section below.
+4. Update import statements if needed; module names are unchanged.
+5. Delete `Podfile`, `Podfile.lock`, and the `.xcworkspace` (if it existed only for CocoaPods), and reopen the project via `PopupBridge.xcodeproj`.
+
+If SPM isn't an option, Carthage remains supported below.
 
 ### Carthage
 
