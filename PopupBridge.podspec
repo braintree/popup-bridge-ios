@@ -8,7 +8,7 @@ browser and send data back to the WKWebView.
 
 Use cases for PopupBridge:
 * Apps with WebViews that need to open a popup
-* When a popup window needs to to send data from the popup back to the WKWebView
+* When a popup window needs to send data from the popup back to the WKWebView
 * When the popup window needs to display the HTTPS lock icon to increase user trust
 * Apps that use OAuth
                        DESC
