@@ -2,37 +2,64 @@ name: Tests
 on: [pull_request, workflow_dispatch]
 jobs:
   unit_test_job:
-    name: Unit (Xcode 16.4.0)
-    runs-on: macOS-15-xlarge
+    name: Unit (Xcode 27)
+    runs-on: xcode-27-xlarge
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Use Xcode 16.4.0
-        run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
+      - name: Use Xcode 27
+        run: |
+          XCODE_PATH=$(ls -d /Applications/Xcode*.app 2>/dev/null | grep -i 27 | sort -V | tail -1)
+          if [ -z "$XCODE_PATH" ]; then
+            echo "::error::No Xcode 27 install found on this runner. Installed Xcode apps:"
+            ls /Applications | grep -i Xcode
+            exit 1
+          fi
+          echo "Resolved Xcode path: $XCODE_PATH"
+          sudo xcode-select -switch "$XCODE_PATH"
+          xcodebuild -version
       - name: Install CocoaPod dependencies
         run: pod install
       - name: Run Unit Tests
         run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 16,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
   ui_test_job:
-    name: UI (Xcode 16.4.0)
+    name: UI (Xcode 27)
     runs-on: macOS-15-xlarge
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Use Xcode 16.4.0
-        run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
+      - name: Use Xcode 27
+        run: |
+          XCODE_PATH=$(ls -d /Applications/Xcode*.app 2>/dev/null | grep -i 27 | sort -V | tail -1)
+          if [ -z "$XCODE_PATH" ]; then
+            echo "::error::No Xcode 27 install found on this runner. Installed Xcode apps:"
+            ls /Applications | grep -i Xcode
+            exit 1
+          fi
+          echo "Resolved Xcode path: $XCODE_PATH"
+          sudo xcode-select -switch "$XCODE_PATH"
+          xcodebuild -version
       - name: Install CocoaPod dependencies
         run: pod install
       - name: Run UI Tests
         run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 16,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
   integration_test_job:
-    name: Integration (Xcode 16.4.0)
+    name: Integration (Xcode 27)
     runs-on: macOS-15-xlarge
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Use Xcode 16.4.0
-        run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
+      - name: Use Xcode 27
+        run: |
+          XCODE_PATH=$(ls -d /Applications/Xcode*.app 2>/dev/null | grep -i 27 | sort -V | tail -1)
+          if [ -z "$XCODE_PATH" ]; then
+            echo "::error::No Xcode 27 install found on this runner. Installed Xcode apps:"
+            ls /Applications | grep -i Xcode
+            exit 1
+          fi
+          echo "Resolved Xcode path: $XCODE_PATH"
+          sudo xcode-select -switch "$XCODE_PATH"
+          xcodebuild -version
       - name: Install CocoaPod dependencies
         run: pod install
       - name: Run Integration Tests
