@@ -1,5 +1,8 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+* Add support for iOS 27 / Xcode 27
+
 ## 3.1.0 (2026-06-24)
 * Add `init(webView:returnURLScheme:prefersEphemeralWebBrowserSession:)` for the Venmo app switch flow. When a `returnURLScheme` is provided and the Venmo app is installed, PopupBridge sends that scheme to the web SDK as the return URL prefix (`window.popupBridge.getReturnUrlPrefix()`) so the Venmo app can deep-link back into your app.
 
