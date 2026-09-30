@@ -9,10 +9,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Use Xcode 16.4.0
         run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
-      - name: Install CocoaPod dependencies
-        run: pod install
+      - name: Install xcbeautify
+        run: brew install xcbeautify
       - name: Run Unit Tests
-        run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 16,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
+        run: set -o pipefail && xcodebuild -project 'PopupBridge.xcodeproj' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'UnitTests' -destination 'name=iPhone 16,platform=iOS Simulator' test | xcbeautify
   ui_test_job:
     name: UI (Xcode 16.4.0)
     runs-on: macOS-15-xlarge
@@ -21,10 +21,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Use Xcode 16.4.0
         run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
-      - name: Install CocoaPod dependencies
-        run: pod install
+      - name: Install xcbeautify
+        run: brew install xcbeautify
       - name: Run UI Tests
-        run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 16,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
+        run: set -o pipefail && xcodebuild -project 'Demo/Demo.xcodeproj' -sdk 'iphonesimulator' -configuration 'Release' -scheme 'UITests' -destination 'name=iPhone 16,platform=iOS Simulator' test | xcbeautify
   integration_test_job:
     name: Integration (Xcode 16.4.0)
     runs-on: macOS-15-xlarge
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Use Xcode 16.4.0
         run: sudo xcode-select -switch /Applications/Xcode_16.4.0.app
-      - name: Install CocoaPod dependencies
-        run: pod install
+      - name: Install xcbeautify
+        run: brew install xcbeautify
       - name: Run Integration Tests
-        run: set -o pipefail && xcodebuild -workspace 'PopupBridge.xcworkspace' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'IntegrationTests' -destination 'name=iPhone 16,platform=iOS Simulator' test | ./Pods/xcbeautify/xcbeautify
+        run: set -o pipefail && xcodebuild -project 'PopupBridge.xcodeproj' -sdk 'iphonesimulator' -configuration 'Debug' -scheme 'IntegrationTests' -destination 'name=iPhone 16,platform=iOS Simulator' test | xcbeautify
