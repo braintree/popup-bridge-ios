@@ -20,7 +20,7 @@ jobs:
     uses: braintree/security-workflows/.github/workflows/codeql-ios.yml@main
     with:
       project: PopupBridge.xcodeproj
-      scheme: Demo
+      scheme: PopupBridge
 
   dependency-review:
     uses: braintree/security-workflows/.github/workflows/dependency-review.yml@main
