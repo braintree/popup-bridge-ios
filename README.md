@@ -21,13 +21,7 @@ Installation
 
 ### CocoaPods
 
-⚠️ **Deprecation Notice:** CocoaPods support for `popup-bridge-ios` is deprecated and will be removed in a future release, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Going forward, we recommend migrating to **Swift Package Manager** (primary) or **Carthage**. See [#102](https://github.com/braintree/popup-bridge-ios/issues/102) for migration guidance and removal timing updates.
-
-To integrate using [CocoaPods](https://cocoapods.org), add the following line to your Podfile:
-
-```ruby
-pod 'PopupBridge'
-```
+CocoaPods support for `popup-bridge-ios` has been removed, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Use **Swift Package Manager** (primary) or **Carthage** instead. See [#102](https://github.com/braintree/popup-bridge-ios/issues/102) for background.
 
 #### Migrating from CocoaPods to Swift Package Manager
 
@@ -86,7 +80,7 @@ Additionally, you must add this scheme to your applications URL types. All 3 cas
 Sample App
 -------
 
-To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
+To run the sample app, clone the repo, open `PopupBridge.xcodeproj` and run the `Demo` app target.
 
 Supported Payment Methods
 -------
