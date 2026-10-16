@@ -55,10 +55,10 @@ jobs:
       - name: Resolve Swift Packages (Xcode)
         run: |
           args=(
-            "-project Demo/Demo.xcodeproj"
-            "-scheme Demo"
-            "-derivedDataPath '${GITHUB_WORKSPACE}/DerivedData'"
-            "-clonedSourcePackagesDirPath SourcePackages"
+            -project Demo/Demo.xcodeproj
+            -scheme Demo
+            -derivedDataPath '${GITHUB_WORKSPACE}/DerivedData'
+            -clonedSourcePackagesDirPath SourcePackages
           )
           xcodebuild -resolvePackageDependencies "${args[@]}"
 
@@ -71,19 +71,19 @@ jobs:
       - name: Build
         run: |
           args=(
-            "-configuration Debug"
-            "-project Demo/Demo.xcodeproj"
-            "-scheme Demo"
-            "-derivedDataPath '${GITHUB_WORKSPACE}/DerivedData'"
-            "-clonedSourcePackagesDirPath SourcePackages"
-            "-scmProvider system"
-            "-sdk iphonesimulator"
-            "-destination 'platform=iOS Simulator,name=iPhone 16'"
-            "CODE_SIGN_IDENTITY="
-            "CODESIGNING_REQUIRED=NO"
-            "CODE_SIGNING_ALLOWED=NO"
-            "clean"
-            "build"
+            -configuration Debug
+            -project Demo/Demo.xcodeproj
+            -scheme Demo
+            -derivedDataPath '${GITHUB_WORKSPACE}/DerivedData'
+            -clonedSourcePackagesDirPath SourcePackages
+            -scmProvider system
+            -sdk iphonesimulator
+            -destination 'platform=iOS Simulator,name=iPhone 16'
+            CODE_SIGN_IDENTITY=
+            CODESIGNING_REQUIRED=NO
+            CODE_SIGNING_ALLOWED=NO
+            clean
+            build
           )
           xcodebuild "${args[@]}"
 
