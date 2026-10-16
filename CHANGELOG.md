@@ -1,6 +1,8 @@
 # PopupBridge iOS Release Notes
 
 ## unreleased
+* Breaking Changes
+  * `prefersEphemeralWebBrowserSession` now defaults to `false` (previously `true`), so the browser session shares cookies with the user's browser, like PayPal's other iOS SDKs. iOS now shows its "Wants to Use … to Sign In" prompt before each checkout, and a buyer's PayPal login can carry over to later checkouts. To keep the previous behavior, pass `prefersEphemeralWebBrowserSession: true` to `POPPopupBridge(webView:prefersEphemeralWebBrowserSession:)` or `POPPopupBridge(webView:returnURLScheme:prefersEphemeralWebBrowserSession:)`.
 * Add support for iOS 27 / Xcode 27
 
 ## 3.1.0 (2026-06-24)
