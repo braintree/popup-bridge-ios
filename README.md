@@ -108,6 +108,16 @@ Quick Start
     }
     ```
     
+### Browser session
+
+By default, PopupBridge uses a browser session that can share cookies with the user's browser, so sites such as PayPal can keep the user signed in across sessions. iOS asks the user for permission ("“App” Wants to Use “example.com” to Sign In") each time a page opens. If the user taps **Cancel** on that prompt, PopupBridge reports a cancel, the same as when the user closes the browser.
+
+To skip the prompt, pass `prefersEphemeralWebBrowserSession: true`. PopupBridge then uses a private session that doesn't share cookies with the user's browser, so the user has to sign in every time:
+
+```swift
+popupBridge = POPPopupBridge(webView: webView, prefersEphemeralWebBrowserSession: true)
+```
+
 PayPal Example
 --------------
 

@@ -43,8 +43,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
     ///   or other browsing data between the authentication session and the user's normal browser session.
-    ///   Defaults to `false`: the session shares cookies with the user's browser, so iOS asks the buyer for permission
-    ///   before opening the page, and a login can carry over to later checkouts. Pass `true` to skip the prompt and start every checkout logged out.
+    ///   Defaults to `false`, which lets sites keep the user signed in across sessions. iOS then asks the user for
+    ///   permission each time a page opens. Pass `true` to skip that prompt.
     public convenience init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = false) {
         self.init(
             webView: webView,
@@ -67,8 +67,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   that the Venmo app uses to deep-link back into the app.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
     ///   or other browsing data between the authentication session and the user's normal browser session.
-    ///   Defaults to `false`: the session shares cookies with the user's browser, so iOS asks the buyer for permission
-    ///   before opening the page, and a login can carry over to later checkouts. Pass `true` to skip the prompt and start every checkout logged out.
+    ///   Defaults to `false`, which lets sites keep the user signed in across sessions. iOS then asks the user for
+    ///   permission each time a page opens. Pass `true` to skip that prompt.
     public convenience init(webView: WKWebView, returnURLScheme: String, prefersEphemeralWebBrowserSession: Bool = false) {
         self.init(
             webView: webView,

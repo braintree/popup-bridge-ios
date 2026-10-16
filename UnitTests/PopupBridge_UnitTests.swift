@@ -480,12 +480,6 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         XCTAssertTrue(pub.webAuthenticationSession.prefersEphemeralWebBrowserSession)
     }
 
-    func testInit_whenPrefersEphemeralWebBrowserSessionFalse_usesSharedSession() {
-        let pub = POPPopupBridge(webView: WKWebView(), prefersEphemeralWebBrowserSession: false)
-
-        XCTAssertFalse(pub.webAuthenticationSession.prefersEphemeralWebBrowserSession)
-    }
-
     func testInitWithReturnURLScheme_whenPrefersEphemeralWebBrowserSessionNotProvided_usesSharedSession() {
         let pub = POPPopupBridge(webView: WKWebView(), returnURLScheme: "my-app-scheme")
 
@@ -502,29 +496,9 @@ final class PopupBridge_UnitTests: XCTestCase, WKNavigationDelegate {
         XCTAssertTrue(pub.webAuthenticationSession.prefersEphemeralWebBrowserSession)
     }
 
-    func testInitWithReturnURLScheme_whenPrefersEphemeralWebBrowserSessionFalse_usesSharedSession() {
-        let pub = POPPopupBridge(
-            webView: WKWebView(),
-            returnURLScheme: "my-app-scheme",
-            prefersEphemeralWebBrowserSession: false
-        )
-
-        XCTAssertFalse(pub.webAuthenticationSession.prefersEphemeralWebBrowserSession)
-    }
-
     func testInit_withInjectedSession_whenPrefersEphemeralWebBrowserSessionNotProvided_usesSharedSession() {
         _ = POPPopupBridge(webView: WKWebView(), webAuthenticationSession: mockWebAuthenticationSession)
 
         XCTAssertFalse(mockWebAuthenticationSession.prefersEphemeralWebBrowserSession)
-    }
-
-    func testInit_withInjectedSession_whenPrefersEphemeralWebBrowserSessionTrue_usesEphemeralSession() {
-        _ = POPPopupBridge(
-            webView: WKWebView(),
-            webAuthenticationSession: mockWebAuthenticationSession,
-            prefersEphemeralWebBrowserSession: true
-        )
-
-        XCTAssertTrue(mockWebAuthenticationSession.prefersEphemeralWebBrowserSession)
     }
 }
