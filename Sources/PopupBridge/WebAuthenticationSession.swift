@@ -4,7 +4,7 @@ import AuthenticationServices
 class WebAuthenticationSession: NSObject {
 
     var authenticationSession: ASWebAuthenticationSession?
-    var prefersEphemeralWebBrowserSession: Bool = true
+    var prefersEphemeralWebBrowserSession: Bool = false
     var callbackURLScheme: String = PopupBridgeConstants.callbackURLScheme
 
     func start(

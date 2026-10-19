@@ -19,7 +19,8 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     private let returnURLScheme: String?
     private var application: URLOpener = UIApplication.shared
     
-    private var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
+    /// Exposed for testing
+    private(set) var webAuthenticationSession: WebAuthenticationSession = WebAuthenticationSession()
     private var returnBlock: ((URL) -> Void)? = nil
 
     /// The URL scheme used consistently across the return URL prefix advertised to the JS
@@ -42,8 +43,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   - webView: The web view to add a script message handler to. Do not change the web view's configuration or user content controller after initializing Popup Bridge.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
     ///   or other browsing data between the authentication session and the user's normal browser session.
-    ///   Defaults to `true`.
-    public convenience init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = true) {
+    ///   Defaults to `false`, which lets sites keep the user signed in across sessions. iOS then asks the user for
+    ///   permission each time a page opens. Pass `true` to skip that prompt.
+    public convenience init(webView: WKWebView, prefersEphemeralWebBrowserSession: Bool = false) {
         self.init(
             webView: webView,
             webAuthenticationSession: WebAuthenticationSession(),
@@ -65,8 +67,9 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
     ///   that the Venmo app uses to deep-link back into the app.
     ///   - prefersEphemeralWebBrowserSession: A Boolean that, when true, requests that the browser does not share cookies
     ///   or other browsing data between the authentication session and the user's normal browser session.
-    ///   Defaults to `true`.
-    public convenience init(webView: WKWebView, returnURLScheme: String, prefersEphemeralWebBrowserSession: Bool = true) {
+    ///   Defaults to `false`, which lets sites keep the user signed in across sessions. iOS then asks the user for
+    ///   permission each time a page opens. Pass `true` to skip that prompt.
+    public convenience init(webView: WKWebView, returnURLScheme: String, prefersEphemeralWebBrowserSession: Bool = false) {
         self.init(
             webView: webView,
             webAuthenticationSession: WebAuthenticationSession(),
@@ -88,7 +91,7 @@ public class POPPopupBridge: NSObject, WKScriptMessageHandler {
         webAuthenticationSession: WebAuthenticationSession,
         returnURLScheme: String? = nil,
         application: URLOpener = UIApplication.shared,
-        prefersEphemeralWebBrowserSession: Bool = true
+        prefersEphemeralWebBrowserSession: Bool = false
     ) {
         self.webView = webView
         self.webAuthenticationSession = webAuthenticationSession

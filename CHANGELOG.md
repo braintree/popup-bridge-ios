@@ -1,6 +1,8 @@
 # PopupBridge iOS Release Notes
 
 ## unreleased
+* Breaking Changes
+  * `prefersEphemeralWebBrowserSession` now defaults to `false` (previously `true`), matching Apple's default. Sites such as PayPal can keep the user signed in across sessions, and iOS asks the user for permission ("“App” Wants to Use “example.com” to Sign In") each time PopupBridge opens a page. To keep the previous behavior, pass `prefersEphemeralWebBrowserSession: true`. See [Browser session](README.md#browser-session).
 * Add support for iOS 27 / Xcode 27
 
 ## 3.1.0 (2026-06-24)
