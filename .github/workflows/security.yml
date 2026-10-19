@@ -10,17 +10,18 @@ permissions:
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, remove-cocoapods-security-workflow ]
   push:
-    branches: [ main ]
+    branches: [ main, remove-cocoapods-security-workflow ]
   workflow_dispatch:
 
 jobs:
   code-scanning:
-    uses: braintree/security-workflows/.github/workflows/codeql-ios.yml@main
+    uses: braintree/security-workflows/.github/workflows/codeql-ios.yml@removeCocoaPods
     with:
-      project: PopupBridge.xcodeproj
-      scheme: PopupBridge
+      mac-runner-version: 'macos-15-xlarge'
+      project: Demo/Demo.xcodeproj
+      scheme: Demo
 
   dependency-review:
     uses: braintree/security-workflows/.github/workflows/dependency-review.yml@main
