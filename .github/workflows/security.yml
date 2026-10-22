@@ -57,7 +57,7 @@ jobs:
           xcodebuild -resolvePackageDependencies "${args[@]}"
 
       - name: CodeQL init
-        uses: braintree/security-workflows/sast/codeql-init@feat/add-sast-composite-actions
+        uses: braintree/security-workflows/sast/codeql-init@main
         with:
           language: swift
           build-mode: manual
@@ -82,7 +82,7 @@ jobs:
           xcodebuild "${args[@]}"
 
       - name: CodeQL analyze
-        uses: braintree/security-workflows/sast/codeql-analyze@feat/add-sast-composite-actions
+        uses: braintree/security-workflows/sast/codeql-analyze@main
         with:
           language: swift
 
