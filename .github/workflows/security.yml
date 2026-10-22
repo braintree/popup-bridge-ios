@@ -22,7 +22,7 @@ defaults:
 jobs:
   sast:
     name: SAST
-    runs-on: xcode-27-xlarge
+    runs-on: macOS-15-xlarge
     timeout-minutes: 30
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,9 +32,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Use Xcode 27.0
+      - name: Use Xcode 16.4.0
         run: |
-          sudo xcode-select -switch /Applications/Xcode_27.0.app
+          sudo xcode-select -switch /Applications/Xcode_16.4.0.app
 
       - name: Cache SwiftPM
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
