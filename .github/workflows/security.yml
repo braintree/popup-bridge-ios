@@ -10,9 +10,9 @@ permissions:
 
 on:
   pull_request:
-    branches: [ main, cocoapods-deprecation, update-sast-composite-actions ]
+    branches: [ main ]
   push:
-    branches: [ main, cocoapods-deprecation, update-sast-composite-actions ]
+    branches: [ main ]
   workflow_dispatch:
 
 defaults:
