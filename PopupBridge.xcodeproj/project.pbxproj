@@ -72,8 +72,6 @@
 		8079D7192996F6C200A2E336 /* PopupBridgeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeUserScript.swift; sourceTree = "<group>"; };
 		A15D038B71F540B38D21330B /* PopupBridge_IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridge_IntegrationTests.swift; sourceTree = "<group>"; };
 		A71371AF1DCD429100D03A5C /* PopupBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupBridge.framework; path = "Pods/../build/Debug-iphoneos/PopupBridge/PopupBridge.framework"; sourceTree = "<group>"; };
-		A73D5A081DFA2E9A00387737 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		A73D5A0A1DFA2E9A00387737 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A775A07C1DEE4E7E009E67C2 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A775A0801DEE4E7E009E67C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A775A08B1DEE4EF0009E67C2 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,7 +141,6 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				806F552D25B13211001754AF /* Sources */,
 				C3CD7FDCB49E48EDA23A7970 /* IntegrationTests */,
 				A775A07D1DEE4E7E009E67C2 /* UnitTests */,
@@ -174,15 +171,6 @@
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
-			isa = PBXGroup;
-			children = (
-				A73D5A081DFA2E9A00387737 /* LICENSE */,
-				A73D5A0A1DFA2E9A00387737 /* README.md */,
-			);
-			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
 		806F552D25B13211001754AF /* Sources */ = {
