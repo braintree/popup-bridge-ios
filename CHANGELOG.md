@@ -1,6 +1,6 @@
 # PopupBridge iOS Release Notes
 
-## unreleased
+## 3.2.0 (2026-10-29)
 * Add support for iOS 27 / Xcode 27
 
 ## 3.1.0 (2026-06-24)
