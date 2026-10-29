@@ -79,9 +79,7 @@ struct FPTIBatchData: Codable {
         let merchantAppVersion: String = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "N/A"
         
         let packageManager: String = {
-            #if COCOAPODS
-                "CocoaPods"
-            #elseif SWIFT_PACKAGE
+            #if SWIFT_PACKAGE
                 "Swift Package Manager"
             #else
                 "Carthage or Other"

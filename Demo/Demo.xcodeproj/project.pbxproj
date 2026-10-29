@@ -10,10 +10,9 @@
 		45150AC32D4D48670071E385 /* PopupBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */; };
 		45150B0C2D4D56F00071E385 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150B0B2D4D56F00071E385 /* AppDelegate.swift */; };
 		45150B0E2D4D572D0071E385 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45150B0D2D4D572D0071E385 /* SceneDelegate.swift */; };
-		8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; };
-		8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8018D88425B7891E00D877F3 /* PopupBridge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		806D559125AFD735005ED326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806D559025AFD735005ED326 /* Assets.xcassets */; };
 		BEF9ED1D2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9ED1C2A2A29B5005D54AB /* PopupBridge_DemoUITests.swift */; };
+		F86CFC9C9CCD03E462A18CC8 /* PopupBridge in Frameworks */ = {isa = PBXBuildFile; productRef = BAFA41532F64D0D77574A68D /* PopupBridge */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,25 +25,10 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		806F556225B1400A001754AF /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8018D88625B7891E00D877F3 /* PopupBridge.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		45150AC22D4D48670071E385 /* PopupBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupBridgeViewController.swift; sourceTree = "<group>"; };
 		45150B0B2D4D56F00071E385 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45150B0D2D4D572D0071E385 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8018D88425B7891E00D877F3 /* PopupBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D558125AFD733005ED326 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		806D559025AFD735005ED326 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806D559525AFD735005ED326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8018D88525B7891E00D877F3 /* PopupBridge.framework in Frameworks */,
+				F86CFC9C9CCD03E462A18CC8 /* PopupBridge in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +62,6 @@
 				806D558325AFD733005ED326 /* Demo */,
 				806D55B525AFD877005ED326 /* UITests */,
 				806D558225AFD733005ED326 /* Products */,
-				806F554125B13E21001754AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,14 +95,6 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
-		806F554125B13E21001754AF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8018D88425B7891E00D877F3 /* PopupBridge.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,13 +105,15 @@
 				806D557D25AFD733005ED326 /* Sources */,
 				806D557E25AFD733005ED326 /* Frameworks */,
 				806D557F25AFD733005ED326 /* Resources */,
-				806F556225B1400A001754AF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Demo;
+			packageProductDependencies = (
+				BAFA41532F64D0D77574A68D /* PopupBridge */,
+			);
 			productName = Demo;
 			productReference = 806D558125AFD733005ED326 /* Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -187,6 +164,9 @@
 				Base,
 			);
 			mainGroup = 806D557825AFD732005ED326;
+			packageReferences = (
+				E26C6547CC29D98BABA460D1 /* XCLocalSwiftPackageReference ".." */,
+			);
 			productRefGroup = 806D558225AFD733005ED326 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -472,6 +452,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		E26C6547CC29D98BABA460D1 /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BAFA41532F64D0D77574A68D /* PopupBridge */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopupBridge;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 806D557925AFD732005ED326 /* Project object */;
 }

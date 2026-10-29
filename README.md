@@ -21,11 +21,17 @@ Installation
 
 ### CocoaPods
 
-To integrate using [CocoaPods](https://cocoapods.org), add the following line to your Podfile:
+CocoaPods support for `popup-bridge-ios` has been removed, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Use **Swift Package Manager** (primary) or **Carthage** instead. See [#102](https://github.com/braintree/popup-bridge-ios/issues/102) for background.
 
-```ruby
-pod 'PopupBridge'
-```
+#### Migrating from CocoaPods to Swift Package Manager
+
+1. Remove the `PopupBridge` pod from your `Podfile` and run `pod deintegrate`.
+2. In Xcode, go to **File → Add Package Dependencies…** and enter `https://github.com/braintree/popup-bridge-ios` as the repository URL.
+3. Tick the checkbox for `PopupBridge` — see the [Swift Package Manager](#swift-package-manager) section below.
+4. Update import statements if needed; module names are unchanged.
+5. Delete `Podfile`, `Podfile.lock`, and the `.xcworkspace` (if it existed only for CocoaPods), and reopen the project via `PopupBridge.xcodeproj`.
+
+If SPM isn't an option, Carthage remains supported below.
 
 ### Carthage
 
@@ -74,7 +80,7 @@ Additionally, you must add this scheme to your applications URL types. All 3 cas
 Sample App
 -------
 
-To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
+To run the sample app, clone the repo, open `PopupBridge.xcodeproj` and run the `Demo` app target.
 
 Supported Payment Methods
 -------
