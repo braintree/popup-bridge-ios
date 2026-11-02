@@ -1,5 +1,8 @@
 # PopupBridge iOS Release Notes
 
+## unreleased
+* Remove CocoaPods support. `PopupBridge.podspec` has been deleted and CocoaPods integration artifacts removed from the SDK, please migrate to a supported package manager.
+
 ## 3.2.0 (2026-10-29)
 * Add support for iOS 27 / Xcode 27
 

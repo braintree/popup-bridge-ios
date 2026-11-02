@@ -58,7 +58,6 @@ jobs:
           set -euo pipefail
           today=$(date +'%Y-%m-%d')
           sed -i '' 's/## unreleased.*/## '"${RELEASE_VERSION}"' ('"$today"')/' CHANGELOG.md
-          sed -i '' 's/\(s\.version *= *\).*/\1"'"${RELEASE_VERSION}"'\"/' PopupBridge.podspec
           plutil -replace CFBundleVersion -string "${RELEASE_VERSION}" -- 'Demo/Demo/Info.plist'
           plutil -replace CFBundleShortVersionString -string "${RELEASE_VERSION}" -- 'Demo/Demo/Info.plist'
           plutil -replace CFBundleVersion -string "${RELEASE_VERSION}" -- 'Sources/PopupBridge/PopupBridge-Framework-Info.plist'
@@ -87,10 +86,3 @@ jobs:
           body_path: changelog_entries.md
           draft: false
           prerelease: false
-
-      - name: Publish to CocoaPods
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-        run: |
-          set -euo pipefail
-          pod trunk push PopupBridge.podspec

@@ -2,7 +2,7 @@
 
 * SDK/Library version: <!-- Example: 4.7.2 -->
 * iOS Version and Device: <!-- Example: iOS 9.3 on an iPhone 6s -->
-* Integration type and version: <!-- Example: CocoaPods 1.1.1, Carthage 0.18.1 -->
+* Integration type and version: <!-- Example: Swift Package Manager 3.0.0, Carthage 0.18.1 -->
 
 ### Issue description
 
