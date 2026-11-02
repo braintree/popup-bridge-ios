@@ -80,7 +80,7 @@ Additionally, you must add this scheme to your applications URL types. All 3 cas
 Sample App
 -------
 
-To run the sample app, clone the repo, open `PopupBridge.xcodeproj` and run the `Demo` app target.
+To run the sample app, clone the repo, open `PopupBridge.xcworkspace` and run the `Demo` app target.
 
 Supported Payment Methods
 -------
