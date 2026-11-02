@@ -21,7 +21,7 @@ Installation
 
 ### CocoaPods
 
-CocoaPods support for `popup-bridge-ios` has been removed, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Use **Swift Package Manager** (primary) or **Carthage** instead. See [#102](https://github.com/braintree/popup-bridge-ios/issues/102) for background.
+CocoaPods support for `popup-bridge-ios` has been removed, in line with the [official CocoaPods deprecation announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). Use **Swift Package Manager** (primary) or **Carthage** instead.
 
 #### Migrating from CocoaPods to Swift Package Manager
 
